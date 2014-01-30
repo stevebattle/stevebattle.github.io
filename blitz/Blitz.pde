@@ -148,7 +148,6 @@ class City {
   
   void initialise(int cityHeight, int level) {
     maxFloors = int(cityHeight/block.height);
-    println(maxFloors);
     buildings = (width -SPACE)/(block.width+GAP);
     margin = (width -buildings*(block.width+GAP) +GAP) /2;
     floors = new int[buildings];
