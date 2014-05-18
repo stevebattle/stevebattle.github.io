@@ -32,7 +32,7 @@ void setup() {
   v1  = new Vehicle1("vehicle1.png",30,VLENGTH);
   v2a = new Vehicle2a("vehicle2a.png",VWIDTH,VLENGTH);
   v2b = new Vehicle2b("vehicle2b.png",VWIDTH,VLENGTH);
-  setVehicle(initialise);
+  setVehicle("2b");
 }
 
 void setVehicle(String v) {
@@ -211,7 +211,7 @@ class Vehicle2a extends Thing {
   
 }
 class Vehicle2b extends Thing {
-  int F = 100;
+  int F = 200;
   float left, right;
   
   Vehicle2b(String filename, int w, int l) {
