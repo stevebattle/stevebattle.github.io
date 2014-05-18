@@ -1,4 +1,4 @@
-/* @pjs preload="sun.png, vehicle1.png, vehicle2a.png, vehicle2b.png, bg.jpg";
+/* @pjs preload="source.png, vehicle1.png, vehicle2a.png, vehicle2b.png, vehicle2c.png, bg.jpg";
  */
 
 /*
@@ -14,10 +14,10 @@
 */
 
 int RATE=20;
-int VWIDTH=50, VLENGTH=75, VSIDE=50;
+int VWIDTH=55, VLENGTH=85, VSIDE=50;
 
 PImage bg;
-Thing vehicle, v1, v2a, v2b, lamp;
+Thing vehicle, v1, v2a, v2b, v2c, src;
 
 void setup() {
   size(600,400);
@@ -28,17 +28,19 @@ void setup() {
   //backgroundPixels(bg);
   //bg.save("data/bg.jpg");
   bg = loadImage("bg.jpg");
-  lamp = new Lamp("sun.png",VSIDE,width/2,height/2);
+  src = new Source("source.png",VSIDE,width/2,height/2);
   v1  = new Vehicle1("vehicle1.png",30,VLENGTH);
   v2a = new Vehicle2a("vehicle2a.png",VWIDTH,VLENGTH);
   v2b = new Vehicle2b("vehicle2b.png",VWIDTH,VLENGTH);
-  setVehicle("2b");
+  v2c = new Vehicle2c("vehicle2c.png",VWIDTH,VLENGTH);
+  setVehicle(initialise);
 }
 
 void setVehicle(String v) {
   if (v=="1") vehicle = v1;
   else if (v=="2a") vehicle = v2a;
   else if (v=="2b") vehicle = v2b;
+  else if (v=="2c") vehicle = v2c;
 }
 
 void backgroundPixels(PImage img, PVector v) {
@@ -64,19 +66,19 @@ void draw() {
   background(bg);
   imageMode(CENTER);
   
-  lamp.draw();
+  src.draw();
   if (vehicle!=null) vehicle.draw();
-  lamp.solve(null);
-  if (vehicle!=null) vehicle.solve(lamp.position);
+  src.solve(null);
+  if (vehicle!=null) vehicle.solve(src.position);
 }
 
 void mouseClicked() {
   vehicle.setPosition(mouseX,mouseY);
 }
-class Lamp extends Thing {
+class Source extends Thing {
   float F = 0.01;
   
-  Lamp(String filename, int d, float x, float y) {
+  Source(String filename, int d, float x, float y) {
     super(filename, d, d, x, y);
   }
     
@@ -134,10 +136,10 @@ class Vehicle1 extends Thing {
   
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
-  void solve(PVector v) {
-    // calculate distance from lamp
+  void solve(PVector src) {
+    // calculate distance from light source
     //float a = (TAU - angleBetweenPoints(position,v)) % TAU ;
-    float d = (width/2)/distance(position,v);
+    float d = (width/2)/distance(position,src);
     
     // cosine distance shifted into the range [0,1]
     //float d = cos(a-angle)/2 +0.5;
@@ -177,9 +179,9 @@ class Vehicle2a extends Thing {
   
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
-  void solve(PVector v) {
-    // calculate angle to lamp
-    float a = (TAU - angleBetweenPoints(position,v)) % TAU ;
+  void solve(PVector src) {
+    // calculate angle to light source
+    float a = (TAU - angleBetweenPoints(position,src)) % TAU ;
     
     // cosine distance shifted into the range [0,1]
     float l = cos(a-angle-left)/2 +0.5;
@@ -223,9 +225,9 @@ class Vehicle2b extends Thing {
   
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
-  void solve(PVector v) {
-    // calculate angle to lamp
-    float a = (TAU - angleBetweenPoints(position,v)) % TAU ;
+  void solve(PVector src) {
+    // calculate angle to light source
+    float a = (TAU - angleBetweenPoints(position,src)) % TAU ;
     
     // cosine distance shifted into the range [0,1]
     float l = cos(a-angle-left)/2 +0.5;
@@ -248,6 +250,55 @@ class Vehicle2b extends Thing {
     float dx = s*cos(-angle);
     float dy = s*sin(-angle);
     position.add(dx*dt,dy*dt,0);
+  }
+  
+}
+class Vehicle2c extends Thing {
+  int F = 100, A = 180;
+  float left, right;
+  
+  Vehicle2c(String filename, int w, int l) {
+    super(filename, w, l, random(width), random(height));    
+    // eyes project from centre through front corners
+    left = atan2(w,l);
+    right = -left;
+  }
+  
+  /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
+  
+  void solve(PVector src) {
+    // calculate angle to light source
+    float a = (TAU - angleBetweenPoints(position,src)) % TAU ;
+    
+    // cosine distance shifted into the range [0,1]
+    float l = cos(a-angle-left)/2 +0.5;
+    float r = cos(a-angle-right)/2 +0.5;
+    
+    // motor velocity proportional to input
+    // vehicle 2b runs towards the light
+    float vl = (l+r)*F, vr = (l+r)*F;
+    
+    // change in orientation over time
+    float dt = 1.0/RATE;
+    float da = (vr-vl)/(2*w);
+    
+    // add 'Brownian' motion
+    da += radians(random(A)-A/2);
+        
+    // overall velocity is average of the 2 wheels
+    float s = (vr+vl)/2;
+    
+    angle = (angle + da*dt) % TAU;
+    
+    // change in position over time
+    float dx = s*cos(-angle);
+    float dy = s*sin(-angle);
+    position.add(dx*dt,dy*dt,0);
+        
+    // keep the vehicle on-screen
+    int m = 50;
+    position.x = (position.x + 3*m +width) % (width + 2*m) -m;
+    position.y = (position.y + 3*m +height) % (height + 2*m) -m;
   }
   
 }

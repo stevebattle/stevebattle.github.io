@@ -56,14 +56,17 @@ function getProcessingSketchId () { return 'Vehicles'; }
 	<body>
 		<div id="content">
 			<div>
-				<script>var initialise="2a"</script>
+				<script>var initialise="2b"</script>
 				<canvas id="Vehicles" data-processing-sources="Vehicles.pde" 
 						width="600" height="400">
 					<p>Your browser does not support the canvas tag.</p>
 					<!-- Note: you can put any alternative content here. -->
 				</canvas>
-				<button onClick="setVehicle('2a')">Vehicle 2a</button>
-   				<button onClick="setVehicle('2b')">Vehicle 2b</button>
+				<form>
+					<input type="radio" name="vehicle" onClick="setVehicle('2a')"/>Vehicle 2a<br/>
+   					<input type="radio" name="vehicle" onClick="setVehicle('2b')" checked/>Vehicle 2b<br/>
+   					<input type="radio" name="vehicle" onClick="setVehicle('2c')"/>Vehicle 2c<br/>
+   				</form>
    				<script>
    				function setVehicle(v) {
        				var sketch = Processing.getInstanceById('Vehicles');
@@ -79,7 +82,7 @@ function getProcessingSketchId () { return 'Vehicles'; }
     		<p>Click anywhere in the canvas to position the vehicle at that point.</p>
     		<p>See <a href="http://battle-bot.blogspot.co.uk/2013/12/braitenbot-2-fear-and-aggression.html">Braitenbot #2: Fear and Aggression</a> for more info.</p>
 			<p>Differential Steering based on the <a href="http://rossum.sourceforge.net/papers/DiffSteer/">Rossum Elementary Trajectory Model</a></p>
-			<div><blockquote>"Let Vehicles 2a and 2b move around in their world for a while and watch them. Their characters are quite opposite. Both dislike sources. But 2a becomes restless in their vicinity and tends to avoid them, escaping until it safely reaches a place where the influence of the source is scarcely felt. Vehicle 2a is a coward, you would say. Not so Vehicle 2b. It, too, is excited by the presence of sources, but resolutely turns toward them and hits them with high velocity, as if it wanted to destroy them. Vehicle 2b is aggressive, obviously."</blockquote>
+			<div><blockquote>"Let Vehicles 2a and 2b move around in their world for a while and watch them. Their characters are quite opposite. Both dislike sources. But 2a becomes restless in their vicinity and tends to avoid them, escaping until it safely reaches a place where the influence of the source is scarcely felt. Vehicle 2a is a <b>coward</b>, you would say. Not so Vehicle 2b. It, too, is excited by the presence of sources, but resolutely turns toward them and hits them with high velocity, as if it wanted to destroy them. Vehicle 2b is <b>aggressive</b>, obviously."</blockquote>
 			<p align="right">Valentino Braitenberg<p></div>
 			<p id="sources">Source code: <a href="Vehicles.pde">Vehicles</a> </p>
 			<p>
