@@ -33,14 +33,25 @@ void setup() {
   v2a = new Vehicle2a("vehicle2a.png",VWIDTH,VLENGTH);
   v2b = new Vehicle2b("vehicle2b.png",VWIDTH,VLENGTH);
   v2c = new Vehicle2c("vehicle2c.png",VWIDTH,VLENGTH);
-  setVehicle(initialise);
+  //setVehicle(initialise);
+  setVehicle("2b");
 }
 
 void setVehicle(String v) {
+  PVector p=null;
+  float a;
+  if (vehicle!=null) {
+    p = vehicle.position;
+    a = vehicle.angle;
+  }
   if (v=="1") vehicle = v1;
   else if (v=="2a") vehicle = v2a;
   else if (v=="2b") vehicle = v2b;
   else if (v=="2c") vehicle = v2c;
+  if (p!=null) {
+    vehicle.position = p;
+    vehicle.angle = a;
+  }
 }
 
 void backgroundPixels(PImage img, PVector v) {
@@ -99,7 +110,7 @@ abstract class Thing {
     this.w = w; 
     this.l = l;
   }
-  
+    
   float distance(PVector a, PVector b) {
     return sqrt(pow(a.x-b.x,2)+pow(a.y-b.y,2));
   }
