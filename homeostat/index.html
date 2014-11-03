@@ -69,14 +69,15 @@ function getProcessingSketchId () { return 'Vehicles'; }
     		<h2>Artificial Life and Intelligent Agents 2014</h2>
     		<p id="description">In 'Design for a Brain' W. Ross Ashby speculates about the possibility of creating a mobile homeostat 
     		<i>with its critical states set so that it seeks situations of high illumination.</i>
-    		This is an embedding of Ashby's classic homeostat within a simulated robot and environment with two degrees of freedom.
+    		This is an embedding of Ashby's classic homeostat (1948) within a simulated robot and environment with two degrees of freedom.
     		It uses a 2-unit homeostat with disjoint units that co-ordinate only via their environment.</p>
+    		<p>In this experiment we can observe the effect of switching the eyes around, and seeing if it is able to re-adapt.</p>
     		<ol>
     			<li>Allow the homeostat to find a stable solution (trace turns green)</li>
     			<li>Click anywhere on the canvas to switch the eyes around (trace turns red)</li>
     			<li>Does this effect or de-stabilize the robot?</li>
-    			<li>Allow the homeostat to re-stabilize (trace turns red)</li>
-    			<li>Refresh the page to re-initialize it</li>
+    			<li>Allow the homeostat to re-stabilize (trace turns green)</li>
+    			<li>Refresh the page to re-initialize if it gets stuck in a degenerate cycle</li>
     		</ol>
     		<p>Compare with <a href="http://stevebattle.github.io/braitenberg/vehicle1.html">type 1</a> and <a href="http://stevebattle.github.io/braitenberg/vehicle2.html">type 2</a> Braitenberg vehicles.</p>
 			<p id="sources">Source code: <a href="Vehicles.pde">Vehicles</a> </p>

@@ -651,7 +651,7 @@ class Vehicle6b extends Vehicle {
     // configure homeostat units N with additional input parameters P
     for (int i=0; i<N; i++) {
       h[i] = new Homeostat(N+P,1f,1f,1f,-1f);
-      h[i].setWeight(i,-0.2f); // recurrent connection
+      h[i].setWeight(i,-0.5f); // recurrent connection
       h[i].setWeight(N+2,1); // essential variable
       h[i].randomize(-1f,1f); // randomize remaining weights      
     }
