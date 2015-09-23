@@ -1,5 +1,41 @@
 <html>
 <body>
-Babbage Engine stub
+<h1>Analytical Engine on Twitter</h1>
+Tweet your 'punched cards' to Babbage's Analytical Engine @BabbageEngine and it will return the results.
+The Babbage engine was created to celebrate Ada Lovelace's Bicentenary on 13th October 2015, and will feature in the Ada Lovelace Event being held at the University of the West of England, Bristol.
+
+A message must start with @BabbageEngine followed by your space-separated punched cards.
+<h3>Number Cards</h3>
+<dl><dt>N<b>column</b> <b>signed-integer</b></dt><dd>Initialise engine column with a numerical value.</dd></dl>
+e.g. N1 333
+<h3>Operation Cards</h3>
+These control arithmetic operations in the Mill:
+<dl>
+<dt>+</dt><dd>Add</dd>
+<dt>-</dt><dd>Subtract</dd>
+<dt>*</dt><dd>Multiply</dd>
+<dt>/</dt><dd>Divide</dd>
+</dl>
+<h3>Variable Cards</h3>
+Transfer columns to the Mill and back:
+<dl>
+  <dt>L<b>column</b></dt><dd>Load column into the Mill</dd>
+  <dt>Z<b>column</b></dt><dd>Load and zero column</dd>
+  <dt>S<b>column</b></dt><dd>Save Mill to column</dd>
+</dl>
+<h3>Stepping Cards</h3>
+<dl>
+  <dt><<b>digits</b></dt><dd>Shift the value in the mill upwards so many digits.</dd>
+  <dt>><b>digits</b></dt><dd>Shift the value in the mill downwards so many digits.</dd>
+</dl>
+<h3>Combinatorial Cards</h3>
+<h3>Action Cards</h3>
+<h3>Advancing and Backing Block Cards</h3>
+<h3>Attendant Cards</h3>
+<h2>References</h2>
+<ul>
+  <li><a href="http://findingada.com">Finding Ada</a></li>
+  <li><a href="http://www.fourmilab.ch/babbage/">The Analytical Engine simulator</a></li>
+</ul>
 </body>
 </html>
