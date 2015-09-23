@@ -3,6 +3,7 @@
 <h1>Analytical Engine on Twitter</h1>
 Tweet your 'punched cards' to Babbage's Analytical Engine @BabbageEngine and it will return the results.
 The Babbage engine was created to celebrate Ada Lovelace's Bicentenary on 13th October 2015, and will feature in the Ada Lovelace Event being held at the University of the West of England, Bristol.
+This software is based on the fourmilab Analytical Engine Simulation.
 
 A message must start with @BabbageEngine followed by your space-separated punched cards.
 <h3>Number Cards</h3>
@@ -29,7 +30,18 @@ Transfer columns to the Mill and back:
   <dt>><b>digits</b></dt><dd>Shift the value in the mill downwards so many digits.</dd>
 </dl>
 <h3>Combinatorial Cards</h3>
+Branches may be conditional upon the setting of the Mill's run-up lever.
+<dl>
+  <dt>CB?cards</b></b></dt><dd>Conditional Backward branch by number of cards</dd>
+  <dt>CF?cards</b></b></dt><dd>Conditional Forward branch by number of cards</dd>
+  <dt>CB+cards</b></b></dt><dd>Unconditional Backward branch by number of cards</dd>
+  <dt>CF+cards</b></b></dt><dd>Unconditional Forward branch by number of cards</dd>
+</dl>
 <h3>Action Cards</h3>
+<dl>
+  <dt>H</dt><dd>Halt and leave card visible</dd>
+  <dt>P</dt><dd>Print the result of the last operation by the Mill.</dd>
+</dl>
 <h3>Advancing and Backing Block Cards</h3>
 <h3>Attendant Cards</h3>
 <h2>References</h2>
