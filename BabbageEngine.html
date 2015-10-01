@@ -8,7 +8,7 @@ This software is based on the fourmilab Analytical Engine Simulation.
 A message must start with @BabbageEngine followed by your line-separated punched cards.
 <h3>Number Cards</h3>
 <dl><dt>N<b>column</b> <b>signed-integer</b></dt><dd>Initialise engine column with a numerical value.</dd></dl>
-e.g. N1 333
+e.g. N0 2
 <h3>Operation Cards</h3>
 These control arithmetic operations in the Mill:
 <dl>
@@ -20,9 +20,9 @@ These control arithmetic operations in the Mill:
 <h3>Variable Cards</h3>
 Transfer columns to the Mill and back:
 <dl>
-  <dt>L<b>column</b></dt><dd>Load column into the Mill</dd>
+  <dt>L<b>column</b></dt><dd>Load column into the Mill ingress</dd>
   <dt>Z<b>column</b></dt><dd>Load and zero column</dd>
-  <dt>S<b>column</b></dt><dd>Save Mill to column</dd>
+  <dt>S<b>column</b></dt><dd>Save Mill egress to column</dd>
 </dl>
 <h3>Stepping Cards</h3>
 <dl>
@@ -30,20 +30,18 @@ Transfer columns to the Mill and back:
   <dt>><b>digits</b></dt><dd>Shift the value in the mill downwards so many digits.</dd>
 </dl>
 <h3>Combinatorial Cards</h3>
-Branches may be conditional upon the setting of the Mill's run-up lever.
+Branches may be conditional upon the setting of the Mill's run-up lever. Count the cards starting at the position following the branch.
 <dl>
-  <dt>CB?cards</b></b></dt><dd>Conditional Backward branch by number of cards</dd>
-  <dt>CF?cards</b></b></dt><dd>Conditional Forward branch by number of cards</dd>
-  <dt>CB+cards</b></b></dt><dd>Unconditional Backward branch by number of cards</dd>
-  <dt>CF+cards</b></b></dt><dd>Unconditional Forward branch by number of cards</dd>
+  <dt>CB?<b>cards</b></dt><dd>Conditional Backward branch by number of cards</dd>
+  <dt>CF?<b>cards</b></dt><dd>Conditional Forward branch by number of cards</dd>
+  <dt>CB+<b>cards</b></dt><dd>Unconditional Backward branch by number of cards</dd>
+  <dt>CF+<b>cards</b></dt><dd>Unconditional Forward branch by number of cards</dd>
 </dl>
 <h3>Action Cards</h3>
 <dl>
   <dt>H</dt><dd>Halt and leave card visible</dd>
   <dt>P</dt><dd>Print the result of the last operation by the Mill.</dd>
 </dl>
-<h3>Advancing and Backing Block Cards</h3>
-<h3>Attendant Cards</h3>
 <h2>References</h2>
 <ul>
   <li><a href="http://findingada.com">Finding Ada</a></li>
