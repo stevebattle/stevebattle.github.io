@@ -35,8 +35,11 @@ function addOrientation(a) {
   angle = (angle + a) % TAU;
 }
 
-function setup() {
+function preload() {
   img = loadImage("images/1basic_720.png");
+}
+
+function setup() {
   createCanvas(720,712);
 }
 
