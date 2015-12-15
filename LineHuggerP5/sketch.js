@@ -51,7 +51,7 @@ function draw() {
   var q = p5.Vector.fromAngle(-angle).mult(length);
   p.add(q);
   
-  var t = red(get(round(p.x),round(p.y)))==0;
+  var t = red(img.get(round(p.x),round(p.y)))==0;
 
   // draw robot
   ellipse(position.x,position.y,BASE,BASE);
