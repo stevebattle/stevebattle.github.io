@@ -51,15 +51,19 @@ function draw() {
   var q = p5.Vector.fromAngle(-angle).mult(length);
   p.add(q);
   
-  var t = red(img.get(round(p.x),round(p.y)))==0;
-
   // draw robot
   ellipse(position.x,position.y,BASE,BASE);
   stroke(1);
   line(position.x,position.y,p.x,p.y);
   
+  var t = red(img.get(p.x,p.y));
+  fill(0);
+  textSize(32);
+  text(t,100,100);
+  
   // move robot
-  if (t) solve(0,SPEED,BASE);
+  if (t<128) 
+    solve(0,SPEED,BASE);
   else solve(SPEED,0,BASE);
   fill(255); stroke(0);  
 }
