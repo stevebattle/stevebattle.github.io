@@ -51,7 +51,7 @@ function draw() {
   var q = p5.Vector.fromAngle(-angle).mult(length);
   p.add(q);
   
-  var t = red(get(p.x,p.y))==0;
+  var t = red(get(p.x,p.y))+green(get(p.x,p.y))+blue(get(p.x,p.y))<128;
 
   // draw robot
   ellipse(position.x,position.y,BASE,BASE);
