@@ -56,13 +56,10 @@ function draw() {
   stroke(1);
   line(position.x,position.y,p.x,p.y);
   
-  var t = red(img.get(p.x,p.y));
-  fill(0);
-  textSize(32);
-  text(t,100,100);
-  
+  var r = red(img.get(p.x,p.y));
+
   // move robot
-  if (t<128) 
+  if (r<128) 
     solve(0,SPEED,BASE);
   else solve(SPEED,0,BASE);
   fill(255); stroke(0);  
