@@ -44,8 +44,8 @@ function addSlider(name, min, max, value) {
 
 function setup() {
   // create canvas
-  createCanvas(320, 540);
-  textSize(15)
+  createCanvas(320, 520);
+  textSize(15);
 
   // add sliders
   aSlider = new Slider("a",0,10,2,0);
@@ -73,6 +73,7 @@ function draw() {
   sSlider.draw();
   
   push();
+  noFill();
   translate(width/2,(height-y)/2+y);
 
   var a = aSlider.getValue();
