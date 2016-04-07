@@ -44,7 +44,7 @@ function addSlider(name, min, max, value) {
 
 function setup() {
   // create canvas
-  createCanvas(320, 490);
+  createCanvas(320, 480);
   textSize(15);
 
   // add sliders
