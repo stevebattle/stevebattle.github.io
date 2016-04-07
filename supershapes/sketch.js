@@ -87,7 +87,7 @@ function draw() {
   beginShape();
   for (var d=0; d<=360; d++) {
     // add angular offset to avoid zero
-    var phi = radians((d+0.01) % 360);
+    var phi = radians((d+0.01) % 360.0);
     // use trig functions to obtain continuous function of t
     var r = sc * supershape(a, b, m, n1, n2, n3, phi);
     vertex(r*cos(phi+radians(ro)), r*sin(phi+radians(ro)));
