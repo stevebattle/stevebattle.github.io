@@ -3,7 +3,7 @@
   http://paulbourke.net/geometry/supershape/
  */
 var aSlider, gSlider, bSlider;
-var x=100, y = 2, yStep = 30;
+var x=100, y = 30, yStep = 35;
 var label = [], l=0;
 var textHeight = 15;
 
