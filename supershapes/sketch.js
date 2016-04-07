@@ -48,12 +48,12 @@ function setup() {
   textSize(15)
 
   // add sliders
-  aSlider = new Slider("a",0,10,2,0);
-  bSlider = new Slider("b",0,10,2,0);
+  aSlider = new Slider("a",0,100,2,0);
+  bSlider = new Slider("b",0,100,2,0);
   mSlider = new Slider("m",1,10,0,1);  
-  n1Slider = new Slider("n1",-10,10,2,1);  
-  n2Slider = new Slider("n2",-10,10,2,0);  
-  n3Slider = new Slider("n3",-10,10,2,0);  
+  n1Slider = new Slider("n1",-100,100,2,1);  
+  n2Slider = new Slider("n2",-100,100,2,0);  
+  n3Slider = new Slider("n3",-100,100,2,0);  
   rSlider = new Slider("r",0,360,0,0);  
   sSlider = new Slider("s",0,width,2,100);
 }
