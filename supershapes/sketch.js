@@ -3,7 +3,7 @@
   http://paulbourke.net/geometry/supershape/
  */
 var aSlider, gSlider, bSlider;
-var x=100, y = 30, yStep = 30;
+var x=65, y = 30, yStep = 30;
 var label = [], l=0;
 var textHeight = 15;
 
@@ -44,7 +44,7 @@ function addSlider(name, min, max, value) {
 
 function setup() {
   // create canvas
-  createCanvas(400, 600);
+  createCanvas(320, 568);
   textSize(15)
 
   // add sliders
