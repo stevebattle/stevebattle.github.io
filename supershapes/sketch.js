@@ -29,8 +29,8 @@ Slider.prototype.getValue = function() {
 
 /* returns the radius of the supershape for given angle phi */
 function supershape(a, b, m, n1, n2, n3, phi) {
-  t1 = pow(abs(cos(m/4 * phi)/a), n2);
-  t2 = pow(abs(sin(m/4 * phi)/b), n3);
+  t1 = pow(abs(cos(m/4.0 * phi)/a), n2);
+  t2 = pow(abs(sin(m/4.0 * phi)/b), n3);
   return 1/pow(t1 + t2, 1/n1);
 }
 
