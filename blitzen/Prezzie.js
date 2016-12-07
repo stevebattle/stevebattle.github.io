@@ -2,20 +2,21 @@ const FUSE = 5; // prezzie can destroy this many trunks
 
 function Prezzie(img) {
   
+  // attributes
   this.falling = false;
-  // tree
-  this.x = 0;
-  this.y = 0;
-  // minimum;
-  
+  this.x = this.y = 0;
   this.image = img;
-  
+  this.tree;
+  this.minimum;
+  this.missed;
+
   this.drop = function(x, y) {
     this.tree = forest.getTree(x);
     this.x = this.tree<0 ? x : forest.getTreeCentre(this.tree);
     this.y = y;
     this.falling = true;
     this.minimum = max(0,this.tree>=0?forest.floors[this.tree]-FUSE:0);
+    this.missed = this.tree<0 || forest.floors[this.tree]===0;
   }
   
   this.draw = function() {
@@ -33,7 +34,10 @@ function Prezzie(img) {
       this.y += STEP;
       var a = this.altitude();
       if (this.tree>=0) forest.destroy(this.tree,a);
-      if (a<=this.minimum) this.falling = false;
+      if (a<=this.minimum) {
+        if (this.missed) boing.play(); // missed
+        this.falling = false;
+      }
     }
   }
 }

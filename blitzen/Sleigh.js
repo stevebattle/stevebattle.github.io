@@ -1,32 +1,33 @@
+const BOUNCE = 7;
+
 function Sleigh(images, forestHeight) {
   
-  const BOUNCE = 7;
-  
-  // state;
+  // attributes
   this.images = images;
-  // altitude; // height in floors
-  // x,y,y1,t;
-  // building;
-  // landed, crashed;
-  
+  this.tree;
   this.state = 0;
-  this.altitude = int(forestHeight/block.height)+1;
+  this.altitude = int(forestHeight/block.height)+1; // height in floors
   this.x = -this.images[0].width;
   this.y = height -BORDER -GROUND -this.altitude*block.height - CLEARANCE -this.images[0].height;
   this.y1 = this.t = 0;
   this.landed = this.crashed = false;
+  
+  jingle.play();
   
   this.draw = function() {
     image(this.images[this.state],this.x,this.y+this.y1);
   }
   
   this.drop = function(prezzie) {
-    prezzie.drop(this.x+this.images[0].width/2, this.y+this.images[0].height/2);
+    if (this.x>=0 && this.x<(width-this.images[0].width/2)) {
+      prezzie.drop(int(this.x+this.images[0].width/2), int(this.y+this.images[0].height/2));
+    }
   }
   
   this.step = function() {
     switch (this.state) {
       case 0: // flying
+      
       this.x += STEP;
       if (this.x > width +this.images[0].width) { 
           // move the sleigh to the start of the next layer
@@ -39,6 +40,7 @@ function Sleigh(images, forestHeight) {
       this.tree = forest.getTree(this.x+sleigh.images[0].width);
       if (this.tree>=0 && forest.getTreeHeight(this.tree)>this.altitude) {
         this.state++; // crash
+        crash.play();
         frameRate(10); // slo-mo
         this.x = forest.getTreeCentre(this.tree) +block.width/2 -this.images[this.state].width;
         this.y += CLEARANCE +this.images[this.state-1].height -this.images[this.state].height;
@@ -58,6 +60,7 @@ function Sleigh(images, forestHeight) {
       break;
       
       case 1: // crashing
+      jingle.stop();
       this.state++;
       this.x = forest.getTreeCentre(this.tree) +block.width/2 -this.images[this.state].width;
       this.y += this.images[this.state-1].height -this.images[this.state].height;

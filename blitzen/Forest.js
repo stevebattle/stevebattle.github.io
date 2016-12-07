@@ -1,35 +1,31 @@
-function Forest(images, forestHeight, level) {
-  const DEVIATION = 0.25;
-  const BIAS = 0.5;
+const DEVIATION = 0.25;
+const BIAS = 0.5;
   
-  this.images = [];
-  // buildings, margin, maxFloors;
+function Forest(images, forestHeight, level) {
+
+  // attributes
   this.floors = [];
   this.tops = [];
-  // built;
-  // count;
-  
+  this.grown;
   this.images = images.slice(1,3);
-
   this.maxFloors = int(forestHeight/block.height);
   this.trees = int((width -SPACE)/(block.width+GAP));
   this.margin = int((width -this.trees*(block.width+GAP) +GAP) /2);
-  this.floors = [];
-  this.tops = [];
-  var scale = this.maxFloors + 2*level; // add two floors per additional level
   this.count=0;
+  
+  var scale = this.maxFloors + 2*level; // add two floors per additional level
   for (var i=0; i<this.trees; i++) {
     var r = randomGaussian()*DEVIATION +BIAS;
     this.floors[i] = max(min(int(r*scale), this.maxFloors),0);
     this.count += this.floors[i];
     this.tops[i] = 0; // topped by a roof
   }
-  this.built=0;
+  this.grown=0;
 
   this.draw = function() {
     for (var i=0; i<this.trees; i++) {
       var x = i*(block.width+GAP) +this.margin;
-      var f = min(this.floors[i],this.built);
+      var f = min(this.floors[i],this.grown);
       for (var j=1; j<f; j++) {
         image(block,x,height -BORDER -GROUND -j*block.height);
       }
@@ -38,7 +34,10 @@ function Forest(images, forestHeight, level) {
         image(this.images[this.tops[i]],x,height -BORDER -GROUND -(f-1)*block.height -this.images[this.tops[i]].height);
       }
     }
-    if (this.built<this.maxFloors) this.built++;
+    if (this.grown<this.maxFloors) {
+      this.grown++;
+      trill.play();
+    }
   }
   
   this.getTree = function(x) {
@@ -64,6 +63,7 @@ function Forest(images, forestHeight, level) {
   this.destroy = function(i, altitude) {
     if (this.floors[i]-1>=altitude) {
       var points = this.floors[i] - max(0,altitude);
+      if (points>0) explosion.play();
       score += points;
       this.count -= points;
       this.floors[i] -= points;

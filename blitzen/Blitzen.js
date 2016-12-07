@@ -3,7 +3,7 @@
  * 
  * by Steve Battle
  *
- * A simple animated game.
+ * A simple animated game (c) 2016
  *
  */
 
@@ -19,13 +19,15 @@ const BONUS = 10;
 var SKY_COLOUR, GROUND_COLOUR, TEXT_COLOUR;
 
 var sleigh, forest, prezzie, font, block;
-
 var level = 0, score = 0, best = 0;
 var images = [];
 
 function preload() {
+  
+  // load font
   font = loadFont("data/CHECKBK0.TTF");
   
+  // load images
   // sleigh
   images[0] = loadImage("data/santa0.gif");
   images[1] = loadImage("data/santa1.gif");
@@ -39,6 +41,14 @@ function preload() {
   
   // prezzie
   images[7] = loadImage("data/prezzie.gif");
+  
+  // load sounds
+  trill = loadSound('data/trill.ogg');
+  boing = loadSound('data/boing.ogg');
+  chip = loadSound('data/chip.ogg');
+  crash = loadSound('data/crash.ogg');
+  explosion = loadSound('data/explosion.ogg');
+  jingle = loadSound('data/jingle.ogg');
 }
 
 function drawGround() {
@@ -61,13 +71,19 @@ function drawBest() {
 
 function setup() {
   block = images[4];
+  
+  // create a 'jingle bell' sound loop, but don't play automatically
+  jingle.loop();
+  jingle.stop(); 
 
   SKY_COLOUR = color(0,0,255); // dark skies
   GROUND_COLOUR = color(255,255,255); // snow white
-  TEXT_COLOUR = color(135,206,255); // blue
+  //TEXT_COLOUR = color(135,206,255); // blue
+  TEXT_COLOUR = color(255,0,0); // blue
 
   createCanvas(450,300).position(50,50);
   textFont(font);
+  
   startGame();
 }
 
