@@ -43,12 +43,11 @@ function preload() {
   images[7] = loadImage("data/prezzie.gif");
   
   // load sounds
-  trill = loadSound('data/trill.ogg');
-  boing = loadSound('data/boing.ogg');
-  chip = loadSound('data/chip.ogg');
-  crash = loadSound('data/crash.ogg');
-  explosion = loadSound('data/explosion.ogg');
-  jingle = loadSound('data/jingle.ogg');
+  trill = loadSound('data/trill.wav');
+  boing = loadSound('data/boing.wav');
+  crash = loadSound('data/crash.wav');
+  explosion = loadSound('data/explosion.wav');
+  jingle = loadSound('data/jingle.wav');
 }
 
 function drawGround() {
