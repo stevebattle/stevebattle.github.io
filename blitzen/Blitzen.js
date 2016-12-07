@@ -75,10 +75,9 @@ function setup() {
   jingle.loop();
   jingle.stop(); 
 
-  SKY_COLOUR = color(0,0,255); // dark skies
+  SKY_COLOUR = color(0,0,255); // blue sky
   GROUND_COLOUR = color(255,255,255); // snow white
-  //TEXT_COLOUR = color(135,206,255); // blue
-  TEXT_COLOUR = color(255,0,0); // blue
+  TEXT_COLOUR = color(255,0,0); // red
 
   createCanvas(450,300).position(50,50);
   textFont(font);
