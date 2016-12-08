@@ -25,7 +25,7 @@ var images = [];
 console.log(localStorage.getItem('BlitzenBest'));
 
 try {
-  best = int(localStorage.getItem('BlitzenBest'));
+  best = parseInt(localStorage.getItem('BlitzenBest'));
 } catch (error) {}
 
 function preload() {
