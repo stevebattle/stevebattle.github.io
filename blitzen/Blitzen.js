@@ -23,9 +23,9 @@ var level = 0, score = 0, best = 0;
 var images = [];
 
 try {
-  if (localStorage.getItem('BlitzenBest')!==undefined) {
+  //if (localStorage.getItem('BlitzenBest')!==undefined) {
     best = int(localStorage.getItem('BlitzenBest'));
-  }
+  //}
 } catch (error) {}
 
 function preload() {
