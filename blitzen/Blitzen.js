@@ -79,11 +79,9 @@ function drawBest() {
 function setup() {
   block = images[4];
   
-  // create a 'jingle bell' sound loop, but don't play automatically
-  try { 
-    jingle.loop();
-    jingle.stop(); 
-  } catch (error) {}
+  // create a 'jingle bell' sound loop, but don't play automatically 
+  jingle.loop();
+  jingle.stop(); 
 
   SKY_COLOUR = color(0,0,255); // dark skies
   GROUND_COLOUR = color(255,255,255); // snow white

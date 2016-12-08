@@ -12,7 +12,7 @@ function Sleigh(images, forestHeight) {
   this.y1 = this.t = 0;
   this.landed = this.crashed = false;
   
-  try { jingle.play(); } catch (error) {}
+  jingle.play();
   
   this.draw = function() {
     var s = min(this.state,3); // maximum image is 3
