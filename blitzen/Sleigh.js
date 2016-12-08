@@ -76,6 +76,9 @@ function Sleigh(images, forestHeight) {
       this.state++;
       this.y += this.images[this.state-1].height -this.images[this.state].height;
       this.crashed = true;
+      try { 
+        localStorage.setItem('BlitzenBest', best);
+      } catch (error) {}
       break;
     }
   }

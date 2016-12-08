@@ -120,9 +120,6 @@ function draw() {
   if ((mouseIsPressed || touchIsDown) && !prezzie.falling) {
     if (sleigh.crashed) {
       level = score = 0;
-      try { 
-        localStorage.setItem('BlitzenBest', best);
-      } catch (error) {}
       startGame();
     }
     else if (forest.count>0) sleigh.drop(prezzie);
