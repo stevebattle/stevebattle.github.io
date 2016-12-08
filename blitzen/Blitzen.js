@@ -83,6 +83,10 @@ function setup() {
   createCanvas(450,300).position(50,50);
   textFont(font);
   
+  if (typeof(Storage)!==undefined && localStorage.best!==undefined) {
+    best = int(localStorage.best);
+  }
+  
   startGame();
 }
 
@@ -112,6 +116,11 @@ function draw() {
   if ((mouseIsPressed || touchIsDown) && !prezzie.falling) {
     if (sleigh.crashed) {
       level = score = 0;
+      if (typeof(Storage)!==undefined) {
+        try { 
+          localStorage.best = best;
+        } catch (error) {}
+      }
       startGame();
     }
     else if (forest.count>0) sleigh.drop(prezzie);
