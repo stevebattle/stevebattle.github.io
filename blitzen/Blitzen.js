@@ -81,9 +81,7 @@ function setup() {
   
   // create a 'jingle bell' sound loop, but don't play automatically
   jingle.loop();
-  if (jingle.isPlaying()) {
-    jingle.stop();
-  }
+  try { jingle.stop(); } catch (error) {}
 
   SKY_COLOUR = color(0,0,255); // dark skies
   GROUND_COLOUR = color(255,255,255); // snow white
