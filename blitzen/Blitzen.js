@@ -29,6 +29,10 @@ try {
   }
 } catch (error) {}
 
+function onkeydown() {
+  keyPress = true;
+}
+
 function preload() {
   
   // load font
@@ -118,7 +122,7 @@ function draw() {
   if (!sleigh.landed) sleigh.step();
   else startGame();
   
-  if ((mouseIsPressed || touchIsDown || keyIsDown(SPACEBAR)) && !prezzie.falling) {
+  if ((mouseIsPressed || touchIsDown || keyPress) && !prezzie.falling) {
     keyPress = false;
     if (sleigh.crashed) {
       level = score = 0;
