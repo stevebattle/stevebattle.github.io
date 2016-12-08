@@ -15,7 +15,7 @@ function Sleigh(images, forestHeight) {
   jingle.play();
   
   this.draw = function() {
-    var s = max(this.state,3);
+    var s = min(this.state,3); // maximum image is 3
     image(this.images[s],this.x,this.y+this.y1);
   }
   
