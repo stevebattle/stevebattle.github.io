@@ -23,13 +23,13 @@ var level = 0, score = 0, best = 0;
 var images = [];
 
 try {
-  if (Window.localStorage.BlitzenBest!==undefined) {
-    best = int(Window.localStorage.BlitzenBest);
+  if (localStorage.getItem('BlitzenBest')!==undefined) {
+    best = int(localStorage.getItem('BlitzenBest'));
   }
 } catch (error) {}
 
 try { 
-  Window.localStorage.BlitzenBest = best;
+  localStorage.setItem('BlitzenBest', best);
 } catch (error) {}
 
 function preload() {
