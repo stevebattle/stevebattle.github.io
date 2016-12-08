@@ -67,7 +67,7 @@ function Sleigh(images, forestHeight) {
       break;
       
       case 1: // crashing
-      jingle.stop();
+      try { jingle.stop(); } catch (error) {}
       this.state++;
       this.x = forest.getTreeCentre(this.tree) +block.width/2 -this.images[this.state].width;
       this.y += this.images[this.state-1].height -this.images[this.state].height;

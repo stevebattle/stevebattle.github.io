@@ -126,5 +126,4 @@ function draw() {
     else if (forest.count>0) sleigh.drop(prezzie);
   }
   if (score>best) best = score;
-  p5._onkeyup(32);
 }
