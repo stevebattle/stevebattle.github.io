@@ -80,8 +80,10 @@ function setup() {
   block = images[4];
   
   // create a 'jingle bell' sound loop, but don't play automatically
-  jingle.loop();
-  try { jingle.stop(); } catch (error) {}
+  try { 
+    jingle.loop();
+    jingle.stop(); 
+  } catch (error) {}
 
   SKY_COLOUR = color(0,0,255); // dark skies
   GROUND_COLOUR = color(255,255,255); // snow white
