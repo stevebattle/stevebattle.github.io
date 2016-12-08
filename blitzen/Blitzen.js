@@ -48,6 +48,7 @@ function preload() {
   crash = loadSound('data/crash.wav');
   explosion = loadSound('data/explosion.wav');
   jingle = loadSound('data/jingle.wav');
+  hohoho = loadSound('data/hohoho.wav');
 }
 
 function drawGround() {
@@ -106,10 +107,7 @@ function draw() {
   prezzie.step();
   sleigh.draw();
   if (!sleigh.landed) sleigh.step();
-  else {
-    jingle.stop();
-    startGame();
-  }
+  else startGame();
   
   if ((mouseIsPressed || touchIsDown) && !prezzie.falling) {
     if (sleigh.crashed) {

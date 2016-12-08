@@ -55,6 +55,13 @@ function Sleigh(images, forestHeight) {
           frameRate(20); // slo-mo
           this.y1 = min(0,-BOUNCE*this.t + this.t*this.t++);
           this.landed = this.x-STEP>width;
+          
+          // no time for the bounce
+          if (this.landed && jingle.isPlaying()) hohoho.play();
+
+          // play on bounce
+          if (this.y1<0 && !hohoho.isPlaying()) hohoho.play();
+          jingle.stop();
         }
       }
       break;

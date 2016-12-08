@@ -35,7 +35,10 @@ function Prezzie(img) {
       var a = this.altitude();
       if (this.tree>=0) forest.destroy(this.tree,a);
       if (a<=this.minimum) {
-        if (this.missed) boing.play(); // missed
+        if (this.missed) { // missed
+          boing.play();
+          if (score>0) score -= 1;
+        }
         this.falling = false;
       }
     }
