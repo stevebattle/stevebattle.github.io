@@ -15,6 +15,7 @@ const SPACE = 100; // space before first building
 const STEP = 5; // pixels traversed in one step
 const FONT_SIZE = 36;
 const BONUS = 10;
+const SPACEBAR = 32;
 
 var SKY_COLOUR, GROUND_COLOUR, TEXT_COLOUR;
 
@@ -117,7 +118,7 @@ function draw() {
   if (!sleigh.landed) sleigh.step();
   else startGame();
   
-  if ((mouseIsPressed || touchIsDown || keyPressed()) && !prezzie.falling) {
+  if ((mouseIsPressed || touchIsDown || keyIsDown(SPACEBAR)) && !prezzie.falling) {
     if (sleigh.crashed) {
       level = score = 0;
       startGame();
