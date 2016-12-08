@@ -19,7 +19,7 @@ const SPACEBAR = 32;
 
 var SKY_COLOUR, GROUND_COLOUR, TEXT_COLOUR;
 
-var sleigh, forest, prezzie, font, block;
+var sleigh, forest, prezzie, font, block, keyPress;
 var level = 0, score = 0, best = 0;
 var images = [];
 
@@ -76,6 +76,14 @@ function drawBest() {
   text("BEST "+best,width/2,BORDER+36);
 }
 
+function keyPressed() {
+  keyPress = true;
+}
+
+function keyReleased() {
+  keyPress = false;
+}
+
 function setup() {
   block = images[4];
   
@@ -118,7 +126,8 @@ function draw() {
   if (!sleigh.landed) sleigh.step();
   else startGame();
   
-  if ((mouseIsPressed || touchIsDown || keyIsDown(SPACEBAR)) && !prezzie.falling) {
+  if ((mouseIsPressed || touchIsDown || keyPress) && !prezzie.falling) {
+    keyPress = false;
     if (sleigh.crashed) {
       level = score = 0;
       startGame();
