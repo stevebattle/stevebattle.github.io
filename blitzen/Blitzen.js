@@ -23,8 +23,9 @@ var level = 0, score = 0, best = 0;
 var images = [];
 
 try {
-  console.log(localStorage.getItem('BlitzenBest'));
-  best = parseInt(localStorage.getItem('BlitzenBest'));
+  if (localStorage.getItem('BlitzenBest')!=null) {
+    best = parseInt(localStorage.getItem('BlitzenBest'));
+  }
 } catch (error) {}
 
 function preload() {
@@ -79,7 +80,9 @@ function setup() {
   
   // create a 'jingle bell' sound loop, but don't play automatically
   jingle.loop();
-  jingle.stop(); 
+  if (jingle.isPlaying()) {
+    jingle.stop();
+  }
 
   SKY_COLOUR = color(0,0,255); // dark skies
   GROUND_COLOUR = color(255,255,255); // snow white
