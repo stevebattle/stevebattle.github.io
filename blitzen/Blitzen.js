@@ -117,7 +117,7 @@ function draw() {
   if (!sleigh.landed) sleigh.step();
   else startGame();
   
-  if ((mouseIsPressed || touchIsDown) && !prezzie.falling) {
+  if ((mouseIsPressed || touchIsDown || keyIsPressed) && !prezzie.falling) {
     if (sleigh.crashed) {
       level = score = 0;
       startGame();
