@@ -29,10 +29,6 @@ try {
   }
 } catch (error) {}
 
-function onkeydown() {
-  keyPress = true;
-}
-
 function preload() {
   
   // load font
@@ -93,7 +89,9 @@ function setup() {
   GROUND_COLOUR = color(255,255,255); // snow white
   TEXT_COLOUR = color(255,0,0); // blue
 
-  createCanvas(450,300).position(50,50);
+  cvs = createCanvas(450,300);
+  cvs.position(50,50);
+  cvs.onKeyPress = function() { keyPress = true; }
   textFont(font);
   
   startGame();
@@ -123,12 +121,12 @@ function draw() {
   else startGame();
   
   if ((mouseIsPressed || touchIsDown || keyPress) && !prezzie.falling) {
-    keyPress = false;
     if (sleigh.crashed) {
       level = score = 0;
       startGame();
     }
     else if (forest.count>0) sleigh.drop(prezzie);
   }
+  keyPress = false;
   if (score>best) best = score;
 }
