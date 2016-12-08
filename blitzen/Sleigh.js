@@ -76,10 +76,21 @@ function Sleigh(images, forestHeight) {
       this.state++;
       this.y += this.images[this.state-1].height -this.images[this.state].height;
       this.crashed = true;
+      break;
+
+      case 3: // wait in case bomb is in flight after crash
+      if (!prezzie.falling) this.state++;
+      break;
+
+      case 4: // save high score
       try { 
         localStorage.setItem('BlitzenBest', best);
       } catch (error) {}
+      this.state++;
       break;
+
+      default:
+      // do nothing
     }
   }
   
