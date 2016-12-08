@@ -58,10 +58,9 @@ function Sleigh(images, forestHeight) {
           
           // no time for the bounce
           if (this.landed && jingle.isPlaying()) hohoho.play();
-
-          // play on bounce
-          if (this.y1<0 && !hohoho.isPlaying()) hohoho.play();
-          jingle.stop();
+          // otherwise play on bounce
+          else if (this.y1<0 && !hohoho.isPlaying()) hohoho.play();
+          if (jingle.isPlaying()) jingle.stop();
         }
       }
       break;
