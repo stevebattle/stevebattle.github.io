@@ -28,10 +28,6 @@ try {
   }
 } catch (error) {}
 
-try { 
-  localStorage.setItem('BlitzenBest', best);
-} catch (error) {}
-
 function preload() {
   
   // load font
@@ -123,7 +119,7 @@ function draw() {
     if (sleigh.crashed) {
       level = score = 0;
       try { 
-        Window.localStorage.BlitzenBest = best;
+        localStorage.setItem('BlitzenBest', best);
       } catch (error) {}
       startGame();
     }
