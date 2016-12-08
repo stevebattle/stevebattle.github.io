@@ -106,7 +106,10 @@ function draw() {
   prezzie.step();
   sleigh.draw();
   if (!sleigh.landed) sleigh.step();
-  else startGame();
+  else {
+    jingle.stop();
+    startGame();
+  }
   
   if ((mouseIsPressed || touchIsDown) && !prezzie.falling) {
     if (sleigh.crashed) {
