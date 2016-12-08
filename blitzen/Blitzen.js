@@ -76,14 +76,6 @@ function drawBest() {
   text("BEST "+best,width/2,BORDER+36);
 }
 
-function keyPressed() {
-  keyPress = true;
-}
-
-function keyReleased() {
-  keyPress = false;
-}
-
 function setup() {
   block = images[4];
   
@@ -126,7 +118,7 @@ function draw() {
   if (!sleigh.landed) sleigh.step();
   else startGame();
   
-  if ((mouseIsPressed || touchIsDown || keyPress) && !prezzie.falling) {
+  if ((mouseIsPressed || touchIsDown || keyIsDown(SPACEBAR)) && !prezzie.falling) {
     keyPress = false;
     if (sleigh.crashed) {
       level = score = 0;
