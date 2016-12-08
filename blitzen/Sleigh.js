@@ -15,7 +15,8 @@ function Sleigh(images, forestHeight) {
   jingle.play();
   
   this.draw = function() {
-    image(this.images[this.state],this.x,this.y+this.y1);
+    var s = max(this.state,3);
+    image(this.images[s],this.x,this.y+this.y1);
   }
   
   this.drop = function(prezzie) {
