@@ -22,11 +22,11 @@ var sleigh, forest, prezzie, font, block;
 var level = 0, score = 0, best = 0;
 var images = [];
 
-//try {
-  //if (localStorage.getItem('BlitzenBest')!==undefined) {
-    best = int(localStorage.getItem('BlitzenBest'));
-  //}
-//} catch (error) {}
+console.log(localStorage.getItem('BlitzenBest'));
+
+try {
+  best = int(localStorage.getItem('BlitzenBest'));
+} catch (error) {}
 
 function preload() {
   
