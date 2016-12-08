@@ -22,6 +22,16 @@ var sleigh, forest, prezzie, font, block;
 var level = 0, score = 0, best = 0;
 var images = [];
 
+try {
+  if (Window.localStorage.BlitzenBest!==undefined) {
+    best = int(Window.localStorage.BlitzenBest);
+  }
+} catch (error) {}
+
+try { 
+  Window.localStorage.BlitzenBest = best;
+} catch (error) {}
+
 function preload() {
   
   // load font
@@ -82,12 +92,6 @@ function setup() {
 
   createCanvas(450,300).position(50,50);
   textFont(font);
-  
-  try {
-    if (Window.localStorage.BlitzenBest!==undefined) {
-      best = int(Window.localStorage.BlitzenBest);
-    }
-  } catch (error) {}
   
   startGame();
 }
