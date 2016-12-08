@@ -75,9 +75,9 @@ function setup() {
   jingle.loop();
   jingle.stop(); 
 
-  SKY_COLOUR = color(0,0,255); // blue sky
+  SKY_COLOUR = color(0,0,255); // dark skies
   GROUND_COLOUR = color(255,255,255); // snow white
-  TEXT_COLOUR = color(255,0,0); // red
+  TEXT_COLOUR = color(255,0,0); // blue
 
   createCanvas(450,300).position(50,50);
   textFont(font);
@@ -108,7 +108,7 @@ function draw() {
   if (!sleigh.landed) sleigh.step();
   else startGame();
   
-  if (mouseIsPressed && !prezzie.falling) {
+  if ((mouseIsPressed || touchIsDown) && !prezzie.falling) {
     if (sleigh.crashed) {
       level = score = 0;
       startGame();
