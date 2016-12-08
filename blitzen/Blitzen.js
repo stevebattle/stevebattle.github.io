@@ -22,9 +22,8 @@ var sleigh, forest, prezzie, font, block;
 var level = 0, score = 0, best = 0;
 var images = [];
 
-console.log(localStorage.getItem('BlitzenBest'));
-
 try {
+  console.log(localStorage.getItem('BlitzenBest'));
   best = parseInt(localStorage.getItem('BlitzenBest'));
 } catch (error) {}
 
