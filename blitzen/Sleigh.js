@@ -52,22 +52,25 @@ function Sleigh(images, forestHeight) {
           this.y++; // descent
           if (this.y%block.height===0) score += BONUS;
         }
-        else if (this.y+this.images[0].height==height-BORDER-GROUND) { // bounce
-          frameRate(20); // slo-mo
+        else if (this.y+this.images[0].height==height-BORDER-GROUND) { // landing
+          frameRate(20); // slo-mo bounce
           this.y1 = min(0,-BOUNCE*this.t + this.t*this.t++);
           this.landed = this.x-STEP>width;
           
           // no time for the bounce
-          if (this.landed && jingle.isPlaying()) hohoho.play();
+          //if (this.landed && jingle.isPlaying()) hohoho.play();
           // otherwise play on bounce
-          else if (this.y1<0 && !hohoho.isPlaying()) hohoho.play();
-          if (jingle.isPlaying()) jingle.stop();
+          //if (this.y1<0 && !hohoho.isPlaying()) 
+          if (jingle.isPlaying()) {
+            jingle.stop();
+            hohoho.play();
+          }
         }
       }
       break;
       
       case 1: // crashing
-      try { jingle.stop(); } catch (error) {}
+      jingle.stop();
       this.state++;
       this.x = forest.getTreeCentre(this.tree) +block.width/2 -this.images[this.state].width;
       this.y += this.images[this.state-1].height -this.images[this.state].height;
