@@ -55,7 +55,7 @@ function Sleigh(images, forestHeight) {
         else if (this.y+this.images[0].height==height-BORDER-GROUND) { // landing
           frameRate(20); // slo-mo bounce
           this.y1 = min(0,-BOUNCE*this.t + this.t*this.t++);
-          this.landed = this.x-STEP>width && this.t*STEP>WIDTH/2;
+          this.landed = this.x-STEP>width && this.t*STEP>width/2;
           
           // ho ho ho!
           if (jingle.isPlaying()) {
