@@ -61,6 +61,9 @@ function Sleigh(images, forestHeight) {
           if (jingle.isPlaying()) {
             jingle.stop();
             hohoho.play();
+            try { // save intermediate score
+              localStorage.setItem('BlitzenBest', best);
+            } catch (error) {}
           }
         }
       }
