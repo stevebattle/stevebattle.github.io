@@ -57,10 +57,7 @@ function Sleigh(images, forestHeight) {
           this.y1 = min(0,-BOUNCE*this.t + this.t*this.t++);
           this.landed = this.x-STEP>width;
           
-          // no time for the bounce
-          //if (this.landed && jingle.isPlaying()) hohoho.play();
-          // otherwise play on bounce
-          //if (this.y1<0 && !hohoho.isPlaying()) 
+          // ho ho ho!
           if (jingle.isPlaying()) {
             jingle.stop();
             hohoho.play();

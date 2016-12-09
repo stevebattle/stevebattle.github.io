@@ -113,7 +113,7 @@ function draw() {
   prezzie.draw();
   prezzie.step();
   sleigh.draw();
-  if (!sleigh.landed) sleigh.step();
+  if (!sleigh.landed || hohoho.isPlaying()) sleigh.step();
   else startGame();
   
   if ((mouseIsPressed || touchIsDown || keyIsPressed) && !prezzie.falling) {
