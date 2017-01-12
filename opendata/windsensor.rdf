@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ssn="http://purl.oclc.org/NET/ssnx/ssn#" 
+    xmlns:dul="http://www.loa-cnr.it/ontologies/DUL.owl#" 
+    xmlns:aws="http://purl.oclc.org/NET/ssnx/meteo/aws#"
+    xmlns:dim="http://purl.oclc.org/NET/ssnx/qu/dim#"
+    xmlns:phenonet="http://purl.oclc.org/NET/ssnx/meteo/phenonet#">
+  <rdf:Description rdf:about="http://purl.oclc.org/NET/ssnx/meteo/phenonet#Wxt520Windcap">
+    <rdf:type rdf:resource="aws:UltrasonicWindSensor"/>
+    <dul:isPartOf>
+      <rdf:Description rdf:about="http://purl.oclc.org/NET/ssnx/meteo/phenonet#VaisalaWxt520">
+        <rdf:type rdf:resource="ssn:System"/>
+      </rdf:Description>
+    </dul:isPartOf>
+    <ssn:implements>
+      <rdf:Description rdf:about="http://purl.oclc.org/NET/ssnx/meteo/phenonet#Process24">
+        <rdf:type rdf:resource="ssn:Process"/>
+        <ssn:hasOutput>
+          <rdf:Description rdf:about="http://purl.oclc.org/NET/ssnx/meteo/phenonet#SpeedAve">
+            <rdf:type rdf:resource="ssn:Output"/>
+            <dul:hasParameter>
+              <rdf:Description rdf:about="http://purl.org/NET/ssnx/qu/unit#metrePerSecond">
+                <rdf:type rdf:resource="dim:VelocityOrSpeedUnit"/>
+              </rdf:Description>
+            </dul:hasParameter>
+            <phenonet:variable_code>SM</phenonet:variable_code>
+            <phenonet:variable_name>Speed Ave</phenonet:variable_name>
+            <phenonet:snlog_code>24</phenonet:snlog_code>
+            <phenonet:sensor_name>WXT520 Windcap</phenonet:sensor_name>
+            <phenonet:sensor_id>WIND</phenonet:sensor_id>
+          </rdf:Description>
+        </ssn:hasOutput>
+        <dul:hasQuality>
+          <rdf:Description rdf:about="http://purl.oclc.org/NET/ssnx/cf/cf-property#wind_speed">
+            <rdf:type rdf:resource="dim:VelocityOrSpeed"/>
+          </rdf:Description>
+        </dul:hasQuality>
+      </rdf:Description>
+    </ssn:implements>
+  </rdf:Description>
+  </rdf:RDF>
