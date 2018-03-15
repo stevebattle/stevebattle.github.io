@@ -13,4 +13,7 @@ body {
     align-items: center;
 }
 
-.caption { margin: 50; }
+.caption { 
+    margin: 50px;
+    min-width: 500px;
+}
