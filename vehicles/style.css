@@ -5,7 +5,7 @@ html, body {
   }
   
   body {
-    margin: 0;
+    margin: 50;
     display: flex;
   
     /* This centers our sketch horizontally. */
