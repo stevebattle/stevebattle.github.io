@@ -20,7 +20,9 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(800,800);
+  var canvas = createCanvas(800,800);
+  // parent <div> in the html
+  canvas.parent('sketch');
   frameRate(RATE);
   src = new Source(src_image,VSIDE,width/2,height/2);
   v = new Vehicle1(v1_image,V1WIDTH,VLENGTH,RATE);
