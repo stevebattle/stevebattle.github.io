@@ -6,12 +6,7 @@ body {
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-
-    /* centre sketch horizontally. */
     justify-content: center;
-
-    /* centre sketch vertically. */
-    align-items: center;
 }
 
 /* the canvas is 800px square */
