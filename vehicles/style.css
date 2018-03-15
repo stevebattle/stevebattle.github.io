@@ -14,7 +14,13 @@ body {
     align-items: center;
 }
 
+/* the canvas is 800px square */
+#sketch {
+    width: 800px;
+    height: 800px;
+}
+
 .caption { 
     margin: 50px;
-    width: 100px;
+    width: 400px;
 }
