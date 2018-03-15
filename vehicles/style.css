@@ -17,7 +17,6 @@ body {
 /* the canvas is 800px square */
 #sketch {
     width: 800px;
-    height: 800px;
 }
 
 .caption { 
