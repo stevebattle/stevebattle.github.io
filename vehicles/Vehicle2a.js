@@ -18,12 +18,12 @@ function Vehicle2a(img,w,l,rate)  {
     var a = this.angleWith(src);
     
     // cosine distance shifted into the range [0,1]
-    var l = cos(a-left)/2 +0.5;
-    var r = cos(a-right)/2 +0.5;
+    var l = cos(a-this.left)/2 +0.5;
+    var r = cos(a-this.right)/2 +0.5;
     
     // motor velocity proportional to input
     // vehicle 2b runs away from the light
-    var vl = l*F, vr = r*F;
+    var vl = l*this.F, vr = r*this.F;
     
     // change in orientation over time
     var dt = 1.0/rate;
@@ -35,8 +35,8 @@ function Vehicle2a(img,w,l,rate)  {
     this.angle = (this.angle + da*dt) % TAU;
     
     // change in position over time
-    var dx = s*cos(-angle);
-    var dy = s*sin(-angle);
+    var dx = s*cos(-this.angle);
+    var dy = s*sin(-this.angle);
     this.addPosition(dx*dt,dy*dt);
   }
   
