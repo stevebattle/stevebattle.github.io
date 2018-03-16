@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Braitenberg Vehicle #2</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="Source.js"></script>
+  <script language="javascript" type="text/javascript" src="Thing.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle2a.js"></script>
+  <script language="javascript" type="text/javascript" src="v2.js"></script>
+  <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+</head>
+<body>
+  <div id="sketch">
+      <!-- sketch will go here! -->
+  </div>
+  <div class="caption">
+		<h1>Braitenberg Vehicle #2: Fear and Aggression</h1>
+    <p id="description">Braitenberg Vehicles 2a and 2b exhibit negative and positive phototaxis, 
+      or directed movement away from, or towards a light source. 
+      Light stimulates the sensors on different sides of the robot differentially, 
+      causing the motors to run at different rates.
+    </p>
+    <form>
+      <input type="radio" name="vehicle" onClick="startVehicle('2a')" checked/>Vehicle 2a Fear<br/>
+      <input type="radio" name="vehicle" onClick="startVehicle('2b')"/>Vehicle 2b: Aggression<br/>
+    </form>
+    <p>See <a href="http://battle-bot.blogspot.co.uk/2013/12/braitenbot-2-fear-and-aggression.html">Braitenbot #2: Fear and Aggression</a> for more info.</p>
+		<div>
+      <blockquote>"Let Vehicles 2a and 2b move around in their world for a while and watch them. 
+        Their characters are quite opposite. Both dislike sources. 
+        But 2a becomes restless in their vicinity and tends to avoid them, 
+        escaping until it safely reaches a place where the influence of the source is scarcely felt. 
+        Vehicle 2a is a <b>coward</b>, you would say. Not so Vehicle 2b. 
+        It, too, is excited by the presence of sources, 
+        but resolutely turns toward them and hits them with high velocity, 
+        as if it wanted to destroy them. Vehicle 2b is <b>aggressive</b>, obviously."
+      </blockquote>
+			<p align="right">Valentino Braitenberg<p></div>
+      <p>See Braitenberg, V. (1984). Vehicles: Experiments in synthetic psychology. Cambridge, MA: MIT Press</p>
+    </div>
+    <p>
+      Built with the <a href="http://processing.org" title="Processing">Processing IDE</a>,
+      JavaScript and <a href="https://p5js.org" title="p5.js">p5.js</a>
+    </p>
+  </div>
+</body>
+</html>
