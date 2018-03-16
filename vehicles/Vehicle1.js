@@ -8,7 +8,7 @@ function Vehicle1(img,w,l,rate) {
   
   this.solve = function(src) {
     // calculate inverse distance from light source
-    var d = (width/2) / this.distanceTo(src.position); 
+    var d = (width/2) / this.distanceTo(src); 
   
     // motor velocity proportional to input
     // vehicle 1 is activated by light

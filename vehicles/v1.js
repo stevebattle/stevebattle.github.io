@@ -34,7 +34,7 @@ function draw() {
   v.drawPath();
   v.draw();
   src.solve();
-  v.solve(src);
+  v.solve(src.position);
   v.checkBorders();
 }
 
