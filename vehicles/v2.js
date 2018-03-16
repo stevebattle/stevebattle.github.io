@@ -16,23 +16,24 @@ var V1WIDTH=30, VWIDTH=55, VLENGTH=85, VSIDE=50;
 function preload() {
   bg_image = loadImage("data/bg800x800.jpg");
   src_image = loadImage("data/source.png");
-  v1_image = loadImage("data/vehicle1.png");
+  v2a_image = loadImage("data/vehicle2a.png");
+  v2b_image = loadImage("data/vehicle2b.png");
 }
 
 function setup() {
   createCanvas(800,800);
   frameRate(RATE);
   src = new Source(src_image,VSIDE,width/2,height/2);
-  v = new Vehicle1(v1_image,V1WIDTH,VLENGTH,RATE);
+  v = new Vehicle2a(v2a_image,VWIDTH,VLENGTH,RATE);
 }
 
 function draw() {
   background(bg_image);
   src.draw();
-  //v.drawPath();
+  v.drawPath();
   v.draw();
   src.solve();
-  v.solve(src);
+  v.solve(src.position);
   v.checkBorders();
 }
 
@@ -40,4 +41,14 @@ function mouseClicked() {
   v.clearPath();
   v.setPosition(int(random(width)),int(random(height)));
   v.angle = radians(random(360));
+}
+
+function startVehicle(id) {
+  switch (id) {
+    case "2a": 
+    v = new Vehicle2a(v2a_image,VWIDTH,VLENGTH,RATE);
+    break;
+    case "2b": 
+    v = new Vehicle2b(v2b_image,VWIDTH,VLENGTH,RATE);
+  }
 }
