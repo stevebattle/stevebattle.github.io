@@ -1,5 +1,4 @@
 function Vehicle(img,w,l) {
-  
   Thing.call(this,img,w,l,random(width),random(height),random(TAU));
   this.prototype = Object.create(Thing.prototype);
   

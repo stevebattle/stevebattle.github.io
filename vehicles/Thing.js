@@ -14,11 +14,22 @@ function Thing(img,w,l,x,y,a) {
     return this.distance(this.position,b);
   };
   
-  // PVector a, PVector b
+  // p5.Vector a, p5.Vector b
   this.angleBetweenPoints = function(a,b) { 
     var dx = b.x - a.x; 
     var dy = b.y - a.y; 
     return atan2(dy, dx); 
+  };
+  
+  // p5.Vector b
+  this.angleTo = function(b) { 
+    return this.angleBetweenPoints(this.position,b); 
+  };
+  
+  // p5.Vector b
+  // take into account angle of this Thing
+  this.angleWith = function(b) { 
+    return (TAU - this.angleTo(b)) % TAU - this.angle; 
   };
   
   this.draw = function() {
