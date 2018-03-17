@@ -16,6 +16,10 @@ function Vehicle(img,w,l) {
     return createVector(origin.x + len * cos(-angle), origin.y + len * sin(-angle));
   };
   
+  this.endPointTo = function(len) {
+    return this.endPoint(this.position, this.angle, len);
+  };
+  
   this.clearPath = function() {
     this.path = new Array(this.PATH_LENGTH);
     this.pathIndex = 0;
