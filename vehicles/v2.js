@@ -22,11 +22,11 @@ function preload() {
 
 function setup() {
   var canvas = createCanvas(800,800);
+  frameRate(RATE);
   // parent <div> in the html
   canvas.parent('sketch');
-  frameRate(RATE);
   src = new Source(src_image,VSIDE,width/2,height/2);
-  v = new Vehicle2a(v2a_image,VWIDTH,VLENGTH,RATE);
+  v = new Vehicle2a(v2a_image,VWIDTH,VLENGTH);
 }
 
 function draw() {
@@ -35,7 +35,7 @@ function draw() {
   v.drawPath();
   v.draw();
   src.solve();
-  v.solve(src.position);
+  v.solve(RATE,src.position);
   v.checkBorders();
 }
 
@@ -48,9 +48,9 @@ function mouseClicked() {
 function startVehicle(id) {
   switch (id) {
     case "2a": 
-    v = new Vehicle2a(v2a_image,VWIDTH,VLENGTH,RATE);
+    v = new Vehicle2a(v2a_image,VWIDTH,VLENGTH);
     break;
     case "2b": 
-    v = new Vehicle2b(v2b_image,VWIDTH,VLENGTH,RATE);
+    v = new Vehicle2b(v2b_image,VWIDTH,VLENGTH);
   }
 }

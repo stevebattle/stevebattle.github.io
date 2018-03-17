@@ -1,4 +1,4 @@
-function Vehicle2b(img,w,l,rate)  {
+function Vehicle2b(img,w,l)  {
   // extends Vehicle
   Vehicle.call(this,img,w,l);
   this.prototype = Object.create(Vehicle.prototype);
@@ -13,7 +13,7 @@ function Vehicle2b(img,w,l,rate)  {
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
   // p5.Vector src
-  this.solve = function(src) {
+  this.solve = function(rate,src) {
     // calculate angle to light source
     var a = this.angleWith(src);
     

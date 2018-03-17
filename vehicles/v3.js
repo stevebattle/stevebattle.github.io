@@ -12,6 +12,11 @@
 
 var RATE = 25;
 var V1WIDTH=30, VWIDTH=55, VLENGTH=85, VSIDE=50;
+var OBSTACLES=10;
+
+// obstacle dimension
+var OSIDE = 60;
+var obs_visible = false;
 
 function preload() {
   bg_image = loadImage("data/bg800x800.jpg");
@@ -28,16 +33,32 @@ function setup() {
   canvas.parent('sketch');
   frameRate(RATE);
   src = new Source(src_image,VSIDE,width/2,height/2);
+    
+  // create obstacles
+  obs = [];
+  for (var i=0; i<OBSTACLES; i++) {
+    obs[i] = new Obstacle(obs_image,OSIDE,random(width),random(height));
+  }
+  
   v = new Vehicle3a(v3a_image,VWIDTH,VLENGTH,RATE);
 }
 
 function draw() {
   background(bg_image);
   src.draw();
-  v.drawPath();
+  
+  // draw obstacles behind
+  for (var i=0; obs_visible && i<OBSTACLES; i++) {
+    obs[i].draw();
+  }
+  
+  // draw vehicle
+  v.drawPath();   
   v.draw();
+  
+  // movement
   src.solve();
-  v.solve(src.position);
+  v.solve(RATE,src.position,obs);
   v.checkBorders();
 }
 
@@ -50,12 +71,15 @@ function mouseClicked() {
 function startVehicle(id) {
   switch (id) {
     case "3a": 
-    v = new Vehicle3a(v3a_image,VWIDTH,VLENGTH,RATE);
+    v = new Vehicle3a(v3a_image,VWIDTH,VLENGTH);
+    obs_visible = false;
     break;
     case "3b": 
-    v = new Vehicle3b(v3b_image,VWIDTH,VLENGTH,RATE);
+    v = new Vehicle3b(v3b_image,VWIDTH,VLENGTH);
+    obs_visible = false;
     break;
     case "3c":
-    v = new Vehicle3c(v3c_image,obs_image,VWIDTH,VLENGTH,RATE);
+    v = new Vehicle3c(v3c_image,VWIDTH,VLENGTH);
+    obs_visible = true;
   }
 }

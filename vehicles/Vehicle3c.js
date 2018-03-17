@@ -1,24 +1,13 @@
-function Vehicle3c(img,obs_img,w,l,rate)  {
+function Vehicle3c(img,w,l)  {
   // extends Vehicle
   Vehicle.call(this,img,w,l);
   this.prototype = Object.create(Vehicle.prototype);
   
   this.F = 500;
-  this.OBSTACLES=10;
   this.PFACTOR=1.1;
-  
-  // obstacles
-  this.obs = [];
-  this.OSIDE = 60;
-  this.obs_img = obs_img;
   
   // sensor range
   this.RANGE = width/6;
-  
-  // create obstacles
-  for (var i=0; i<this.OBSTACLES; i++) {
-    this.obs[i] = new Obstacle(this.obs_img,this.OSIDE,random(width),random(height));
-  }
   
   // fixed angles of left and right eyes relative to body
   this.DISPARITY = 45
@@ -28,7 +17,7 @@ function Vehicle3c(img,obs_img,w,l,rate)  {
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
   // p5.Vector src
-  this.solve = function(src) {
+  this.solve = function(rate,src,obstacles) {
     // calculate angle to light source
     var a = this.angleWith(src);
     
@@ -43,8 +32,8 @@ function Vehicle3c(img,obs_img,w,l,rate)  {
 
     // determine minimum proximity
     var p = 0;
-    for (var i=0; i<this.obs.length; i++) {
-      p = max(p, this.obs[i].proximity(p1,p2));
+    for (var i=0; i<obstacles.length; i++) {
+      p = max(p, obstacles[i].proximity(p1,p2));
     }
     
     // motor velocity proportional to input
@@ -70,24 +59,6 @@ function Vehicle3c(img,obs_img,w,l,rate)  {
     var dx = s*cos(-this.angle);
     var dy = s*sin(-this.angle);
     this.addPosition(dx*dt,dy*dt);
-  };
-  
-  this.draw = function() {
-    // draw obstacles
-    console.log(this.obs.length);
-    for (var i=0; i<this.obs.length; i++) {
-      this.obs[i].draw();
-      console.log("*");
-    }
-    
-    //Thing.prototype.draw.call(this);
-    push();
-    translate(this.position.x,this.position.y);
-    // rotate the coordinate frame in the opposite direction
-    rotate(-this.angle);
-    imageMode(CENTER);
-    image(this.img,0,0,this.l,this.w);
-    pop();
   };
   
 }

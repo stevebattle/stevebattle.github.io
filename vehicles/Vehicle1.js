@@ -1,12 +1,13 @@
-function Vehicle1(img,w,l,rate) {
-  this.F = 100;
-  
+function Vehicle1(img,w,l) {
+  // extends Vehicle
   Vehicle.call(this,img,w,l);
   this.prototype = Object.create(Vehicle.prototype);
-    
+  
+  this.F = 100;
+
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
-  this.solve = function(src) {
+  this.solve = function(rate,src) {
     // calculate inverse distance from light source
     var d = (width/2) / this.distanceTo(src); 
   
