@@ -73,6 +73,13 @@ function Vehicle3c(img,obs_img,w,l,rate)  {
   };
   
   this.draw = function() {
+    // draw obstacles
+    console.log(this.obs.length);
+    for (var i=0; i<this.obs.length; i++) {
+      this.obs[i].draw();
+      console.log("*");
+    }
+    
     //Thing.prototype.draw.call(this);
     push();
     translate(this.position.x,this.position.y);
@@ -81,12 +88,6 @@ function Vehicle3c(img,obs_img,w,l,rate)  {
     imageMode(CENTER);
     image(this.img,0,0,this.l,this.w);
     pop();
-    
-    console.log(this.obs.length);
-    for (var i=0; i<this.obs.length; i++) {
-      this.obs[i].draw();
-      console.log("*");
-    }
   };
   
 }
