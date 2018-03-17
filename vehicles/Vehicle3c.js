@@ -4,7 +4,7 @@ function Vehicle3c(img,obs_img,w,l,rate)  {
   this.prototype = Object.create(Vehicle.prototype);
   
   this.F = 500;
-  this.OBSTACLES=5;
+  this.OBSTACLES=10;
   this.PFACTOR=1.1;
   
   // obstacles
