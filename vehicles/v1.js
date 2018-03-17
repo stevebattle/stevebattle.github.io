@@ -20,7 +20,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(800,800);
+  var canvas = createCanvas(800,800);
   frameRate(RATE);
   // parent <div> in the html
   try { canvas.parent('sketch'); } catch(err) {}
