@@ -30,7 +30,7 @@ function preload() {
 function setup() {
   var canvas = createCanvas(800,800);
   // parent <div> in the html
-  canvas.parent('sketch');
+  try { canvas.parent('sketch'); } catch(err) {}
   frameRate(RATE);
   src = new Source(src_image,VSIDE,width/2,height/2);
     
