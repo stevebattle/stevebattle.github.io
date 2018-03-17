@@ -1,0 +1,66 @@
+<html>
+<head>
+  <title>Braitenberg Vehicle #3</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="Source.js"></script>
+  <script language="javascript" type="text/javascript" src="Thing.js"></script>
+  <script language="javascript" type="text/javascript" src="Obstacle.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle3a.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle3b.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle3c.js"></script>
+  <script language="javascript" type="text/javascript" src="v3.js"></script>
+  <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+</head>
+<body>
+  <div id="sketch">
+      <!-- sketch goes here -->
+  </div>
+  <div class="caption">
+		<h1>Braitenberg Vehicle #3:<br/>Love</h1>
+    <p id="description">Vehicle 2 can only get excited by input, but for Vehicle 3 light inhibits the motors, 
+      causing it to slow down and bask in the sunshine that it loves. 
+      The more light that falls on the sensor, the greater the inhibitory effect on the motors; 
+      the light causes them to slow down.
+    </p>
+    <p>
+      Like Vehicle 2b, Vehicle 3b utilises crossed connections. 
+      Light falling on one side makes the motor on the opposite side slow down, 
+      causing the vehicle to shy away from the light that calms it.
+    </p>
+    <p>Vehicle 3c has not just one pair of light sensors, 
+      but an additional distance or proximity sensor which allows the robot to sense oncoming obstructions in 
+      its environment. 
+      This version of vehicle 3c is inspired by the description in 'Understanding Intelligence' (p187) 
+      by Pfeiffer and Scheier, which introduces the proximity sensor and has sensors for different 
+      qualities having either positive or negative motor connections. 
+      We begin to appreciate the enormous variety of connections, crossed and uncrossed, 
+      excitatory and inhibitory, that are possible with this simple multisensorial robot.
+    </p>
+    <form>
+      <input type="radio" name="vehicle" onClick="startVehicle('3a')" checked/>Vehicle 3a: Inhibition<br/>
+      <input type="radio" name="vehicle" onClick="startVehicle('3b')"/>Vehicle 3b: Crossover<br/>
+      <input type="radio" name="vehicle" onClick="startVehicle('3c')"/>Vehicle 3c: Multisensorial<br/>
+    </form>
+    <p>See <a href="http://battle-bot.blogspot.co.uk/2013/12/braitenbot-3-love.html">Braitenbot #3: Love</a> for more info.</p>
+    <blockquote>"These vehicles like the source , you will say, but in different ways. 
+      Vehicle 3a loves it in a permanent way, 
+      staying close by in quiet admiration from the time it spots the source to all future time. 
+      Vehicle 3b, on the other hand, is an explorer."<br/>
+      "If you consider the possibility of strong and weak influences from the sensors to the motors, 
+      you realize that the variety becomes even greater. 
+      The vehicle may not care much about light but care very much about temperature."
+    </blockquote>
+		<p align="right">Valentino Braitenberg</p>
+    <p>See Braitenberg, V. (1984). Vehicles: Experiments in synthetic psychology. Cambridge, MA: MIT Press</p>
+    <p>
+      Built with the <a href="http://processing.org" title="Processing">Processing IDE</a>,
+      JavaScript and <a href="https://p5js.org" title="p5.js">p5.js</a>
+    </p>
+  </div>
+</body>
+</html>
