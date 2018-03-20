@@ -27,8 +27,8 @@ function Vehicle3c(img,w,l)  {
     
     // draw sensor line
     var p1 = this.position, p2 = this.endPointTo(this.RANGE);
-    stroke(0,255,0);
-    line(p1.x,p1.y,p2.x,p2.y);
+    //stroke(0,255,0);
+    //line(p1.x,p1.y,p2.x,p2.y);
 
     // determine minimum proximity
     var p = 0;
@@ -59,6 +59,23 @@ function Vehicle3c(img,w,l)  {
     var dx = s*cos(-this.angle);
     var dy = s*sin(-this.angle);
     this.addPosition(dx*dt,dy*dt);
+  };
+  
+  this.draw1 = this.draw;
+  this.draw = function() {
+    this.draw1();
+    //push();
+    //translate(this.position.x,this.position.y);
+    //// rotate the coordinate frame in the opposite direction
+    //rotate(-this.angle);
+    //imageMode(CENTER);
+    //image(this.img,0,0,this.l,this.w);
+    //pop();
+    
+    // draw sensor line
+    var p1 = this.position, p2 = this.endPointTo(this.RANGE);
+    stroke(0,255,0);
+    line(p1.x,p1.y,p2.x,p2.y);    
   };
   
 }
