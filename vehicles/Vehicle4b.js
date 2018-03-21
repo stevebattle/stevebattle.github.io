@@ -1,10 +1,14 @@
-function Vehicle3c(img,w,l)  {
+function Vehicle4b(img,w,l)  {
   // extends Vehicle
   Vehicle.call(this,img,w,l);
   this.prototype = Object.create(Vehicle.prototype);
   
-  this.F = 500;
-  this.PFACTOR=1.1;
+  this.F = 300;
+  this.PFACTOR=0.5;
+  
+  this.SLOPE = 50;
+  this.BIAS = 0.5;
+
   
   // sensor range
   this.RANGE = width/6;
@@ -13,6 +17,24 @@ function Vehicle3c(img,w,l)  {
   this.DISPARITY = 45
   this.left = radians(this.DISPARITY);
   this.right = -this.left;
+  
+  /* The activation value is modulated by the sigmoid function 
+   with slope f. eg. sigmoid(0, F) = 0.5 */
+
+  this.sigmoid = function(x,f) {
+    return 1/(1+exp(-f*x));
+  }
+  
+  // determine minimum proximity
+  this.proximitySensor = function(obstacles) {
+    // sensor line
+    var p1 = this.position, p2 = this.endPointTo(this.RANGE);
+    var p = 0;
+    for (var i=0; i<obstacles.length; i++) {
+      p = max(p, obstacles[i].proximity(p1,p2));
+    }
+    return p;
+  }
   
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
@@ -25,28 +47,18 @@ function Vehicle3c(img,w,l)  {
     var l = cos(a-this.left)/2 +0.5;
     var r = cos(a-this.right)/2 +0.5;
     
-    // sensor line
-    var p1 = this.position, p2 = this.endPointTo(this.RANGE);
-
-    // determine minimum proximity
-    var p = 0;
-    for (var i=0; i<obstacles.length; i++) {
-      p = max(p, obstacles[i].proximity(p1,p2));
-    }
+    // threshold function using sigmoid
+    var p = this.sigmoid(this.proximitySensor(obstacles)-this.BIAS, this.SLOPE);
     
     // motor velocity proportional to input
-    // vehicle 3c avoids obstacles
+    // vehicle 4b avoids obstacles by turning on contact
     var ratio = 0.3;
-    var vl = (1-r)*this.F, vr = (1-l)*this.F;
-    var vl = ((1-ratio)*r -ratio*l -this.PFACTOR*p)*this.F;
+    var vl = ((1-ratio)*r -ratio*l +this.PFACTOR*p)*this.F;
     var vr = ((1-ratio)*l -ratio*r -this.PFACTOR*p)*this.F;
 
     // change in orientation over time
     var dt = 1.0/rate;
     var da = (vr-vl)/(2*this.w);
-    
-    // add 'Brownian' motion
-    da += radians(random(360)-180);
     
     // overall velocity is average of the 2 wheels
     var s = (vr+vl)/2;

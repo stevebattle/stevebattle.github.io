@@ -1,0 +1,63 @@
+<html>
+<head>
+  <title>Braitenberg Vehicle #4</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="Source.js"></script>
+  <script language="javascript" type="text/javascript" src="Thing.js"></script>
+  <script language="javascript" type="text/javascript" src="Obstacle.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle4a.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle4b.js"></script>
+  <script language="javascript" type="text/javascript" src="v4.js"></script>
+  <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+</head>
+<body>
+  <div id="sketch">
+      <!-- sketch goes here -->
+  </div>
+  <div class="caption">
+		<h1>Braitenberg Vehicle #4: <br>Values and Special Tastes</h1>
+    <p id="description">
+      Vehicle 4 introduces new internal nodes that represent artificial neurons, analogous to our own brain cells. 
+      These have a non-linear activation function that controls how much the output is activated by its inputs. 
+    </p>
+    <p>
+      Vehicle4a has a neuron with a bell-shaped activation function. 
+      This function is the normal distribution, symmetrical around zero.
+      Normal curves as used in artificial neural networks are known as <a href="http://en.wikipedia.org/wiki/Radial_basis_function_network"
+      >radial basis function networks</a>. 
+      The peak of the curve can be shifted to any desired value by adding a fixed bias to the input.
+      This bias becomes the preferred value of the neuron, with maximum output at that value.
+      Vehicle 4a is created with bias values for each eye that give it a preference for
+      a light source to the right of the vehicle.
+    </p>
+    <p>A common activation function is the sigmoid curve, so-called because of its distinctive 'S' shape.
+      The curve transitions from 0 to 1 around zero, that can again be shifted by adding a bias value.
+      The rapid non-linear transition from 0 to 1 represents a decision.
+      Vehicel4b makes a decision to turn when it encounters an obstacle, as detected by its proximity sensor.
+    </p>
+    <form>
+      <input type="radio" name="vehicle" onClick="startVehicle('4a')" checked/>Vehicle 4a: Normal<br/>
+      <input type="radio" name="vehicle" onClick="startVehicle('4b')"/>Vehicle 4b: Sigmoid<br/>
+    </form>
+    <p>See <a href="http://battle-bot.blogspot.co.uk/2013/12/braitenbot-4-values-and-special-tastes.html"
+      >Braitenbot #4: Values and Special Tastes</a> for more info.</p>
+    <blockquote>"Whatever their origin, 
+      thresholds in some behaviour patterns make a lot of difference in the eye of the observer. 
+      These creatures, the observer would say, ponder over their decisions..
+      You would almost be tempted to say: where decisions are being made, there must be a will to make them. 
+      Why not? For all we know, this is not the worst criterion for establishing the existence of free will."
+    </blockquote>
+		<p align="right">Valentino Braitenberg</p>
+    <p>See Braitenberg, V. (1984). Vehicles: Experiments in synthetic psychology. Cambridge, MA: MIT Press</p>
+    <p>
+      Built with the <a href="http://processing.org" title="Processing">Processing IDE</a>,
+      JavaScript and <a href="https://p5js.org" title="p5.js">p5.js</a>
+    </p>
+  </div>
+</body>
+</html>
