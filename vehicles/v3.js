@@ -63,6 +63,11 @@ function draw() {
 }
 
 function mouseClicked() {
+  // create obstacles
+  obs = [];
+  for (var i=0; i<OBSTACLES; i++) {
+    obs[i] = new Obstacle(obs_image,OSIDE,random(width),random(height));
+  }
   v.clearPath();
   v.setPosition(int(random(width)),int(random(height)));
   v.angle = radians(random(360));
