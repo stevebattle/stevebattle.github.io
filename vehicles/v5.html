@@ -1,0 +1,68 @@
+<html>
+<head>
+  <title>Braitenberg Vehicle #5</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="Source.js"></script>
+  <script language="javascript" type="text/javascript" src="Thing.js"></script>
+  <script language="javascript" type="text/javascript" src="Obstacle.js"></script>
+  <script language="javascript" type="text/javascript" src="AdaptiveNeuron.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle5a.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle5b.js"></script>
+  <script language="javascript" type="text/javascript" src="Vehicle5c.js"></script>
+  <script language="javascript" type="text/javascript" src="v5.js"></script>
+  <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+</head>
+<body>
+  <div id="sketch">
+      <!-- sketch goes here -->
+  </div>
+  <div class="caption">
+		<h1>Braitenberg Vehicle #5: Logic</h1>
+    <p id="description">
+      Vehicle 4 introduces new internal nodes that represent artificial neurons, analogous to our own brain cells. 
+      These have a non-linear activation function that controls how much the output is activated by its inputs. 
+    </p>
+    <p>
+      Vehicle 5a has a feed-forward neural network, 
+      where the output of one neuron can be the input to another neuron. 
+      The main restriction is that these connections must not form a cycle, 
+      so it can only <em>react</em> to it's input.
+    </p>
+    <p>
+      Vehicle 5b introduces recurrent excitatory connections in a Continuous Time Recurrent Neural Network.
+      A pair of mutually inhibitory neurons oscillate to form a Matsuoka oscillator,
+      which is used here to control the scanning of the proximity sensor.
+    </p>
+    <p>
+      Vehicle 5c looks at recurrent <em>excitatory</em> connections.
+      An excitatory autapse appears where a neuron loops back on itself. 
+      This creates a positive feedback loop which acts as a neural monostable, 
+      which is used here to prolong the momentary stimulus of contact with the vehicle shell long 
+      enough for it to reverse clear of the obstacle.
+    </p>
+    <form>
+      <input type="radio" name="vehicle" onClick="startVehicle('5a')" checked/>Vehicle 5a: The logician<br/>
+      <input type="radio" name="vehicle" onClick="startVehicle('5b')"/>Vehicle 5b: The head turner<br/>
+      <input type="radio" name="vehicle" onClick="startVehicle('5c')"/>Vehicle 5c: The autapse<br/>
+    </form>
+    <p>See <a href="http://battle-bot.blogspot.co.uk/2013/12/braitenbot-4-values-and-special-tastes.html"
+      >Braitenbot #4: Values and Special Tastes</a> for more info.</p>
+    <blockquote>"This is an elementary sort of MEMORY. 
+      It is not difficult to understand how out of such elementary memory stores 
+      (consisting of such reciprocally connected threshold devices) complex memories can be synthesised, 
+      with the possibility of storing extremely complex events."
+    </blockquote>
+		<p align="right">Valentino Braitenberg</p>
+    <p>See Braitenberg, V. (1984). Vehicles: Experiments in synthetic psychology. Cambridge, MA: MIT Press</p>
+    <p>
+      Built with the <a href="http://processing.org" title="Processing">Processing IDE</a>,
+      JavaScript and <a href="https://p5js.org" title="p5.js">p5.js</a>
+    </p>
+  </div>
+</body>
+</html>
