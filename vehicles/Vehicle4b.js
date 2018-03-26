@@ -12,6 +12,7 @@ function Vehicle4b(img,w,l)  {
   
   // sensor range
   this.RANGE = width/6;
+  this.drawProximity = false;
   
   // fixed angles of left and right eyes relative to body
   this.DISPARITY = 45
@@ -33,6 +34,7 @@ function Vehicle4b(img,w,l)  {
     for (var i=0; i<obstacles.length; i++) {
       p = max(p, obstacles[i].proximity(p1,p2));
     }
+    if (p>0) this.drawProximity = true;
     return p;
   }
   
@@ -78,9 +80,12 @@ function Vehicle4b(img,w,l)  {
     this.super_draw();
     
     // draw sensor line
-    var p1 = this.position, p2 = this.endPointTo(this.RANGE);
-    stroke(0,255,0);
-    line(p1.x,p1.y,p2.x,p2.y);    
+    if (this.drawProximity) {
+      var p1 = this.position, p2 = this.endPointTo(this.RANGE);
+      stroke(0,255,0);
+      line(p1.x,p1.y,p2.x,p2.y);
+      this.drawProximity = false;
+    }
   };
   
 }
