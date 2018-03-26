@@ -53,13 +53,13 @@ function Thing(img,w,l,x,y,a) {
     this.position.x += x;
     this.position.y += y;
   };
-  
-  // x,y min & max assuming angle of zero degrees
+
+  // x,y min & max for zero degrees (fixed obstacles)
   
   this.left = function() {
     return this.position.x - this.l/2;
   };
-
+  
   this.right = function() {
     return this.position.x + this.l/2;
   };
@@ -71,5 +71,29 @@ function Thing(img,w,l,x,y,a) {
   this.bottom = function() {
     return this.position.y + this.w/2;
   };
+  
+  // bounding box corners
+  
+  this.corner = function(xoff,yoff) {
+    return new p5.Vector(
+      xoff*cos(-this.angle) - yoff*sin(-this.angle) + this.position.x,
+      xoff*sin(-this.angle) + yoff*cos(-this.angle) + this.position.y);
+  }
+ 
+  this.topLeft = function() {
+    return this.corner(-this.l/2,-this.w/2);
+  }
+  
+  this.topRight = function() {
+    return this.corner(this.l/2,-this.w/2);
+  }
+  
+  this.bottomLeft = function() {
+    return this.corner(-this.l/2,this.w/2);
+  }
+  
+  this.bottomRight = function() {
+    return this.corner(this.l/2,this.w/2);
+  }
 
 }
