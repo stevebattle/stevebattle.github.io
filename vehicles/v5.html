@@ -24,26 +24,29 @@
   <div class="caption">
 		<h1>Braitenberg Vehicle #5: Logic</h1>
     <p id="description">
-      Vehicle 4 introduces new internal nodes that represent artificial neurons, analogous to our own brain cells. 
-      These have a non-linear activation function that controls how much the output is activated by its inputs. 
+      To make a brain out of artificial neurons we can connect them together whichever way we like. 
     </p>
     <p>
-      Vehicle 5a has a feed-forward neural network, 
+      Vehicle 5a has a <a href="http://en.wikipedia.org/wiki/Feedforward_neural_network"
+      >feed-forward neural network</a>, 
       where the output of one neuron can be the input to another neuron. 
       The main restriction is that these connections must not form a cycle, 
       so it can only <em>react</em> to it's input.
     </p>
     <p>
-      Vehicle 5b introduces recurrent excitatory connections in a Continuous Time Recurrent Neural Network.
-      A pair of mutually inhibitory neurons oscillate to form a Matsuoka oscillator,
+      Vehicle 5b introduces recurrent excitatory connections in a <a href="http://en.wikipedia.org/wiki/Recurrent_neural_network#Continuous-time_RNN"
+      >Continuous Time Recurrent Neural Network</a>.
+      A pair of mutually inhibitory neurons oscillate to form a <a href="http://www.cs.cmu.edu/~hgeyer/Teaching/R16-899B/Papers/Matsuoka85BiolCybern.pdf"
+      >Matsuoka oscillator</a>,
       which is used here to control the scanning of the proximity sensor.
     </p>
     <p>
       Vehicle 5c looks at recurrent <em>excitatory</em> connections.
       An excitatory autapse appears where a neuron loops back on itself. 
-      This creates a positive feedback loop which acts as a neural monostable, 
-      which is used here to prolong the momentary stimulus of contact with the vehicle shell long 
-      enough for it to reverse clear of the obstacle.
+      This creates a positive feedback loop which acts as a <a href="http://doc.gold.ac.uk/aisb50/AISB50-S05/AISB50-S5-Battle-paper.pdf"
+      >neural monostable</a>, 
+      which prolongs the momentary stimulus of contact with its shell long 
+      enough for the vehicle to reverse clear of the obstacle.
     </p>
     <form>
       <input type="radio" name="vehicle" onClick="startVehicle('5a')" checked/>Vehicle 5a: The logician<br/>
