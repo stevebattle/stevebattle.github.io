@@ -7,14 +7,13 @@ function Vehicle5c(img,w,l)  {
   this.PFACTOR=0.5;
   
   this.SLOPE = 50;
-  this.PBIAS = 0.25;
-  this.BBIAS = -0.1; // bumper bias
+  this.BIAS = -0.1; // bumper bias
   
   // Autapse parameters
   this.TA = 6.0; // time constant controls sustain
   this.TR = 3.0 // integration time constant
   this.B = 2.0 // neural adaptation factor
-  this.A = 1.7 // strength of autaptic connection
+  this.A = 1.5 // strength of autaptic connection
 
   // sensor range
   this.RANGE = width/6;
@@ -29,12 +28,6 @@ function Vehicle5c(img,w,l)  {
   
   this.drawBox = false;
   this.drawProximity = false;
-  
-  //* activation function defined by the sigmoid function 
-  // with slope f. eg. sigmoid(0, F) = 0.5 */
-  this.sigmoid = function(x) {
-    return 1/(1+exp(-this.SLOPE*x));
-  }
   
   // activation function passed to the adaptive neuron
   this.saturatingLinearFunction = function(x) {
@@ -94,7 +87,6 @@ function Vehicle5c(img,w,l)  {
     
     // tip of sensor
     var tip = this.endPointTo(this.RANGE);
-    //var p = this.sigmoid(this.proximity(obstacles,tip)-this.PBIAS);
     var p = this.proximity(obstacles,tip);
     var c = this.contact(obstacles);
 
@@ -102,8 +94,8 @@ function Vehicle5c(img,w,l)  {
     // TA, TR are time constants
     // B is the adaptation factor
     // final argument is the inhibitory and weighted, by A, impulse rate of its twin
-    this.an0.solve(this.BBIAS,this.TA,this.TR,c.left,this.B,this.an0.output*this.A);
-    this.an1.solve(this.BBIAS,this.TA,this.TR,c.right,this.B,this.an1.output*this.A);
+    this.an0.solve(this.BIAS,this.TA,this.TR,c.left,this.B,this.an0.output*this.A);
+    this.an1.solve(this.BIAS,this.TA,this.TR,c.right,this.B,this.an1.output*this.A);
   
     // obstruction when head is looking either left or right
     //var nearLeft = this.sigmoid(p + this.an0.output -1.1);
