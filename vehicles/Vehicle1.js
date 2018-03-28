@@ -3,7 +3,7 @@ function Vehicle1(img,w,l) {
   Vehicle.call(this,img,w,l);
   this.prototype = Object.create(Vehicle.prototype);
   
-  this.F = 100;
+  this.F = 500;
 
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
