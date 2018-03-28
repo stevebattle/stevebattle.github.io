@@ -1,6 +1,9 @@
 function Vehicle(img,w,l) {
   Thing.call(this,img,w,l,random(width),random(height),random(TAU));
   this.prototype = Object.create(Thing.prototype);
+  this.super = this.prototype;
+  // window diagonal
+  this.diagonal = sqrt(pow(width,2),pow(height,2));
   
   // vehicles leave a visible path
   this.PATH_LENGTH=1000;
