@@ -76,13 +76,13 @@ function mouseClicked() {
 
 function startVehicle(id) {
   switch (id) {
-    case "5a": 
+    case "a": 
     v = new Vehicle5a(v5a_image,VWIDTH,VLENGTH);
     break;
-    case "5b": 
+    case "b": 
     v = new Vehicle5b(v5b_image,VWIDTH,VLENGTH);
     break;
-    case "5c": 
+    case "c": 
     v = new Vehicle5c(v5c_image,VWIDTH,VLENGTH);
   }
 }

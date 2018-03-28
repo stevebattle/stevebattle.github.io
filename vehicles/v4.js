@@ -74,11 +74,11 @@ function mouseClicked() {
 
 function startVehicle(id) {
   switch (id) {
-    case "4a": 
+    case "a": 
     v = new Vehicle4a(v4a_image,VWIDTH,VLENGTH);
     obs_visible = false;
     break;
-    case "4b": 
+    case "b": 
     v = new Vehicle4b(v4b_image,VWIDTH,VLENGTH);
     obs_visible = true;
   }

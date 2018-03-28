@@ -10,7 +10,7 @@
        http://creativecommons.org/licenses/by/3.0
 */
 
-var RATE = 20;
+var RATE = 25;
 var V1WIDTH=30, VWIDTH=55, VLENGTH=85, VSIDE=50;
 
 function preload() {

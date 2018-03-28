@@ -14,6 +14,7 @@ function Vehicle2a(img,w,l)  {
   
   // p5.Vector src
   this.solve = function(rate,src) {
+
     // calculate angle to light source
     var a = this.angleWith(src);
     
