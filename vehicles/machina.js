@@ -57,6 +57,7 @@ function draw() {
 
 function mouseClicked() {
   if (mouseX==lastX && mouseY==lastY) return false;
+  lastX = mouseX; lastY = mouseY;
 
   // delete existing obstacle?
   for (var i=0; i<obs.length; i++) {
@@ -72,6 +73,7 @@ function mouseClicked() {
 
 function touchStarted() {
   if (mouseX==lastX && mouseY==lastY) return false;
+  lastX = mouseX; lastY = mouseY;
 
   // delete existing obstacle?
   for (var i=0; i<obs.length; i++) {
