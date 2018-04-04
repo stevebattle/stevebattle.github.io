@@ -65,3 +65,15 @@ function mouseClicked() {
   // otherwise create new obstacle
   obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);  
 }
+
+function touchStarted() {
+  // delete existing obstacle?
+  for (var i=0; i<obs.length; i++) {
+    if (obs[i].encloses(mouseX,mouseY)) {
+      obs.splice(i,1);
+      return;
+    }
+  }
+  // otherwise create new obstacle
+  obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);  
+}
