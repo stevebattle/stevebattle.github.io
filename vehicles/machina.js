@@ -17,6 +17,7 @@ var V1WIDTH=30, VLENGTH=85, VWIDTH=(1246/1751.0)*VLENGTH, VSIDE=50;
 // obstacle dimension
 var OSIDE = 60;
 var obs_visible = true;
+var lastX, lastY;
 
 function preload() {
   bg_image = loadImage("data/bg800x800.jpg");
@@ -55,23 +56,28 @@ function draw() {
 }
 
 function mouseClicked() {
+  if (mouseX==lastX && mouseY==lastY) return false;
+
   // delete existing obstacle?
   for (var i=0; i<obs.length; i++) {
     if (obs[i].encloses(mouseX,mouseY)) {
       obs.splice(i,1);
-      return;
+      return false;
     }
   }
   // otherwise create new obstacle
   obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);
+  return false;
 }
 
 function touchStarted() {
+  if (mouseX==lastX && mouseY==lastY) return false;
+
   // delete existing obstacle?
   for (var i=0; i<obs.length; i++) {
     if (obs[i].encloses(mouseX,mouseY)) {
       obs.splice(i,1);
-      return;
+      return false;
     }
   }
   // otherwise create new obstacle
