@@ -64,7 +64,6 @@ function mouseClicked() {
   }
   // otherwise create new obstacle
   obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);
-  return false;
 }
 
 function touchStarted() {
