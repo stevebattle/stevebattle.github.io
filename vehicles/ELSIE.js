@@ -123,7 +123,7 @@ function ELSIE(img,w,l)  {
     strokeWeight(1);
     
     if (this.leftContact>0 | this.rightContact>0 | this.frontContact>0 | this.rearContact>0) { // pattern O: obstacle avoidance
-      text('O', this.TEXTX, this.TEXTY);
+      if (this.battery>0) text('O', this.TEXTX, this.TEXTY);
       
       // The Drive and scan motors alternate between full and half power. 
       this.leftContact = max(0,this.leftContact-elapsed);
@@ -152,7 +152,7 @@ function ELSIE(img,w,l)  {
       this.charging = true;
     }
     else if (l<this.DARK) { // pattern E: slow drive / fast scan
-      text('E', this.TEXTX, this.TEXTY);
+      if (this.battery>0) text('E', this.TEXTX, this.TEXTY);
       drive = 0.5;
       scan = 1;
     }
