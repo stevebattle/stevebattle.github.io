@@ -96,4 +96,7 @@ function Thing(img,w,l,x,y,a) {
     return this.corner(this.l/2,this.w/2);
   }
 
+  this.encloses = function(x,y) {
+    return this.left()<=x && x<=this.right() && this.top()<= y && y <= this.bottom();
+  }
 }

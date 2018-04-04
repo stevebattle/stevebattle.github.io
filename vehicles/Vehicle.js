@@ -1,5 +1,5 @@
 function Vehicle(img,w,l) {
-  Thing.call(this,img,w,l,random(width),random(height),random(TAU));
+  Thing.call(this,img,w,l,random(width-200)+100,random(height-200)+100,random(TAU));
   this.prototype = Object.create(Thing.prototype);
   this.super = this.prototype;
   // window diagonal
