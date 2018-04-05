@@ -68,7 +68,7 @@ function mouseClicked() {
   }
   // otherwise create new obstacle
   obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);
-  //return false;
+  return false;
 }
 
 function touchStarted() {
@@ -84,5 +84,5 @@ function touchStarted() {
   }
   // otherwise create new obstacle
   obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);
-  //return false; 
+  return false; 
 }
