@@ -63,12 +63,12 @@ function mouseClicked() {
   for (var i=0; i<obs.length; i++) {
     if (obs[i].encloses(mouseX,mouseY)) {
       obs.splice(i,1);
-      return false;
+      //return false;
     }
   }
   // otherwise create new obstacle
   obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);
-  return false;
+  //return false;
 }
 
 function touchStarted() {
@@ -79,10 +79,10 @@ function touchStarted() {
   for (var i=0; i<obs.length; i++) {
     if (obs[i].encloses(mouseX,mouseY)) {
       obs.splice(i,1);
-      return false;
+      //return false;
     }
   }
   // otherwise create new obstacle
   obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);
-  return false; 
+  //return false; 
 }
