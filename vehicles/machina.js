@@ -53,22 +53,9 @@ function draw() {
   src.solve();
   v.solve(RATE,src,obs);
   //v.checkBorders();
-
-  if ((mouseIsPressed || touchIsDown) && mouseX!=lastX && mouseY!=lastY) {
-    lastX = mouseX; lastY = mouseY;
-
-    // delete existing obstacle?
-    for (var i=0; i<obs.length; i++) {
-      if (obs[i].encloses(mouseX,mouseY)) {
-        obs.splice(i,1);
-      }
-    }
-    // otherwise create new obstacle
-    obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);
-  }
 }
 
-/* function mouseClicked() {
+function mouseClicked() {
   if (mouseX==lastX && mouseY==lastY) return false;
   lastX = mouseX; lastY = mouseY;
 
@@ -84,7 +71,7 @@ function draw() {
   return false;
 }
 
-function touchStarted() {
+function touchEnded() {
   if (mouseX==lastX && mouseY==lastY) return false;
   lastX = mouseX; lastY = mouseY;
 
@@ -99,4 +86,3 @@ function touchStarted() {
   obs[obs.length] = new Obstacle(obs_image,OSIDE,mouseX,mouseY);
   return false; 
 }
- */
