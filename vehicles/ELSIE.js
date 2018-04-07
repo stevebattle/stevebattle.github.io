@@ -39,6 +39,8 @@ function ELSIE(img,w,l)  {
   this.TEXTX = width-40;
   this.TEXTY = 37;
   this.BATTERY_LOW = 50;
+  this.MAX_SCAN = 1;
+  this.MAX_DRIVE = 1;
 
   
   this.leftContact = 0;
@@ -131,18 +133,18 @@ function ELSIE(img,w,l)  {
       this.frontContact = max(0,this.frontContact-elapsed);
       this.rearContact = max(0,this.rearContact-elapsed);
       if (this.time%1000 < 300) { // one third of the time on 'steer-hard-push-gently'
-        drive = 0.5;
-        scan = 1;        
+        drive = this.MAX_DRIVE/2;
+        scan = this.MAX_SCAN;        
       }
       else { // two thirds 'push-hard-steer-gently'.
-        drive = 1;
-        scan = 0.5;
+        drive = this.MAX_DRIVE;
+        scan = this.MAX_SCAN/2;
       }
       // override driving _into_ obstacles, equal and opposite reaction
       if (this.leftContact>0 & this.turn<0 |
           this.rightContact>0 & this.turn>=0 |
           this.frontContact>0 & abs(this.turn)<PI/2 |
-          this.rearContact>0 & abs(this.turn)>=PI/2 ) drive = -drive;
+          this.rearContact>0 & abs(this.turn)>=PI/2 ) drive = -drive/2;
     }
     else if(this.battery<this.BATTERY_MAX-1 && src.encloses(this.position.x,this.position.y)) { // pattern R: recharge
       text('R', this.TEXTX, this.TEXTY);
@@ -153,8 +155,8 @@ function ELSIE(img,w,l)  {
     }
     else if (l<this.DARK) { // pattern E: slow drive / fast scan
       if (this.battery>0) text('E', this.TEXTX, this.TEXTY);
-      drive = 0.5;
-      scan = 1;
+      drive = this.MAX_DRIVE/2;
+      scan = this.MAX_SCAN;
     }
     else if (l<this.BRIGHT || this.battery<this.BATTERY_LOW) { // pattern P: fast drive / no scan
       if (this.battery>0) text('P', this.TEXTX, this.TEXTY);
@@ -163,8 +165,8 @@ function ELSIE(img,w,l)  {
     }
     else { // pattern N: fast drive / slow scan
       text('N', this.TEXTX, this.TEXTY);
-      drive = 1 ;
-      scan = 0.5;
+      drive = this.MAX_DRIVE ;
+      scan = this.MAX_SCAN/2;
     }
       
     // direction of rotation of the scan, which is clockwise for ELMER, and counter-clockwise for ELSIE
