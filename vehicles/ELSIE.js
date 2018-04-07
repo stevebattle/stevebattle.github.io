@@ -161,7 +161,7 @@ function ELSIE(img,w,l)  {
     else if (l<this.BRIGHT || this.battery<this.BATTERY_LOW) { // pattern P: fast drive / no scan
       if (this.battery>0) text('P', this.TEXTX, this.TEXTY);
       drive = 1;
-      scan = 0;
+      scan = 0.01; // small bias to avoid lock-in loop - would not happen in reality
     }
     else { // pattern N: fast drive / slow scan
       text('N', this.TEXTX, this.TEXTY);
