@@ -1,6 +1,6 @@
 function Vehicle6(img,w,l,rate) {
   // extends Vehicle
-  Vehicle.call(this,img,w,l);
+  Vehicle.call(this,img,w,l,0);
   this.prototype = Object.create(Vehicle.prototype);
   
   this.F = 300;

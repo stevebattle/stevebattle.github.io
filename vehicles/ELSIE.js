@@ -1,28 +1,14 @@
 function ELSIE(img,w,l)  {
   // extends Vehicle
-  Vehicle.call(this,img,w,l);
+  this.ROFFSET = 21;
+  Vehicle.call(this,img,w,l,this.ROFFSET);
   this.prototype = Object.create(Vehicle.prototype);
   
   this.F = 90;
   this.PFACTOR=0.5;
-  
-  this.SLOPE = 50;
-  this.BIAS = 0.5;
-  
-  // Matsuoka parameters
-  this.TA = 12.0; // time constant controls frequency
-  this.TR = 1.0 // integration time constant
-  this.S = 2.9 // constant tonic stimulus
-  this.B = 5.0 // neural adaptation factor
-  this.A = 1.5 // strength of mutual inhibition
 
   // sensor range
   this.RANGE = width;
-  
-  // fixed angles of left and right eyes relative to body
-  this.DISPARITY = 45;
-  this.left = radians(this.DISPARITY);
-  this.right = -this.left;
   
   this.time=millis();
   this.turn = 0;
@@ -30,7 +16,7 @@ function ELSIE(img,w,l)  {
   this.drawBox = false;
   
   this.SCAN = PI/2;
-  this.OFFSET = 28;
+  this.FOFFSET = 28;
   this.CONTACT = 1000;
   this.DARK = 0.01;
   this.BRIGHT = 0.9;
@@ -40,9 +26,8 @@ function ELSIE(img,w,l)  {
   this.TEXTY = 37;
   this.BATTERY_LOW = 50;
   this.MAX_SCAN = 1;
-  this.MAX_DRIVE = 1;
+  this.MAX_DRIVE = 1.15;
 
-  
   this.leftContact = 0;
   this.rightContact = 0;
   this.frontContact = 0;
@@ -50,7 +35,7 @@ function ELSIE(img,w,l)  {
   this.battery = this.BATTERY_MAX;
   
   // stem & tip of sensor
-  this.stem = this.endPointTo(this.OFFSET);
+  this.stem = this.endPointTo(this.ROFFSET+this.FOFFSET);
   this.tip = this.endPointTo(this.RANGE);
   
   // p1, p2: p5.Vector
@@ -111,7 +96,7 @@ function ELSIE(img,w,l)  {
     // calculate inverse distance from light dropping to 0 at full range
     var d = this.distance(this.stem,src.position);
     var inv = d<this.RANGE ? 1-(d/this.RANGE) : 0;
-    var l = src.intersection(p1,p2,4) ? inv : 0;
+    var l = src.intersection(p1,p2,3) ? inv : 0;
 
     // shell contact
     this.contact(obstacles);
@@ -185,12 +170,12 @@ function ELSIE(img,w,l)  {
     var dy = v * cos(-this.turn) * sin(-this.angle);
     this.addPosition(dx*dt,dy*dt);
     
-    var da = v/this.OFFSET * sin(-this.turn);
+    var da = v/(this.ROFFSET+this.FOFFSET) * sin(-this.turn);
     this.angle = (this.angle + da*dt) % TAU;
     
     // scan proximity sensor
     //var p1 = this.position;
-    var p1 = this.endPointTo(this.OFFSET);
+    var p1 = this.endPointTo(this.ROFFSET+this.FOFFSET);
     var p2 = this.endPointTo(this.RANGE);
     
     // rotate sensor end-point p2 around centre p1

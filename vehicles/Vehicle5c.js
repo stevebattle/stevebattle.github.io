@@ -1,6 +1,6 @@
 function Vehicle5c(img,w,l)  {
   // extends Vehicle
-  Vehicle.call(this,img,w,l);
+  Vehicle.call(this,img,w,l,0);
   this.prototype = Object.create(Vehicle.prototype);
   
   this.F = 200;
@@ -93,23 +93,11 @@ function Vehicle5c(img,w,l)  {
     // a small bias = -0.1 prevents random triggering
     // TA, TR are time constants
     // B is the adaptation factor
-    // final argument is the inhibitory and weighted, by A, impulse rate of its twin
+    // final argument is the excitatory autapse weighted, by A
     this.an0.solve(this.BIAS,this.TA,this.TR,c.left,this.B,this.an0.output*this.A);
     this.an1.solve(this.BIAS,this.TA,this.TR,c.right,this.B,this.an1.output*this.A);
-  
-    // obstruction when head is looking either left or right
-    //var nearLeft = this.sigmoid(p + this.an0.output -1.1);
-    //var nearRight = this.sigmoid(p + this.an1.output -1.1);
-    
-    // output is the firing rate of neurons a and b
-    // The difference between the outputs approximates a sinewave
-    //var oscillator = this.an0.output - this.an1.output;
-    // use oscillator output to drive proximity sensor servo
-    //this.turn = oscillator*radians(45);
-    console.log(this.an0.output, this.an1.output, p);
 
     // motor velocity proportional to input
-    // vehicle 4b avoids obstacles by turning on contact
     var vl = (r - 2*this.an1.output - p)*this.F;
     var vr = (l - 2*this.an0.output - p)*this.F;
 
@@ -135,16 +123,6 @@ function Vehicle5c(img,w,l)  {
     this.time = millis();
     this.an0.step(this.t/100.0);
     this.an1.step(this.t/100.0);
-    
-    // scan proximity sensor
-    //var p1 = this.position, p2 = this.endPointTo(this.RANGE);
-    
-    // rotate sensor end-point p2 around centre p1
-    //var xoff = p2.x - p1.x;
-    //var yoff = p2.y - p1.y;
-    //this.tip = new p5.Vector(
-    //  xoff*cos(this.turn) - yoff*sin(this.turn) + p1.x,
-    //  xoff*sin(this.turn) + yoff*cos(this.turn) + p1.y);
   };
   
   // save shadowed super.draw()

@@ -1,7 +1,7 @@
 /* light source */
 
 function Source(img,d,x,y) {
-  Thing.call(this,img,d,d,x,y,0);
+  Thing.call(this,img,d,d,x,y,0,0);
   this.prototype = Object.create(Thing.prototype);
 
   this.F = 0.01;

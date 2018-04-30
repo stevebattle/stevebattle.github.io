@@ -1,6 +1,6 @@
 function Obstacle(img,d,x,y)  {
   // extends Thing
-  Thing.call(this,img,d,d,x,y,0);
+  Thing.call(this,img,d,d,x,y,0,0);
   this.prototype = Object.create(Thing.prototype);
 
   // The Liang-Barsky algorithm for line-rectangle collisions

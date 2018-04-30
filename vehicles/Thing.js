@@ -1,9 +1,10 @@
-function Thing(img,w,l,x,y,a) {
+function Thing(img,w,l,x,y,a,o) {
   this.img = img;
   this.w = w;
   this.l = l;
   this.position = createVector(x,y);
   this.angle = a;
+  this.offset = o;
   
   // p5.Vector a, b
   this.distance = function(a, b) {
@@ -37,6 +38,7 @@ function Thing(img,w,l,x,y,a) {
     translate(this.position.x,this.position.y);
     // rotate the coordinate frame in the opposite direction
     rotate(-this.angle);
+    translate(this.offset,0);
     imageMode(CENTER);
     image(this.img,0,0,this.l,this.w);
     pop();
@@ -81,19 +83,19 @@ function Thing(img,w,l,x,y,a) {
   }
  
   this.topLeft = function() {
-    return this.corner(-this.l/2,-this.w/2);
+    return this.corner(-this.l/2+this.offset,-this.w/2);
   }
   
   this.topRight = function() {
-    return this.corner(this.l/2,-this.w/2);
+    return this.corner(this.l/2+this.offset,-this.w/2);
   }
   
   this.bottomLeft = function() {
-    return this.corner(-this.l/2,this.w/2);
+    return this.corner(-this.l/2+this.offset,this.w/2);
   }
   
   this.bottomRight = function() {
-    return this.corner(this.l/2,this.w/2);
+    return this.corner(this.l/2+this.offset,this.w/2);
   }
 
   this.encloses = function(x,y) {

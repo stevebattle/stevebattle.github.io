@@ -1,5 +1,5 @@
-function Vehicle(img,w,l) {
-  Thing.call(this,img,w,l,random(width-200)+100,random(height-200)+100,random(TAU));
+function Vehicle(img,w,l,o) {
+  Thing.call(this,img,w,l,random(width-200)+100,random(height-200)+100,random(TAU),o);
   this.prototype = Object.create(Thing.prototype);
   this.super = this.prototype;
   // window diagonal
@@ -30,7 +30,10 @@ function Vehicle(img,w,l) {
   
   this.drawPath = function() {
     // add current position to path
-    this.path[this.pathIndex] = createVector(this.position.x,this.position.y);
+    var p = this.corner(this.offset,0);
+    //this.path[this.pathIndex] = createVector(this.position.x,this.position.y);
+    console.log(p);
+    this.path[this.pathIndex] = p;
     this.pathIndex = (this.pathIndex+1)%this.PATH_LENGTH;
     
     for (var i=0; i<this.PATH_LENGTH-1; i++) {     
