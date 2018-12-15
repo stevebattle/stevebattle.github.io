@@ -34,7 +34,7 @@ function draw() {
   fill(hue, 255, 255);
     
   beginShape();
-  if (frameCount % 360 == 90) m += 2;
+  if (frameCount % 360 == 90 || frameCount % 360 == 270) m += 2;
   for (var phi=0.0001; phi<2*PI; phi+=0.01) {
     // use trig functions to obtain continuous function of t
     var r = supershape(0.99, 5, m, abs(cos(t)), 0.2 - abs(sin(t)), abs(sin(t)), phi);
