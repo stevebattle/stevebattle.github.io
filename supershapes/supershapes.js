@@ -3,6 +3,8 @@
   http://paulbourke.net/geometry/supershape/
 */
 
+var rotation = 90;
+
 /* returns the radius of the supershape for given angle phi */
 function supershape(a, b, m, n1, n2, n3, phi) {
   var t1 = pow(abs(cos(m/4 * phi) / a), n2);
@@ -38,7 +40,7 @@ function draw() {
   for (var phi=0.0001; phi<2*PI; phi+=0.01) {
     // use trig functions to obtain continuous function of t
     var r = supershape(0.99, 5, m, abs(cos(t)), 0.2 - abs(sin(t)), abs(sin(t)), phi);
-    vertex(100 * r * cos(phi), 100 * r * sin(phi));
+    vertex(100 * r * cos(phi+radians(rotation)), 100 * r * sin(phi+radians(rotation)));
   }
   endShape();
 }
