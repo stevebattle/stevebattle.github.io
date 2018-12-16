@@ -23,14 +23,54 @@
     For more see:
     <a href="http://paulbourke.net/geometry/supershape/">http://paulbourke.net/geometry/supershape/</a>
     </div>
-    <div id="a" class="w3-container w3-blue w3-mobile">a</div>
-    <div id="b" class="w3-container w3-blue w3-mobile">b</div>
-    <div id="m" class="w3-container w3-blue w3-mobile">m</div>
-    <div id="n1" class="w3-container w3-blue w3-mobile">n1</div>
-    <div id="n2" class="w3-container w3-blue w3-mobile">n2</div>
-    <div id="n3" class="w3-container w3-blue w3-mobile">n3</div>
-    <div id="rot" class="w3-container w3-blue w3-mobile">r</div>
-    <div id="sca" class="w3-container w3-blue w3-mobile">s</div>
+    <div class="w3-container w3-blue w3-mobile">a
+      <input type="range" min="-100" max="100" value="1" class="slider" id="a" 
+      onchange="document.getElementById('atext').value=this.value" />
+      <input type="text" value="1" id="atext"
+      onchange="document.getElementById('a').value=this.value" />
+    </div>
+    <div class="w3-container w3-blue w3-mobile">b
+      <input type="range" min="-10" max="10" value="0" class="slider" id="b" 
+      onchange="document.getElementById('btext').value=this.value" />
+      <input type="text" value="0" id="btext"
+      onchange="document.getElementById('b').value=this.value" />
+    </div>
+    <div class="w3-container w3-blue w3-mobile">m
+      <input type="range" min="0" max="100" value="2" class="slider" id="m" 
+      onchange="document.getElementById('mtext').value=this.value" />
+      <input type="text" value="2" id="mtext"
+      onchange="document.getElementById('m').value=this.value" />
+    </div>
+    <div class="w3-container w3-blue w3-mobile">n1
+      <input type="range" min="-200" max="200" value="25" class="slider" id="n1" 
+      onchange="document.getElementById('n1text').value=this.value" />
+      <input type="text" value="25" id="n1text"
+      onchange="document.getElementById('n1').value=this.value" />
+    </div>
+    <div class="w3-container w3-blue w3-mobile">n2
+      <input type="range" min="-100" max="100" value="-5" class="slider" id="n2" 
+      onchange="document.getElementById('n2text').value=this.value" />
+      <input type="text" value="-5" id="n2text"
+      onchange="document.getElementById('n2').value=this.value" />
+    </div>
+    <div class="w3-container w3-blue w3-mobile">n3
+      <input type="range" min="-100" max="100" value="0" class="slider" id="n3" 
+      onchange="document.getElementById('n3text').value=this.value" />
+      <input type="text" value="0" id="n3text"
+      onchange="document.getElementById('n3').value=this.value" />
+    </div>
+    <div class="w3-container w3-blue w3-mobile">r
+      <input type="range" min="0" max="360" value="180" class="slider" id="rot" 
+      onchange="document.getElementById('rtext').value=this.value" />
+      <input type="text" value="180" id="rtext"
+      onchange="document.getElementById('rot').value=this.value" />
+    </div>
+    <div class="w3-container w3-blue w3-mobile">s
+      <input type="range" min="0" max="500" value="250" class="slider" id="sca" 
+      onchange="document.getElementById('stext').value=this.value" />
+      <input type="text" value="250" id="stext"
+      onchange="document.getElementById('sca').value=this.value" />
+    </div>
   </div>
 </body>
 </html>
