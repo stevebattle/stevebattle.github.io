@@ -12,14 +12,8 @@
         var button = 0;
 
         function getButtonValue() {
-            Puck.eval("BTN.read()", function(v) {
-                if (button < v) {
-                    button = v;
-                    return true;
-                }
-                button = v;
-                return false;
-            });
+            Puck.eval("BTN.read()", function(v) { button = v; });
+            return button;
         }
         StartAudioContext(Tone.context);
         console.log(getButtonValue());
