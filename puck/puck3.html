@@ -16,6 +16,7 @@
             console.log(button);
             return button;
         }
+        Puck.write('LED1.reset();\n');
         setInterval(function loop() {
             b0 = button;
             b1 = getButtonValue();
