@@ -1,0 +1,23 @@
+<html>
+ <head>
+    <!-- see https://tonejs.github.io -->
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-bundle.js"></script>
+    <script src="https://unpkg.com/tone"></script>
+    <script src="https://unpkg.com/@tonejs/ui"></script>
+    <script>
+        const synth = new Tone.AMSynth().toMaster();
+
+        setWatch(function() {
+            synth.triggerAttack('C4');
+        }, BTN, {edge:"rising", debounce:50, repeat:true});
+
+        setWatch(function() {
+            synth.triggerAttack('C4');
+        }, BTN, {edge:"falling", debounce:50, repeat:true});
+
+    </script>
+ </head>
+ <body>
+    Press the button on the puck.
+</body>
+</html>
