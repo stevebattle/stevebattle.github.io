@@ -13,7 +13,7 @@
 
         function getButtonValue() {
             Puck.eval("BTN.read()", function(v) { button = v; });
-            synth.resume();
+            synth.AudioContext.resume();
             return button;
         }
         console.log(getButtonValue());
