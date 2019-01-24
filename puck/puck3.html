@@ -8,18 +8,29 @@
 
     <script>
         const synth = new Tone.AMSynth().toMaster();
+        var prev_button = 0;
+        var button = 0;
 
-        setWatch(function() {
-            synth.triggerAttack('C4');
-        }, BTN, {edge:"rising", debounce:50, repeat:true});
-
-        setWatch(function() {
-            synth.triggerAttack('C4');
-        }, BTN, {edge:"falling", debounce:50, repeat:true});
+        function getButtonValue() {
+            Puck.eval("BTN.read()", function(v) {
+                button = v;
+                setTimeout(function() { getButtonValue(); }, 250);
+            });
+        }
 
     </script>
  </head>
  <body>
     Press the button on the puck.
+    <script> while (true) {
+        getButtonValue();
+        console.log(button);
+        if (prev_button < button) {
+            synth.triggerAttack('C4');
+        }
+        else if (button < prev_button) {
+            synth.triggerRelease(); 
+        }
+    }</script>
 </body>
 </html>
