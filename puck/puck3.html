@@ -20,6 +20,7 @@
         setInterval(function loop() {
             b0 = button;
             b1 = getButtonValue();
+            console.log(b1);
             if (!b0 && b1) {
                 console.log('attack');
                 synth.triggerAttack('C4');
