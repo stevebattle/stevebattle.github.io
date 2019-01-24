@@ -13,24 +13,21 @@
 
         function getButtonValue() {
             Puck.eval("BTN.read()", function(v) {
+                if (button < v) {
+                    synth.triggerAttack('C4');
+                }
+                else if (v < button) {
+                    synth.triggerRelease(); 
+                }
                 button = v;
                 setTimeout(function() { getButtonValue(); }, 250);
             });
         }
 
+        getButtonValue();
     </script>
  </head>
  <body>
-    Press the button on the puck.
-    <script> while (true) {
-        getButtonValue();
-        console.log(button);
-        if (prev_button < button) {
-            synth.triggerAttack('C4');
-        }
-        else if (button < prev_button) {
-            synth.triggerRelease(); 
-        }
-    }</script>
+    Press the puck.
 </body>
 </html>
