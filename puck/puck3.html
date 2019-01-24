@@ -9,7 +9,7 @@
     <script>
         const synth = new Tone.AMSynth().toMaster();
         var button = false;
-        var b0, b1;
+        var b0 = false, b1;
 
         function getButtonValue() {
             Puck.eval("BTN.read()", function(v) { button = v; });
@@ -19,7 +19,6 @@
         function start() {
         Puck.write('LED1.reset();\n');
         setInterval(function loop() {
-            b0 = button;
             b1 = getButtonValue();
             console.log(b0,b1);
             if (!b0 && b1) {
@@ -28,6 +27,7 @@
             else if (b0 && !b1) {
                 synth.triggerRelease();
             }
+            b0 = b1;
         }, 500);
     }
     </script>
