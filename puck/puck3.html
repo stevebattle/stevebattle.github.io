@@ -19,10 +19,10 @@
         setInterval(function loop() {
             b0 = button;
             b1 = getButtonValue();
-            if (not(b0) && b1) {
+            if (!b0 && b1) {
                 synth.triggerAttack('C4');
             }
-            else if (b0 && not(b1)) {
+            else if (b0 && !b1) {
                 synth.triggerRelease();
             }
         }, 500)
