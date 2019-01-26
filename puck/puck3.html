@@ -15,7 +15,7 @@
         var maxhz = 4186;
 
         function capmap(c) {
-            var s = (c - capmin) / (cmax - cmin);
+            var s = (c - mincap) / (maxcap - mincap);
             return minhz + s * (maxhz - minhz);
         }
 
