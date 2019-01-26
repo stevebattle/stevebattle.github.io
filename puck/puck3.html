@@ -30,15 +30,16 @@
             setInterval(function loop() {
                 b1 = getButtonValue();
                 c = getCap();
-                console.log(b0,b1);
+                c1 = capmap(c);
+                console.log(c,c1);
                 if (!b0 && b1) {
-                    synth.triggerAttack(capmap(c));
+                    synth.triggerAttack(c1);
                 }
                 else if (b0 && !b1) {
                     synth.triggerRelease();
                 }
                 else {
-                    synth.setNote(capmap(c));
+                    synth.setNote(capmap(c1));
                 }
                 b0 = b1;
             }, 500);
