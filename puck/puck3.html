@@ -10,29 +10,38 @@
         const synth = new Tone.AMSynth().toMaster();
         var button = false;
         var b0 = false, b1;
+        var cap,mincap,maxcap;
 
         function getButtonValue() {
-            Puck.eval("BTN.read()", function(v) { button = v; });
+            //Puck.eval("BTN.read()", function(v) { button = v; });
+            Puck.eval("digitalRead(D1);", function(v) { button = v; });
             //console.log(button);
-            return button;
+            return !button;
         }
         function start() {
-        Puck.write('LED1.reset();\n');
-        setInterval(function loop() {
-            b1 = getButtonValue();
-            console.log(b0,b1);
-            if (!b0 && b1) {
-                synth.triggerAttack('C4');
-            }
-            else if (b0 && !b1) {
-                synth.triggerRelease();
-            }
-            b0 = b1;
-        }, 500);
-    }
+            Puck.write('LED1.reset();\n');
+            setInterval(function loop() {
+                b1 = getButtonValue();
+                console.log(b0,b1);
+                if (!b0 && b1) {
+                    synth.triggerAttack('C4');
+                }
+                else if (b0 && !b1) {
+                    synth.triggerRelease();
+                }
+                b0 = b1;
+            }, 500);
+        }
+        function getCap() {
+            Puck.eval("Puck.capSense()", function(n) { cap = n; });
+            return cap;
+        }
+
     </script>
  </head>
  <body>
     <button onclick="start()">Connect to BLE device.</button>
+    <button onclick="mincap=getCap();">low</button>
+    <button onclick="maxcap=getCap();">high</button>
 </body>
 </html>
