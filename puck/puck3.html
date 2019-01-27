@@ -34,7 +34,7 @@
                 c = getCap();
                 ema = ema + weight *(c - ema);
                 if (isNaN(ema)) {
-                    ema = capmin;
+                    ema = mincap;
                 }
                 console.log(ema);
                 b1 = getButtonValue();
