@@ -16,7 +16,7 @@
 
         function capmap(c) {
             var s = (c - mincap) / (maxcap - mincap);
-            return minhz + s * (maxhz - minhz);
+            return parseInt(minhz + s * (maxhz - minhz));
         }
 
         function getButtonValue() {
