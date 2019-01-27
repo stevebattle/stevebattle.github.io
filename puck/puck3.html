@@ -10,7 +10,7 @@
         const synth = new Tone.AMSynth().toMaster();
         var button = false;
         var b0 = false, b1;
-        var cap,mincap,maxcap;
+        var cap,mincap=0,maxcap=1000;
         var minhz = 27.5;
         var maxhz = 4186;
 
@@ -29,8 +29,8 @@
         function start() {
             //Puck.write('LED1.reset();\n');
             setInterval(function loop() {
-                b1 = getButtonValue();
                 c = getCap();
+                b1 = getButtonValue();
                 c1 = capmap(c);
                 //console.log(c,c1);
                 if (!b0 && b1) {
