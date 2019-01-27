@@ -33,6 +33,9 @@
             setInterval(function loop() {
                 c = getCap();
                 ema = ema + weight *(c - ema);
+                if (isNan(ema)) {
+                    ema = capmin;
+                }
                 console.log(ema);
                 b1 = getButtonValue();
                 c1 = capmap(ema);
