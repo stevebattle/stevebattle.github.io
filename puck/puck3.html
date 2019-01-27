@@ -18,7 +18,7 @@
 
         function capmap(c) {
             var s = (c - mincap) / (maxcap - mincap);
-            console.log(c,s);
+            //console.log(c,s);
             return parseInt(minhz + s * (maxhz - minhz));
         }
 
@@ -33,6 +33,7 @@
             setInterval(function loop() {
                 c = getCap();
                 ema = ema + weight *(c - ema);
+                console.log(ema);
                 b1 = getButtonValue();
                 c1 = capmap(ema);
                 //console.log(c,c1);
