@@ -13,6 +13,8 @@
         var cap,mincap=0,maxcap=1000;
         var minhz = 27.5;
         var maxhz = 4186;
+        var ema = 1;
+        var weight = 0.1;
 
         function capmap(c) {
             var s = (c - mincap) / (maxcap - mincap);
@@ -30,8 +32,9 @@
             //Puck.write('LED1.reset();\n');
             setInterval(function loop() {
                 c = getCap();
+                ema = ema + weight *(c - ema);
                 b1 = getButtonValue();
-                c1 = capmap(c);
+                c1 = capmap(ema);
                 //console.log(c,c1);
                 if (!b0 && b1) {
                     synth.triggerAttack(c1);
@@ -43,7 +46,7 @@
                     synth.setNote(c1);
                 }
                 b0 = b1;
-            }, 500);
+            }, 100);
         }
         function getCap() {
             Puck.eval("Puck.capSense()", function(n) { cap = n; });
