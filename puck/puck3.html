@@ -33,7 +33,7 @@
             setInterval(function loop() {
                 c = getCap();
                 ema = ema + weight *(c - ema);
-                if (isNan(ema)) {
+                if (isNaN(ema)) {
                     ema = capmin;
                 }
                 console.log(ema);
