@@ -16,6 +16,7 @@
 
         function capmap(c) {
             var s = (c - mincap) / (maxcap - mincap);
+            console.log(c,s);
             return parseInt(minhz + s * (maxhz - minhz));
         }
 
@@ -31,7 +32,7 @@
                 b1 = getButtonValue();
                 c = getCap();
                 c1 = capmap(c);
-                console.log(c,c1);
+                //console.log(c,c1);
                 if (!b0 && b1) {
                     synth.triggerAttack(c1);
                 }
