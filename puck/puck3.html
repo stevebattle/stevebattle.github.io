@@ -8,8 +8,6 @@
 
     <script>
         const synth = new Tone.AMSynth().toMaster();
-        var button = false;
-        var b0 = false, b1;
         var cap,mincap=1000,maxcap=1000;
         var minhz = 27.5;
         var maxhz = 4186;
@@ -20,7 +18,6 @@
 
         function capmap(c) {
             var s = (c - mincap) / (maxcap - mincap);
-            //console.log(c,s);
             return parseInt(minhz + s * (maxhz - minhz));
         }
 
@@ -28,7 +25,6 @@
             Puck.eval("BTN.read()", function(v) { button = v; });
             //Puck.eval("digitalRead(D1)", function(v) { button = v; });
             //button = !button;
-            //console.log(button);
             return button;
         }
         function start() {
@@ -39,27 +35,15 @@
                 if (isNaN(ema)) {
                     ema = 0;
                 }
-                else if (ema<mincap) {
-                    mincap = ema;
+                if (c<mincap) {
+                    mincap = c;
                 }
-                else if (ema>maxcap) {
-                    maxcap = ema;
+                if (c>maxcap) {
+                    maxcap = c;
                 }
-                //b1 = getButtonValue();
-                //b0 = b1 = false;
                 c1 = capmap(ema);
-                console.log(mincap,maxcap,~~ema,c1);
-                //if (!b0 && b1) {
-                //    synth.triggerAttack(c1);
-                //}
-                //else if (b0 && !b1) {
-                //    synth.triggerRelease();
-                //}
-                //else {
-                 //   synth.setNote(c1);
-                //}
+                console.log(mincap,~~maxcap,~~ema,c1);
                 synth.setNote(c1);
-                //b0 = b1;
             }, 100);
         }
         function getCap() {
