@@ -15,7 +15,7 @@
         var maxhz = 4186;
         // https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
         var ema = 0;
-        var weight = 0.5;
+        var weight = 0.9;
 
         function capmap(c) {
             var s = (c - mincap) / (maxcap - mincap);
@@ -34,10 +34,10 @@
             //Puck.write('LED1.reset();\n');
             setInterval(function loop() {
                 c = getCap();
-                ema = ~~(ema + weight*(c - ema));
-                //if (isNaN(ema)) {
-                //    ema = mincap;
-                //}
+                ema = ema + weight*(c - ema);
+                if (isNaN(ema)) {
+                    ema = 0;
+                }
                 b1 = getButtonValue();
                 c1 = capmap(ema);
                 console.log(ema,c1);
