@@ -15,7 +15,7 @@
         var maxhz = 4186;
         // https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
         var ema = 0;
-        var weight = 0.9;
+        var weight = 0.5;
 
         function capmap(c) {
             var s = (c - mincap) / (maxcap - mincap);
