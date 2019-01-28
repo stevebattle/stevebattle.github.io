@@ -46,19 +46,20 @@
                     maxcap = ema;
                 }
                 //b1 = getButtonValue();
-                b0 = b1 = false;
+                //b0 = b1 = false;
                 c1 = capmap(ema);
-                console.log(ema,c1);
-                if (!b0 && b1) {
-                    synth.triggerAttack(c1);
-                }
-                else if (b0 && !b1) {
-                    synth.triggerRelease();
-                }
-                else {
-                    synth.setNote(c1);
-                }
-                b0 = b1;
+                console.log(mincap,maxcap,~~ema,c1);
+                //if (!b0 && b1) {
+                //    synth.triggerAttack(c1);
+                //}
+                //else if (b0 && !b1) {
+                //    synth.triggerRelease();
+                //}
+                //else {
+                 //   synth.setNote(c1);
+                //}
+                synth.setNote(c1);
+                //b0 = b1;
             }, 100);
         }
         function getCap() {
