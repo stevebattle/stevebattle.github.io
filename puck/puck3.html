@@ -16,6 +16,7 @@
         // https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
         var ema = 0;
         var weight = 0.1;
+        var c1;
 
         function capmap(c) {
             var s = (c - mincap) / (maxcap - mincap);
@@ -44,7 +45,8 @@
                 else if (ema>maxcap) {
                     maxcap = ema;
                 }
-                b1 = getButtonValue();
+                //b1 = getButtonValue();
+                b0 = b1 = false;
                 c1 = capmap(ema);
                 console.log(ema,c1);
                 if (!b0 && b1) {
@@ -68,5 +70,7 @@
  </head>
  <body>
     <button onclick="start()">Connect</button>
+    <button onclick="synth.triggerAttack(c1);">Play</button>
+    <button onclick="synth.triggerRelease();">Mute</button>
 </body>
 </html>
