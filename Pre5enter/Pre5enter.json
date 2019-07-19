@@ -1,18 +1,18 @@
 { 
-    default: { 
-        width:800,
-        height:500,
-        duration:10,
-        background:"black"
+    "default": { 
+        "width":800,
+        "height":500,
+        "duration":10,
+        "background":"black"
     },
-    sources:[ 
+    "sources":[ 
         { 
-            width:770, height:650, duration:5, background:"black",
-            src:"https://stevebattle.github.io/animated-android/" 
+            "width":770, "height":650, "duration":5, "background":"black",
+            "src":"https://stevebattle.github.io/animated-android/" 
         }, 
         { 
-            width:760, height:640,
-            src:"https://stevebattle.github.io/run-robot-run/" 
+            "width":760, "height":640,
+            "src":"https://stevebattle.github.io/run-robot-run/" 
         } 
     ]
 }
