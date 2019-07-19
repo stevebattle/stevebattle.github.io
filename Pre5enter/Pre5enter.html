@@ -26,11 +26,12 @@
                     f.width = conf.sources[i].width || conf.default.width ;
                     source = conf.sources[i].src ;
                     if (source.endsWith(".js")) { // Processing P5 source
-                        f.srcdoc = "<html><div id='sketch'><\/div><script src='libraries/p5.js'><\/script><script src='" + source + "'><\/script><\/html>" ;
+                        f.srcdoc = "<html><div id='sketch'><\/div><script src='libraries/p5.js'><\/script><script src='" + 
+                        source + "'><\/script><\/html>" ;
                     } else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { // (animated) gif, jpeg
-                        //f.srcdoc = "<html><img src='" + source + "'><\/html>" ;
-                        f.removeAttribute("srcdoc") ;
-                        f.src = source ;                   
+                        f.srcdoc = "<html><img width=" + f.width + " height=" + f.height + " src='" + source + "'><\/html>" ;
+                        //f.removeAttribute("srcdoc") ;
+                        //f.src = source ;                   
                     } else { // default is html (may be implied index.html)
                         // srcdoc overrides src
                         f.removeAttribute("srcdoc") ;
