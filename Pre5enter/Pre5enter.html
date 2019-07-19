@@ -27,14 +27,13 @@
                     f.height = conf.sources[i].height || conf.default.height ; 
                     f.width = conf.sources[i].width || conf.default.width ;
                     source = conf.sources[i].src ;
-                    if (source.endsWith(".html")) {
-                        f.srcdoc = null ;
-                        f.src = source ;
-                    }
-                    else if (source.endsWith(".js")) {
+                    if (source.endsWith(".js")) {
                         // Processing P5 source
                         f.src = null ;
                         f.srcdoc = "<span>test</span>" ;
+                    } else { // default is html (may be implied index.html)
+                        //f.srcdoc = null ;
+                        f.src = source ;
                     }
                     background = conf.sources[i].background || conf.default.background ;
                     document.body.style.backgroundColor = background ;
