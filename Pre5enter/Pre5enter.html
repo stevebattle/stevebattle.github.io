@@ -29,10 +29,10 @@
                     source = conf.sources[i].src ;
                     if (source.endsWith(".js")) {
                         // Processing P5 source
-                        f.src = null ;
+                        //f.src = "" ;
                         f.srcdoc = "<span>test</span>" ;
                     } else { // default is html (may be implied index.html)
-                        //f.srcdoc = null ;
+                        //f.srcdoc = "" ;
                         f.src = source ;
                     }
                     background = conf.sources[i].background || conf.default.background ;
