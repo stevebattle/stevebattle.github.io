@@ -20,7 +20,11 @@
         },
         {
             "width":360, "height":360, "duration":10, "background":"white",
-            "src":"https://stevebattle.github.io/Pre5enter/18.gif"
+            "src":"https://stevebattle.github.io/Pre5enter/images/18.gif"
+        },
+        {
+            "width":3331, "height":2265, "duration":3, "background":"black",
+            "src":"https://stevebattle.github.io/Pre5enter/images/tortoise.jpg"
         }
     ]
 }
