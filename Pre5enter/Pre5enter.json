@@ -8,15 +8,19 @@
     "sources":[ 
         { 
             "width":770, "height":650, "duration":3, "background":"black",
-            "src":"https://stevebattle.github.io/animated-android/" 
+            "src":"https://stevebattle.github.io/animated-android/index.html" 
         }, 
         { 
             "width":760, "height":640, "duration":3,
             "src":"https://stevebattle.github.io/run-robot-run/" 
         },
         {
-            "background":"white",
+            "width":500, "height":500, "duration":3, "background":"white",
             "src":"https://stevebattle.github.io/supershapes/supershapes.js"
+        },
+        {
+            "width":360, "height":360, "duration":10, "background":"white",
+            "src":"https://stevebattle.github.io/Pre5enter/18.gif"
         }
     ]
 }
