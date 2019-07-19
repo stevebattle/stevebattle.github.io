@@ -13,6 +13,9 @@
         { 
             "width":760, "height":640,
             "src":"https://stevebattle.github.io/run-robot-run/" 
-        } 
+        },
+        {
+            "src":"https://stevebattle.github.io/supershapes/supershapes.js"
+        }
     ]
 }

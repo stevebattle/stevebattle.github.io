@@ -2,10 +2,12 @@
     <head>
         <title>Pre5enter</title>
         <!-- author: https://github.com/stevebattle/ -->
+        <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
     </head>
     <body>
             <div style="text-align:center;">
                 <iframe id="iframe" style="border:none;"></iframe>
+                <div id="sketch">
             </div>
             <script>
                 function getJSON(url, callback) {
@@ -24,7 +26,16 @@
                 function change() {
                     f.height = conf.sources[i].height || conf.default.height ; 
                     f.width = conf.sources[i].width || conf.default.width ;
-                    f.src = conf.sources[i].src ;
+                    source = conf.sources[i].src ;
+                    if (source.endsWith(".html")) {
+                        f.srcdoc = null ;
+                        f.src = source ;
+                    }
+                    else if (source.endsWith(".js")) {
+                        // Processing P5 source
+                        f.src = null ;
+                        f.srcdoc = "<span>test</span>" ;
+                    }
                     background = conf.sources[i].background || conf.default.background ;
                     document.body.style.backgroundColor = background ;
                     duration = conf.sources[i].duration || conf.default.duration ;
