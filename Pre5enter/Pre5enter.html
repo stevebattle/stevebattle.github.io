@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Pre5enter</title>
+        <!-- author: https://github.com/stevebattle/ -->
+    </head>
+    <body>
+            <div style="text-align:center;">
+                <iframe id="iframe" style="border:none;"></iframe>
+            </div>
+            <script>
+                function getJSON(url, callback) {
+                    var req = new XMLHttpRequest() ;
+                    req.open('GET', url, false ) ;
+                    req.onload = function() {
+                        if (req.status == 200) {
+                            callback(null, JSON.parse(req.responseText)) ;
+                        } else {
+                            callback(req.status, null) ;
+                        }
+                    };
+                    req.send() ;
+                }
+
+                function change() {
+                    f.height = conf.sources[i].height || conf.default.height ; 
+                    f.width = conf.sources[i].width || conf.default.width ;
+                    f.src = conf.sources[i].src ;
+                    background = conf.sources[i].background || conf.default.background ;
+                    document.body.style.backgroundColor = background ;
+                    duration = conf.sources[i].duration || conf.default.duration ;
+                    i = (i+1) % conf.sources.length ;
+                    setTimeout(change, duration * 1000) ;
+                }
+
+                var conf ;
+                var query = window.location.search.substring(1) ;
+                dataURL = query.split("=")[1]; // conf parameter
+                // CORS is supported by github. Verify this with:
+                // curl -I https://stevebattle.github.io/Pre5enter/Pre5enter.json
+                //dataURL = "https://stevebattle.github.io/Pre5enter/Pre5enter.json" ;
+                var f = document .getElementById("iframe");
+                var i = 0;
+                getJSON(dataURL, function(err, data) {
+                    if (err != null) {
+                        alert('Cannot load Pre5enter data: ' + err);
+                    } else {
+                        conf = data ;
+                        change();
+                    }
+                });
+            </script>
+    </body>
+</html>
