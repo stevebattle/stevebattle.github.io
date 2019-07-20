@@ -36,7 +36,7 @@
                 f.width = conf.clips[i].width || conf.default.width ;
                 base = conf.clips[i].base ;
                 source = conf.clips[i].src ;
-                if (source.isArray()) { // multiple P5 source files
+                if (Array.isArray(source)) { // multiple P5 source files
                     srcdoc = "<html><div id='sketch'><\/div><script src='libraries/p5.js'>" ;
                     for (n=0; n<source.length; n++) {
                         s = source[n] ;
