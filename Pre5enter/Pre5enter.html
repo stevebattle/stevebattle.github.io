@@ -34,6 +34,7 @@
                 req.send() ;
             }
 
+            // confirm existence of source files referenced in the configuration file
             function checkExists(url, callback, t) {
                 if (url) {
                     var req = new XMLHttpRequest();
