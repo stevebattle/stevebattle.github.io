@@ -94,6 +94,7 @@
                     }
                     else {
                         srcdoc += "<script src='" + source + "'><\/script>" ;
+                        checkExists(source,skip,timeout) ;
                     }
                     srcdoc += "<\/body><\/html>" ;
                     f.srcdoc = srcdoc ;
