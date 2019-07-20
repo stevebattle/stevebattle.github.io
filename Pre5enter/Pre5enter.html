@@ -32,6 +32,14 @@
                 req.send() ;
             }
 
+            // skip immediately to the next clip
+            function skip() { 
+                if (t) {
+                    t.clearTimeout() ;
+                }
+                change() ;
+            }
+
             // change the currently displayed clip
             function change() {
                 // parameters can be set in default or individual clips
@@ -66,7 +74,7 @@
                 else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { 
                     // (animated) gif, jpeg image
                     f.srcdoc = "<html><img width=" + f.width + " height=" + f.height + " src='" + 
-                    source + "'><\/html>" ;                 
+                    source + "' onerror='parent.skip()'><\/html>" ;                 
                 } 
                 else { // default is html (may be implied index.html)
                     // srcdoc overrides src
@@ -81,7 +89,7 @@
                 // setup call to next change after duration
                 duration = conf.clips[i].duration || conf.default.duration ;
                 i = (i+1) % conf.clips.length ;
-                setTimeout(change, duration * 1000) ;
+                t = setTimeout(change, duration * 1000) ;
             }
 
             var conf ;
@@ -91,6 +99,7 @@
             // curl -I https://stevebattle.github.io/Pre5enter/Pre5enter.json
             //dataURL = "https://stevebattle.github.io/Pre5enter/Pre5enter.json" ;
             var f = document .getElementById("iframe");
+            var t = null; // for the timeout
             var i = 0;
             getJSON(dataURL, function(err, data) {
                 if (err != null) {
