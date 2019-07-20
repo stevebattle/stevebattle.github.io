@@ -16,12 +16,12 @@
         },
         {
             "width":500, "height":500, "background":"white", "duration":30,
-            "src":"https://stevebattle.github.io/supershapes/supershapes.js"
+            "base": "https://stevebattle.github.io/vehicles/",
+            "src":[ "Source.js", "Thing.js", "Vehicle.js", "Vehicle1.js", "v1.js" ]
         },
         {
             "width":500, "height":500, "background":"white", "duration":30,
-            "base": "https://stevebattle.github.io/vehicles/",
-            "src":[ "Source.js", "Thing.js", "Vehicle.js", "Vehicle1.js", "v1.js" ]
+            "src":"https://stevebattle.github.io/supershapes/supershapes.js"
         },
         {
             "src":"https://stevebattle.github.io/Pre5enter/images/18.gif"

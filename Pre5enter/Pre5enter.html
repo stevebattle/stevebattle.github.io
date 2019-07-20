@@ -34,14 +34,29 @@
             function change() {
                 f.height = conf.clips[i].height || conf.default.height ; 
                 f.width = conf.clips[i].width || conf.default.width ;
+                base = conf.clips[i].base ;
                 source = conf.clips[i].src ;
-                if (source.endsWith(".js")) { // Processing P5 source
+                if (source.isArray()) { // multiple P5 source files
+                    srcdoc = "<html><div id='sketch'><\/div><script src='libraries/p5.js'>" ;
+                    for (n=0; n<source.length; n++) {
+                        s = source[n] ;
+                        if (base && !s.startsWith('http')) {
+                            s = base + s;
+                        }
+                        srcdoc += "<script src='" + s + "'><\/script>" ;
+                    }
+                    srcdoc += "<\/html>" ;
+                    f.srcdoc = srcdoc ;
+                }
+                else if (source.endsWith(".js")) { // Processing P5 source
                     f.srcdoc = "<html><div id='sketch'><\/div><script src='libraries/p5.js'><\/script><script src='" + 
                     source + "'><\/script><\/html>" ;
-                } else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { 
+                } 
+                else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { 
                     // (animated) gif, jpeg image
                     f.srcdoc = "<html><img width=" + f.width + " height=" + f.height + " src='" + source + "'><\/html>" ;                 
-                } else { // default is html (may be implied index.html)
+                } 
+                else { // default is html (may be implied index.html)
                     // srcdoc overrides src
                     f.removeAttribute("srcdoc") ;
                     f.src = source ;
