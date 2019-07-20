@@ -8,9 +8,9 @@
     },
     "clips":[ 
         { 
-            "comment":"P5 embedded in html, iframe size crops bottom of frame",
+            "comment":"missing html",
             "width":770, "height":650,
-            "src":"https://stevebattle.github.io/animated-android/index.html" 
+            "src":"https://stevebattle.github.io/animated-android/missing.html" 
         }, 
         { 
             "comment":"directory assumed to contain index.html",
@@ -36,8 +36,8 @@
         },
         {
             "width":666, "height":452,
-            "comment":"static jpeg (jpg) image, scaled",
-            "src":"https://stevebattle.github.io/Pre5enter/images/nonexistent.jpg"
+            "comment":"it should skip this missing image",
+            "src":"https://stevebattle.github.io/Pre5enter/images/missing.jpg"
         }
     ]
 }

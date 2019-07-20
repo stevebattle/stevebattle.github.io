@@ -21,27 +21,54 @@
             // get parsed JSON configuration
             function getJSON(url, callback) {
                 var req = new XMLHttpRequest() ;
-                req.open('GET', url, false ) ;
-                req.onload = function() {
-                    if (req.status == 200) {
+                req.onreadystatechange = function() {
+                    // When readyState property is 4 the response is ready
+                    if (this.readyState == this.DONE && this.status == 200) {
                         callback(null, JSON.parse(req.responseText)) ;
-                    } else {
+                    } 
+                    else if (this.readyState == 4) {
                         callback(req.status, null) ;
                     }
-                };
+                } ;
+                req.open('GET', url, true ) ;
                 req.send() ;
             }
 
-            // skip immediately to the next clip
-            function skip() { 
-                if (t) {
-                    t.clearTimeout() ;
+            function checkExists(url, callback, t) {
+                if (url) {
+                    var http = new XMLHttpRequest();
+                    http.onreadystatechange = function() {
+                        if (this.readyState == this.DONE && this.status != 200) {
+                            callback(t);
+                        }
+                    } ;
+                    http.open('HEAD', url, true);
+                    http.send();
+                } 
+                else {
+                    callback(t) ;
                 }
-                change() ;
+            }
+
+            // skip immediately to the next clip, ensuring the timeouts are in sync
+            function skip(t) {
+                if (timeout == t) {
+                    clearTimeout(timeout) ;
+                    change() ;
+                }
             }
 
             // change the currently displayed clip
             function change() {
+                // setup call to next change after duration
+                duration = conf.clips[i].duration || conf.default.duration ;
+                i = (i+1) % conf.clips.length ;
+                timeout = setTimeout(change, duration * 1000) ;
+
+                // set background colour
+                background = conf.clips[i].background || conf.default.background ;
+                document.body.style.backgroundColor = background ;
+
                 // parameters can be set in default or individual clips
                 f.height = conf.clips[i].height || conf.default.height ; 
                 f.width = conf.clips[i].width || conf.default.width ;
@@ -74,22 +101,15 @@
                 else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { 
                     // (animated) gif, jpeg image
                     f.srcdoc = "<html><img width=" + f.width + " height=" + f.height + " src='" + 
-                    source + "' onerror='parent.skip()'><\/html>" ;                 
+                    source + "' onerror='parent.skip(" + timeout + ")'><\/html>" ;
+                    // skip this clip on load error                
                 } 
                 else { // default is html (may be implied index.html)
                     // srcdoc overrides src
                     f.removeAttribute("srcdoc") ;
                     f.src = source ;
+                    checkExists(source,skip,timeout) ;
                 }
-
-                // background colour
-                background = conf.clips[i].background || conf.default.background ;
-                document.body.style.backgroundColor = background ;
-
-                // setup call to next change after duration
-                duration = conf.clips[i].duration || conf.default.duration ;
-                i = (i+1) % conf.clips.length ;
-                t = setTimeout(change, duration * 1000) ;
             }
 
             var conf ;
@@ -99,7 +119,7 @@
             // curl -I https://stevebattle.github.io/Pre5enter/Pre5enter.json
             //dataURL = "https://stevebattle.github.io/Pre5enter/Pre5enter.json" ;
             var f = document .getElementById("iframe");
-            var t = null; // for the timeout
+            var timeout = null; // for the timeout
             var i = 0;
             getJSON(dataURL, function(err, data) {
                 if (err != null) {
