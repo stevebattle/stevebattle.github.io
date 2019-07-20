@@ -16,7 +16,7 @@
         },
         {
             "width":720, "height":712, "background":"white", "duration":10,
-            "src":"https://stevebattle.github.io/LineHugger/sketch.js"
+            "src":"https://stevebattle.github.io/LineHuggerP5/sketch.js"
         },
         {
             "width":800, "height":800, "background":"white", "duration":30,
