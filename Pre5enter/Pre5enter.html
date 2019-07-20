@@ -2,9 +2,19 @@
     <head>
         <title>Pre5enter</title>
         <!-- author: https://github.com/stevebattle/ -->
+        <style>
+            .centre {
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+        </style>
     </head>
     <body>
-            <div style="text-align:center;">
+            <div class="centre">
                 <iframe id="iframe" style="border:none;"></iframe>
             </div>
             <script>
