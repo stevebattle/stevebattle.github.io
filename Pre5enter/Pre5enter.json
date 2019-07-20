@@ -1,29 +1,28 @@
 { 
     "default": { 
-        "width":800,
+        "width":500,
         "height":500,
         "duration":5,
         "background":"black"
     },
     "sources":[ 
         { 
-            "width":770, "height":650, "duration":3, "background":"black",
+            "width":770, "height":650,
             "src":"https://stevebattle.github.io/animated-android/index.html" 
         }, 
         { 
-            "width":760, "height":640, "duration":3,
+            "width":760, "height":640,
             "src":"https://stevebattle.github.io/run-robot-run/" 
         },
         {
-            "width":500, "height":500, "duration":3, "background":"white",
+            "width":500, "height":500, "background":"white",
             "src":"https://stevebattle.github.io/supershapes/supershapes.js"
         },
         {
-            "width":500, "height":500, "duration":5, "background":"white",
             "src":"https://stevebattle.github.io/Pre5enter/images/18.gif"
         },
         {
-            "width":666, "height":452, "duration":3, "background":"black",
+            "width":666, "height":452,
             "src":"https://stevebattle.github.io/Pre5enter/images/tortoise.jpg"
         }
     ]
