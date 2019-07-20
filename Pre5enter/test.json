@@ -1,0 +1,43 @@
+{ 
+    "default": { 
+        "width":500,
+        "height":500,
+        "comment":"time in seconds",
+        "duration":5,
+        "background":"black"
+    },
+    "clips":[ 
+        { 
+            "comment":"P5 embedded in html, iframe size crops bottom of frame",
+            "width":770, "height":650,
+            "src":"https://stevebattle.github.io/animated-android/index.html" 
+        }, 
+        { 
+            "comment":"directory assumed to contain index.html",
+            "width":760, "height":640,
+            "src":"https://stevebattle.github.io/run-robot-run/" 
+        },
+        {
+            "width":720, "height":712, "background":"white", "duration":10,
+            "comment":"base required to load graphic resources in P5",
+            "base": "https://stevebattle.github.io/LineHuggerP5/",
+            "src":"https://stevebattle.github.io/LineHuggerP5/sketch.js"
+        },
+        {
+            "width":800, "height":800, "background":"white", "duration":20,
+            "comment":"multiple P5 sources (multi-file class defs) with same base",
+            "base": "https://stevebattle.github.io/vehicles/",
+            "src":[ "Source.js", "Thing.js", "Vehicle.js", "Vehicle1.js", "v1.js" ]
+        },
+        {
+            "comment":"self-contained P5 source (no base required for resources)",
+            "width":500, "height":500, "background":"white", "duration":30,
+            "src":"https://stevebattle.github.io/supershapes/supershapes.js"
+        },
+        {
+            "width":666, "height":452,
+            "comment":"static jpeg (jpg) image, scaled",
+            "src":"https://stevebattle.github.io/Pre5enter/images/nonexistent.jpg"
+        }
+    ]
+}
