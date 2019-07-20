@@ -25,9 +25,9 @@
         },
         {
             "width":800, "height":800, "background":"white", "duration":20,
-            "comment":"multiple P5 sources (multi-file class defs) with same base",
+            "comment":"missing P5 source",
             "base": "https://stevebattle.github.io/vehicles/",
-            "src":[ "Source.js", "Thing.js", "Vehicle.js", "Vehicle1.js", "v1.js" ]
+            "src":[ "Source.js", "Thing.js", "missing.js", "Vehicle1.js", "v1.js" ]
         },
         {
             "comment":"missing P5 src",

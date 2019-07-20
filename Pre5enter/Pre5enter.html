@@ -36,14 +36,14 @@
 
             function checkExists(url, callback, t) {
                 if (url) {
-                    var http = new XMLHttpRequest();
-                    http.onreadystatechange = function() {
+                    var req = new XMLHttpRequest();
+                    req.onreadystatechange = function() {
                         if (this.readyState == this.DONE && this.status != 200) {
                             callback(t);
                         }
                     } ;
-                    http.open('HEAD', url, true);
-                    http.send();
+                    req.open('HEAD', url, true);
+                    req.send();
                 } 
                 else {
                     callback(t) ;
@@ -90,6 +90,7 @@
                         for (n=0; n<source.length; n++) {
                             srcdoc += "<script language='javascript' type='text/javascript' src='" + 
                             source[n] + "'><\/script>" ;
+                            checkExists(source[n],skip,timeout) ;
                         }
                     }
                     else {
