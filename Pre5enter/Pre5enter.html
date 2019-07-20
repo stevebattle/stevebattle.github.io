@@ -32,25 +32,24 @@
                 }
 
                 function change() {
-                    f.height = conf.sources[i].height || conf.default.height ; 
-                    f.width = conf.sources[i].width || conf.default.width ;
-                    source = conf.sources[i].src ;
+                    f.height = conf.clips[i].height || conf.default.height ; 
+                    f.width = conf.clips[i].width || conf.default.width ;
+                    source = conf.clips[i].src ;
                     if (source.endsWith(".js")) { // Processing P5 source
                         f.srcdoc = "<html><div id='sketch'><\/div><script src='libraries/p5.js'><\/script><script src='" + 
                         source + "'><\/script><\/html>" ;
-                    } else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { // (animated) gif, jpeg
-                        f.srcdoc = "<html><img width=" + f.width + " height=" + f.height + " src='" + source + "'><\/html>" ;
-                        //f.removeAttribute("srcdoc") ;
-                        //f.src = source ;                   
+                    } else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { 
+                        // (animated) gif, jpeg image
+                        f.srcdoc = "<html><img width=" + f.width + " height=" + f.height + " src='" + source + "'><\/html>" ;                 
                     } else { // default is html (may be implied index.html)
                         // srcdoc overrides src
                         f.removeAttribute("srcdoc") ;
                         f.src = source ;
                     }
-                    background = conf.sources[i].background || conf.default.background ;
+                    background = conf.clips[i].background || conf.default.background ;
                     document.body.style.backgroundColor = background ;
-                    duration = conf.sources[i].duration || conf.default.duration ;
-                    i = (i+1) % conf.sources.length ;
+                    duration = conf.clips[i].duration || conf.default.duration ;
+                    i = (i+1) % conf.clips.length ;
                     setTimeout(change, duration * 1000) ;
                 }
 

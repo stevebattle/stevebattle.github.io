@@ -5,7 +5,7 @@
         "duration":5,
         "background":"black"
     },
-    "sources":[ 
+    "clips":[ 
         { 
             "width":770, "height":650,
             "src":"https://stevebattle.github.io/animated-android/index.html" 
