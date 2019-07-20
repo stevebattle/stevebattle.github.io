@@ -2,6 +2,7 @@
     "default": { 
         "width":500,
         "height":500,
+        "comment":"time in seconds",
         "duration":5,
         "background":"black"
     },
@@ -23,7 +24,7 @@
             "src":"https://stevebattle.github.io/LineHuggerP5/sketch.js"
         },
         {
-            "width":800, "height":800, "background":"white", "duration":30,
+            "width":800, "height":800, "background":"white", "duration":20,
             "comment":"multiple P5 sources (multi-file class defs) with same base",
             "base": "https://stevebattle.github.io/vehicles/",
             "src":[ "Source.js", "Thing.js", "Vehicle.js", "Vehicle1.js", "v1.js" ]
