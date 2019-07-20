@@ -15,6 +15,10 @@
             "src":"https://stevebattle.github.io/run-robot-run/" 
         },
         {
+            "width":720, "height":712, "background":"white", "duration":10,
+            "src":"https://stevebattle.github.io/LineHugger/sketch.js"
+        },
+        {
             "width":800, "height":800, "background":"white", "duration":30,
             "comment":"set the base to simplify multiple P5 sources",
             "base": "https://stevebattle.github.io/vehicles/",

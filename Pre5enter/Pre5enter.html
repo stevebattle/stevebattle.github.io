@@ -55,10 +55,6 @@
                     srcdoc += "<\/body><\/html>" ;
                     f.srcdoc = srcdoc ;
                 }
-                else if (source.endsWith(".js")) { // Processing P5 source
-                    f.srcdoc = "<html><div id='sketch'><\/div><script src='libraries/p5.js'><\/script><script src='" + 
-                    source + "'><\/script><\/html>" ;
-                } 
                 else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { 
                     // (animated) gif, jpeg image
                     f.srcdoc = "<html><img width=" + f.width + " height=" + f.height + " src='" + source + "'><\/html>" ;                 
