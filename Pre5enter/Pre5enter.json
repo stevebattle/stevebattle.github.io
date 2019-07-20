@@ -15,7 +15,7 @@
             "src":"https://stevebattle.github.io/run-robot-run/" 
         },
         {
-            "width":500, "height":500, "background":"white", "duration":20,
+            "width":500, "height":500, "background":"white", "duration":30,
             "src":"https://stevebattle.github.io/supershapes/supershapes.js"
         },
         {
