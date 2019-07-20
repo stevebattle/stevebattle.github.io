@@ -36,17 +36,21 @@
                 f.width = conf.clips[i].width || conf.default.width ;
                 base = conf.clips[i].base ;
                 source = conf.clips[i].src ;
-                if (Array.isArray(source)) { // multiple P5 source files
+                if (Array.isArray(source) || source.endsWith(".js")) { // single or multiple P5 source files
                     srcdoc = "<html>" ;
                     if (base) {
                         srcdoc += "<head><base href='"+ base +"'><\/base><\/head>" ;
                     }
                     srcdoc += "<body>" ;
-                    srcdoc += "<div id='sketch'><\/div><script src='libraries/p5.js'><\/script>" ;
-                    for (n=0; n<source.length; n++) {
-                        s = source[n] ;
-
-                        srcdoc += "<script src='" + s + "'><\/script>" ;
+                    srcdoc += "<div id='sketch'><\/div>" ;
+                    srcdoc += "<script src='libraries/p5.js'><\/script>" ;
+                    if (Array.isArray(source)) {
+                        for (n=0; n<source.length; n++) {
+                            srcdoc += "<script src='" + source[n] + "'><\/script>" ;
+                        }
+                    }
+                    else {
+                        srcdoc += "<script src='" + source + "'><\/script>" ;
                     }
                     srcdoc += "<\/body><\/html>" ;
                     f.srcdoc = srcdoc ;

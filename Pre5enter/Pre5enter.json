@@ -15,7 +15,7 @@
             "src":"https://stevebattle.github.io/run-robot-run/" 
         },
         {
-            "width":500, "height":500, "background":"white", "duration":30,
+            "width":800, "height":800, "background":"white", "duration":30,
             "comment":"set the base to simplify multiple P5 sources",
             "base": "https://stevebattle.github.io/vehicles/",
             "src":[ "Source.js", "Thing.js", "Vehicle.js", "Vehicle1.js", "v1.js" ]
