@@ -2,21 +2,33 @@
     <head>
         <script src="build/artoolkit.debug.js"></script>
         <script>
-            // navigator.getUserMedia is not supported on Safari (works in Chrome)
-            var video = ARController.getUserMedia({
-	            maxARVideoSize: 320, // do AR processing on scaled down video of this size
-	            facing: "environment",
-	            onSuccess: function(video) {
-		            console.log('got video', video);
-	            }
-            });
+  var param = new ARCameraParam();
 
-            var camera = new ARCameraParam('Data/camera_para.dat');
-            camera.onload = function() {
-	            var arController = new ARController(video.videoWidth, video.videoHeight, camera);
-	            console.log('ARController ready for use', arController);
-            };
+param.onload = function () {
+  var img = document.getElementById('my-image');
+  var ar = new ARController(img.width, img.height, param);
 
+  // Set pattern detection mode to detect both pattern markers and barcode markers.
+  // This is more error-prone than detecting only pattern markers (default) or only barcode markers.
+  //
+  // For barcode markers, use artoolkit.AR_MATRIX_CODE_DETECTION
+  // For pattern markers, use artoolkit.AR_TEMPLATE_MATCHING_COLOR
+  //
+  ar.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION);
+  
+  ar.addEventListener('markerNum', function (ev) {
+    console.log('got markers', markerNum);
+  });
+  ar.addEventListener('getMarker', function (ev) {
+    console.log('found marker?', ev);
+  });
+  ar.loadMarker('Data/patt.hiro', function (marker) {
+    console.log('loaded marker', marker);
+    ar.process(img);
+  });
+};
+
+param.src = 'Data/camera_para.dat';
         </script>
     </head>
     <body>
