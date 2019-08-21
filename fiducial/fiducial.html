@@ -11,10 +11,12 @@
 	            }
             });
 
-            var arController = new ARController(video, 'Data/camera_para.dat');
-            arController.onload = function() {
+            var camera = new ARCameraParam('Data/camera_para.dat');
+            camera.onload = function() {
+	            var arController = new ARController(video.videoWidth, video.videoHeight, camera);
 	            console.log('ARController ready for use', arController);
             };
+
         </script>
     </head>
     <body>
