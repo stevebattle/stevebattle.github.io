@@ -1,6 +1,15 @@
 <html>
     <head>
         <script src="build/artoolkit.min.js"></script>
+        <script>
+            var video = ARController.getUserMedia({
+	            maxARVideoSize: 320, // do AR processing on scaled down video of this size
+	            facing: "environment",
+	            onSuccess: function(video) {
+		            console.log('got video', video);
+	            }
+            });
+        </script>
     </head>
     <body>
         jsartoolkit
