@@ -1,0 +1,75 @@
+<html>
+<body>
+<style>
+video {
+	transform: scale(-1, 1);
+}
+
+canvas {
+	transform: scale(-1, 1);
+}
+</style>
+
+<script src="../build/artoolkit.debug.js"></script>
+<script src="../js/artoolkit.api.js"></script>
+
+<script>
+var video = document.createElement('video');
+
+document.body.appendChild(video);
+
+navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+var tw = 1280 / 2;
+var th = 720 / 2;
+
+var hdConstraints = {
+	audio: false,
+	video: {
+		mandatory: {
+			maxWidth: tw,
+			maxHeight: th
+    	}
+  	}
+};
+
+if (navigator.getUserMedia) {
+	navigator.getUserMedia(hdConstraints, success, errorCallback);
+} else {
+	errorCallback('');
+}
+
+function errorCallback(e) {
+	console.log("Can't access user media", e);
+}
+
+
+function success(stream) {
+	console.log('success', stream);
+	video.src = window.URL.createObjectURL(stream);
+	video.onclick = function() { video.play(); };
+	video.play();
+
+	var cameraParam = new ARCameraParam();
+	cameraParam.onload = function() {
+		
+		var arController;
+
+		var interval = setInterval(function() {
+			if (!video.videoWidth)	return;
+
+			if (!arController) {
+				arController = new ARController(video, cameraParam);
+				arController.debugSetup();
+			}
+
+			arController.process();
+		}, 16);
+
+	};
+	cameraParam.src = 'Data/camera_para.dat';
+}
+</script>
+
+</body>
+</html>
