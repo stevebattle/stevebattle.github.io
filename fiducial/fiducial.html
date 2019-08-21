@@ -2,6 +2,7 @@
     <head>
         <script src="build/artoolkit.min.js"></script>
         <script>
+            // navigator.getUserMedia is not supported on Safari (works in Chrome)
             var video = ARController.getUserMedia({
 	            maxARVideoSize: 320, // do AR processing on scaled down video of this size
 	            facing: "environment",
@@ -9,6 +10,11 @@
 		            console.log('got video', video);
 	            }
             });
+
+            var arController = new ARController(video, 'Data/camera_para.dat');
+            arController.onload = function() {
+	            console.log('ARController ready for use', arController);
+            };
         </script>
     </head>
     <body>
