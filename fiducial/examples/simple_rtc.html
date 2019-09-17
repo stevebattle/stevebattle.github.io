@@ -59,7 +59,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					var id = ev.data.marker.idMatrix;
 					var pos = ev.data.marker.pos;
 					var vertex = ev.data.marker.vertex;
-					console.log(pos[0],pos[1]);
+					console.log(tw-pos[0],pos[1]);
 
 					var ctx = canvas.getContext('2d');
 					ctx.save();
@@ -69,7 +69,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 
 					ctx.font = "20px Arial";
 					// reverse text
-					ctx.translate(-pos[0], pos[1]);
+					ctx.translate(tw-pos[0], pos[1]);
 					ctx.fillText(id, 0, 0);
 
 					// ctx.beginPath();
