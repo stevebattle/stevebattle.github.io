@@ -70,7 +70,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					// reverse text
 					canvas.translate(pos[0], pos[1]);
 					canvas.scale(-1, 1);
-					ctx.fillText("text", 0, 0);
+					ctx.fillText(id, 0, 0);
 
 					// ctx.beginPath();
 					// ctx.arc(pos[0], pos[1], 8, 0, Math.PI * 2);
