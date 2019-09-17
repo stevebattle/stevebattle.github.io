@@ -13,8 +13,8 @@ canvas {
 <script src="../build/artoolkit.debug.js"></script>
 <script src="../js/artoolkit.api.js"></script>
 
-<video id="video"></video> 
-<canvas id="canvas"></canvas>
+<div><video id="video"></video></div>
+<div><canvas id="canvas"></canvas></div>
 
 <script>
 
@@ -61,14 +61,13 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					var vertex = ev.data.marker.vertex;
 					console.log(pos);
 
-
 					var ctx = canvas.getContext('2d');
 
 					// clear canvas
 					ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 					ctx.font = "30px Arial";
-					ctx.fillText(id, pos[0], pos[1]);
+					ctx.fillText("text", pos[0], pos[1]);
 
 					// ctx.beginPath();
 					// ctx.arc(pos[0], pos[1], 8, 0, Math.PI * 2);
