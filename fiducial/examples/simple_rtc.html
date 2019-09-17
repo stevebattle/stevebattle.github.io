@@ -53,13 +53,10 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 				arController.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_4x4);
 				arController.addEventListener('getMarker', function(ev) {
 					var barcodeId = ev.data.marker.idMatrix;
+					var position = ev.data.marker.pos;
+					console.log(position);
 					if (barcodeId !== -1) {
 						console.log("saw a barcode marker with id", barcodeId);
-
-						// Note that you need to copy the values of the transformation matrix,
-						// as the event transformation matrix is reused for each marker event
-						// sent by an ARController.
-						//
 						var transform = ev.data.matrix;
 						if (!detectedBarcodeMarkers[barcodeId]) {
 							detectedBarcodeMarkers[barcodeId] = {
@@ -68,7 +65,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 							}
 						}
 						detectedBarcodeMarkers[barcodeId].visible = true;
-						detectedBarcodeMarkers[barcodeId].matrix.set(transform);
+						detectedBarcodeMarkers[barcodeId].matrix.set(transform); // copy matrix
 
 					}
 				});
