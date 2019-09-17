@@ -62,13 +62,14 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					console.log(pos);
 
 					var ctx = canvas.getContext('2d');
+					ctx.save();
 
 					// clear canvas
 					ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 					ctx.font = "20px Arial";
 					// reverse text
-					ctx.fillText(id, -pos[0], pos[1]);
+					ctx.fillText(id, pos[0], pos[1]);
 
 					// ctx.beginPath();
 					// ctx.arc(pos[0], pos[1], 8, 0, Math.PI * 2);
