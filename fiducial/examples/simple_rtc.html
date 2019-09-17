@@ -61,7 +61,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					console.log(position);
 
 					var canvas = document.querySelector('canvas');
-					var ctx = canvas.getContext();
+					var ctx = canvas.getContext('2d');
 
 					ctx.beginPath();
 					ctx.arc(pos[0], pos[1], 8, 0, Math.PI * 2);
