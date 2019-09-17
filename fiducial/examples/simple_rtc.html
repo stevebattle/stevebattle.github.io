@@ -42,29 +42,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 	cameraParam.onload = function() {
 		
 		var arController;
-		arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
-
-		arController.addEventListener('getMarker', function(ev) {
-			var barcodeId = ev.data.marker.idMatrix;
-			if (barcodeId !== -1) {
-				console.log("saw a barcode marker with id", barcodeId);
-
-				// Note that you need to copy the values of the transformation matrix,
-				// as the event transformation matrix is reused for each marker event
-				// sent by an ARController.
-				//
-				var transform = ev.data.matrix;
-				if (!detectedBarcodeMarkers[barcodeId]) {
-					detectedBarcodeMarkers[barcodeId] = {
-						visible: true,
-						matrix: new Float32Array(16)
-					}
-				}
-				detectedBarcodeMarkers[barcodeId].visible = true;
-				detectedBarcodeMarkers[barcodeId].matrix.set(transform);
-
-			}
-		});
 
 		var interval = setInterval(function() {
 			if (!video.videoWidth)	return;
@@ -72,8 +49,29 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 			if (!arController) {
 				arController = new ARController(video, cameraParam);
 				arController.debugSetup();
-			}
+				arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
+				arController.addEventListener('getMarker', function(ev) {
+					var barcodeId = ev.data.marker.idMatrix;
+					if (barcodeId !== -1) {
+						console.log("saw a barcode marker with id", barcodeId);
 
+						// Note that you need to copy the values of the transformation matrix,
+						// as the event transformation matrix is reused for each marker event
+						// sent by an ARController.
+						//
+						var transform = ev.data.matrix;
+						if (!detectedBarcodeMarkers[barcodeId]) {
+							detectedBarcodeMarkers[barcodeId] = {
+								visible: true,
+								matrix: new Float32Array(16)
+							}
+						}
+						detectedBarcodeMarkers[barcodeId].visible = true;
+						detectedBarcodeMarkers[barcodeId].matrix.set(transform);
+
+					}
+				});
+			}
 			arController.process();
 		}, 16);
 
