@@ -36,7 +36,7 @@ var detectedBarcodeMarkers = {};
 navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
 	var video = document.querySelector('video');
 	video.srcObject = stream;
-	//video.play();
+	video.play();
 
 	var cameraParam = new ARCameraParam();
 	cameraParam.onload = function() {
