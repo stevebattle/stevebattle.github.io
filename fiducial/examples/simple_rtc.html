@@ -18,9 +18,6 @@ var video = document.createElement('video');
 
 document.body.appendChild(video);
 
-//navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-navigator.getUserMedia = navigator.mediaDevices.getUserMedia
-
 var tw = 1280 / 2;
 var th = 720 / 2;
 
@@ -37,12 +34,13 @@ var hdConstraints = {
 navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
 	var video = document.querySelector('video');
 	video.srcObject = stream;
-	video.play();
+	//video.play();
 
 	var cameraParam = new ARCameraParam();
 	cameraParam.onload = function() {
 		
 		var arController;
+		arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
 
 		var interval = setInterval(function() {
 			if (!video.videoWidth)	return;
@@ -64,32 +62,6 @@ function errorCallback(e) {
 	console.log("Can't access user media", e);
 }
 
-
-function success(stream) {
-	console.log('success', stream);
-	video.src = window.URL.createObjectURL(stream);
-	video.onclick = function() { video.play(); };
-	video.play();
-
-	var cameraParam = new ARCameraParam();
-	cameraParam.onload = function() {
-		
-		var arController;
-
-		var interval = setInterval(function() {
-			if (!video.videoWidth)	return;
-
-			if (!arController) {
-				arController = new ARController(video, cameraParam);
-				arController.debugSetup();
-			}
-
-			arController.process();
-		}, 16);
-
-	};
-	cameraParam.src = 'Data/camera_para.dat';
-}
 </script>
 
 </body>
