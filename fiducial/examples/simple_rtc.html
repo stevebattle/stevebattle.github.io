@@ -13,10 +13,13 @@ canvas {
 <script src="../build/artoolkit.debug.js"></script>
 <script src="../js/artoolkit.api.js"></script>
 
-<script>
-var video = document.createElement('video');
+<video id="video"></video> 
+<canvas id="canvas"></canvas>
 
-document.body.appendChild(video);
+<script>
+//var video = document.createElement('video');
+
+//document.body.appendChild(video);
 
 var tw = 1280 / 2;
 var th = 720 / 2;
@@ -54,7 +57,17 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 				arController.addEventListener('getMarker', function(ev) {
 					var barcodeId = ev.data.marker.idMatrix;
 					var position = ev.data.marker.pos;
+					var vertex = ev.data.marker.vertex;
 					console.log(position);
+
+					var canvas = document.querySelector('canvas');
+					var ctx = canvas.getContext();
+
+					ctx.beginPath();
+					ctx.arc(pos[0], pos[1], 8, 0, Math.PI * 2);
+					ctx.fillStyle = 'red';
+					ctx.fill();
+
 					if (barcodeId !== -1) {
 						console.log("saw a barcode marker with id", barcodeId);
 						var transform = ev.data.matrix;
