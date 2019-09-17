@@ -64,10 +64,16 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 
 					var ctx = canvas.getContext('2d');
 
-					ctx.beginPath();
-					ctx.arc(pos[0], pos[1], 8, 0, Math.PI * 2);
-					ctx.fillStyle = 'red';
-					ctx.fill();
+					// clear canvas
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+					ctx.font = "30px Arial";
+					ctx.fillText(id, pos[0], pos[1]);
+
+					// ctx.beginPath();
+					// ctx.arc(pos[0], pos[1], 8, 0, Math.PI * 2);
+					// ctx.fillStyle = 'red';
+					// ctx.fill();
 
 					if (id !== -1) {
 						console.log("saw a barcode marker with id", id);
