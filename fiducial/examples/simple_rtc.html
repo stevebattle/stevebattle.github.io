@@ -50,6 +50,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 				arController = new ARController(video, cameraParam);
 				arController.debugSetup();
 				arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
+				artoolkit.setMatrixCodeType(artoolkit.CONSTANTS.AR_MATRIX_CODE_4x4);
 				arController.addEventListener('getMarker', function(ev) {
 					var barcodeId = ev.data.marker.idMatrix;
 					if (barcodeId !== -1) {
