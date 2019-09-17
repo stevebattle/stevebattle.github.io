@@ -17,9 +17,6 @@ canvas {
 <canvas id="canvas"></canvas>
 
 <script>
-//var video = document.createElement('video');
-
-//document.body.appendChild(video);
 
 var tw = 1280 / 2;
 var th = 720 / 2;
@@ -35,6 +32,10 @@ var hdConstraints = {
 };
 
 var detectedBarcodeMarkers = {};
+
+var canvas = document.querySelector('canvas');
+canvas.height = th;
+canvas.width = tw;
 
 navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
 	var video = document.querySelector('video');
@@ -60,7 +61,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					var vertex = ev.data.marker.vertex;
 					console.log(pos);
 
-					var canvas = document.querySelector('canvas');
+
 					var ctx = canvas.getContext('2d');
 
 					ctx.beginPath();
