@@ -58,7 +58,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					var id = ev.data.marker.idMatrix;
 					var pos = ev.data.marker.pos;
 					var vertex = ev.data.marker.vertex;
-					console.log(position);
+					console.log(pos);
 
 					var canvas = document.querySelector('canvas');
 					var ctx = canvas.getContext('2d');
