@@ -13,6 +13,7 @@ canvas {
 <script src="../build/artoolkit.debug.js"></script>
 <script src="../js/artoolkit.api.js"></script>
 
+<video id="video"></video> 
 <script>
 var video = document.createElement('video');
 
@@ -31,18 +32,17 @@ var hdConstraints = {
   	}
 };
 
-navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
-    var video = document.createElement('video');
+var video = document.getElementById('video');
     video.style.width = document.width + 'px';
     video.style.height = document.height + 'px';
     video.setAttribute('autoplay', '');
     video.setAttribute('muted', '');
     video.setAttribute('playsinline', '');
-    document.body.appendChild(video);
 
-	var video = document.querySelector('video');
+navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
+	//var video = document.querySelector('video');
 	video.srcObject = stream;
-    video.play();
+    //video.play();
 
 	var cameraParam = new ARCameraParam();
 	cameraParam.onload = function() {
