@@ -34,11 +34,31 @@ var hdConstraints = {
   	}
 };
 
-if (navigator.getUserMedia) {
-	navigator.getUserMedia(hdConstraints, success, errorCallback);
-} else {
-	errorCallback('');
-}
+navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
+	var video = document.querySelector('video');
+	video.srcObject = stream;
+	video.play();
+
+	var cameraParam = new ARCameraParam();
+	cameraParam.onload = function() {
+		
+		var arController;
+
+		var interval = setInterval(function() {
+			if (!video.videoWidth)	return;
+
+			if (!arController) {
+				arController = new ARController(video, cameraParam);
+				arController.debugSetup();
+			}
+
+			arController.process();
+		}, 16);
+
+	};
+	cameraParam.src = 'Data/camera_para.dat';
+});
+
 
 function errorCallback(e) {
 	console.log("Can't access user media", e);
