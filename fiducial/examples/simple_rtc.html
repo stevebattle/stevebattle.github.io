@@ -55,8 +55,8 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 				arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
 				arController.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_4x4);
 				arController.addEventListener('getMarker', function(ev) {
-					var barcodeId = ev.data.marker.idMatrix;
-					var position = ev.data.marker.pos;
+					var id = ev.data.marker.idMatrix;
+					var pos = ev.data.marker.pos;
 					var vertex = ev.data.marker.vertex;
 					console.log(position);
 
@@ -68,18 +68,17 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					ctx.fillStyle = 'red';
 					ctx.fill();
 
-					if (barcodeId !== -1) {
-						console.log("saw a barcode marker with id", barcodeId);
+					if (id !== -1) {
+						console.log("saw a barcode marker with id", id);
 						var transform = ev.data.matrix;
-						if (!detectedBarcodeMarkers[barcodeId]) {
-							detectedBarcodeMarkers[barcodeId] = {
+						if (!detectedBarcodeMarkers[id]) {
+							detectedBarcodeMarkers[id] = {
 								visible: true,
 								matrix: new Float32Array(16)
 							}
 						}
-						detectedBarcodeMarkers[barcodeId].visible = true;
-						detectedBarcodeMarkers[barcodeId].matrix.set(transform); // copy matrix
-
+						detectedBarcodeMarkers[id].visible = true;
+						detectedBarcodeMarkers[id].matrix.set(transform); // copy matrix
 					}
 				});
 			}
