@@ -69,7 +69,8 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 
 					ctx.font = "20px Arial";
 					// reverse text
-					ctx.fillText(id, pos[0], pos[1]);
+					ctx.translate(-pos[0], pos[1]);
+					ctx.fillText(id, 0, 0);
 
 					// ctx.beginPath();
 					// ctx.arc(pos[0], pos[1], 8, 0, Math.PI * 2);
