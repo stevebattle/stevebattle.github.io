@@ -41,7 +41,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 	var video = document.querySelector('video');
 	video.srcObject = stream;
 	video.play();
-	console.log("video: ",video.videoWidth, video.videoHeight);
 
 	var cameraParam = new ARCameraParam();
 	cameraParam.onload = function() {
@@ -50,6 +49,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 
 		var interval = setInterval(function() {
 			if (!video.videoWidth)	return;
+			console.log("video: ",video.videoWidth, video.videoHeight);
 
 			if (!arController) {
 				arController = new ARController(video, cameraParam);
