@@ -56,12 +56,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 				arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
 				arController.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_4x4);
 
-				arController.addEventListener('markerNum', function(ev) {
-					console.log("Detected " + ev.data + " markers.");
-					// clear canvas
-					ctx.clearRect(0, 0, video.videoWidth, video.videoHeight);
-				});
-
 				arController.addEventListener('getMarker', function(ev) {
 					var id = ev.data.marker.idMatrix;
 					var index = ev.data.index;
@@ -70,6 +64,10 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					console.log(tw-pos[0],pos[1]);
 
 					var ctx = canvas.getContext('2d');
+
+					if (index==0) { // clear canvas if this is the first marker
+						ctx.clearRect(0, 0, video.videoWidth, video.videoHeight);
+					}
 					ctx.save();
 					ctx.font = "20px Arial";
 					// reverse text
