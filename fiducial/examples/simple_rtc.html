@@ -78,6 +78,8 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// mirror text
 						ctx.scale(-1, 1);
 						ctx.font = "20px Arial";
+						ctx.textAlign = 'center';
+						ctx.textBaseline = 'middle'; 
 						ctx.fillText(id, 0, 0);
 						ctx.restore();
 
