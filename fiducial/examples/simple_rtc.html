@@ -64,7 +64,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 
 				arController.addEventListener('getMarker', function(ev) {
 					var id = ev.data.marker.idMatrix;
-					var index = ev.data.marker.index;
+					var index = ev.data.index;
 					var pos = ev.data.marker.pos;
 					var vertex = ev.data.marker.vertex;
 					console.log(tw-pos[0],pos[1]);
