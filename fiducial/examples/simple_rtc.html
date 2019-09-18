@@ -41,6 +41,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 	var video = document.querySelector('video');
 	video.srcObject = stream;
 	video.play();
+	console.log("video: ",video.videoWidth, video.videoHeight);
 
 	var cameraParam = new ARCameraParam();
 	cameraParam.onload = function() {
@@ -61,17 +62,17 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					var index = ev.data.index;
 					var pos = ev.data.marker.pos;
 					var vertex = ev.data.marker.vertex;
-					console.log(tw-pos[0],pos[1]);
+					console.log(pos[0],pos[1]);
 
 					var ctx = canvas.getContext('2d');
 
 					if (index==0) { // clear canvas if this is the first marker
-						ctx.clearRect(0, 0, video.videoWidth, video.videoHeight);
+						ctx.clearRect(0, 0, tw, th);
 					}
 					ctx.save();
 					ctx.font = "20px Arial";
 					// reverse text
-					ctx.translate(tw-pos[0], pos[1]);
+					ctx.translate(pos[0], pos[1]);
 					ctx.scale(-1, 1);
 					ctx.fillText(id, 0, 0);
 					ctx.restore();
