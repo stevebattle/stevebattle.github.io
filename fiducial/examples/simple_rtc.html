@@ -71,8 +71,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					}
 
 					if (id !== -1) {
-						console.log("saw a barcode marker with id", id);
-
+						// plot ID
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
 						// mirror text
@@ -83,7 +82,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.fillText(id, 0, 0);
 						ctx.restore();
 
-						// outline
+						// bounding box
 						ctx.beginPath();
 						ctx.moveTo(vertex[0][0], vertex[0][1]);
 						ctx.lineTo(vertex[1][0], vertex[1][1]);
