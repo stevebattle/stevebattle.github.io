@@ -65,7 +65,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					//console.log(pos[0],pos[1]);
 
 					var ctx = canvas.getContext('2d');
-
 					if (index==0) { // clear canvas if this is the first marker
 						ctx.clearRect(0, 0, canvas.width, canvas.height);
 					}
@@ -89,6 +88,12 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.lineTo(vertex[2][0], vertex[2][1]);
 						ctx.lineTo(vertex[3][0], vertex[3][1]);
 						ctx.closePath();
+						ctx.stroke();
+
+						// line
+						ctx.beginPath();
+						ctx.moveTo(0, 0);
+						ctx.lineTo(10, 10);
 						ctx.stroke();
 
 						var transform = ev.data.matrix;
