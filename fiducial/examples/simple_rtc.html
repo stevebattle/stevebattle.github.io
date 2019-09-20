@@ -103,9 +103,9 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
 
-						var shear = multiplyMatrixVector(transform,[1,1,0,1]);
-						var sx = shear[0], sy = shear[1];
-						ctx.transform(1,sy,sx,1,0,0);
+						//var shear = multiplyMatrixVector(transform,[1,1,0,1]);
+						//var sx = shear[0], sy = shear[1];
+						//ctx.transform(1,sy,sx,1,0,0);
 						
 						// see rotate matrix for cos, sin
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
