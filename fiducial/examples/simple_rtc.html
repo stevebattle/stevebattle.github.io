@@ -37,29 +37,7 @@ var canvas = document.querySelector('canvas');
 canvas.height = th;
 canvas.width = tw;
 
-// glMatrix matrices are flat arrays.
-var tmp = new Float32Array(16);
-
-function convertMarkerMatrix(arMat, glMat) {
-  glMat[0] = arMat.m00;
-  glMat[1] = -arMat.m10;
-  glMat[2] = arMat.m20;
-  glMat[3] = 0;
-  glMat[4] = arMat.m01;
-  glMat[5] = -arMat.m11;
-  glMat[6] = arMat.m21;
-  glMat[7] = 0;
-  glMat[8] = -arMat.m02;
-  glMat[9] = arMat.m12;
-  glMat[10] = -arMat.m22;
-  glMat[11] = 0;
-  glMat[12] = arMat.m03;
-  glMat[13] = -arMat.m13;
-  glMat[14] = arMat.m23;
-  glMat[15] = 1;
-};
-
-function multiplyMatrixAndPoint(matrix, point) {
+function multiplyMatrixVector(matrix, point) {
   
   //Give a simple variable name to each part of the matrix, a column and row number
   var c0r0 = matrix[ 0], c1r0 = matrix[ 1], c2r0 = matrix[ 2], c3r0 = matrix[ 3];
@@ -113,7 +91,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					var index = ev.data.index;
 					var pos = ev.data.marker.pos;
 					var vertex = ev.data.marker.vertex;
-					//console.log(pos[0],pos[1]);
+					var transform = ev.data.matrix;
 
 					var ctx = canvas.getContext('2d');
 					if (index==0) { // clear canvas if this is the first marker
@@ -124,6 +102,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// plot ID
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
+						ctx.rotate(Math.acos(transform[0]));
 						// mirror text
 						ctx.scale(-1, 1);
 						ctx.font = "20px Arial";
@@ -141,20 +120,15 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.closePath();
 						ctx.stroke();
 
-						var transform = ev.data.matrix;
 
 						// line
-						// https://www.html5rocks.com/en/tutorials/webgl/jsartoolkit_webrtc/
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
-						//convertMarkerMatrix(transform,tmp);
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
 						ctx.beginPath();
 						ctx.moveTo(0, 0);
-						var point = [0,100,0,1];
-						point = multiplyMatrixAndPoint(transform,point);
-						console.log(point[0],point[1]);
-						ctx.lineTo(point[0],point[1]);
+						var tip = multiplyMatrixVector(transform,[0,100,0,1]);
+						ctx.lineTo(tip[0],tip[1]);
 						ctx.stroke();
 						ctx.restore();
 
