@@ -102,7 +102,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// plot ID
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
-						var a = Math.acos(transform[0]);
+						var a = Math.atan2(transform[0],-transform[1]);
 						console.log(a);
 						ctx.rotate(a);
 						// mirror text
