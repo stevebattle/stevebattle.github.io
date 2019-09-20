@@ -57,7 +57,7 @@ function convertMarkerMatrix(arMat, glMat) {
   glMat[13] = -arMat.m13;
   glMat[14] = arMat.m23;
   glMat[15] = 1;
-}
+};
 
 function multiply(a, b) {
     var b00 = b[0 * 4 + 0];
@@ -109,7 +109,7 @@ function multiply(a, b) {
     dst[14] = b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32;
     dst[15] = b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33;
     return dst;
-  },
+  };
 
 navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
 	var video = document.querySelector('video');
