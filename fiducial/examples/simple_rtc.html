@@ -97,9 +97,9 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.translate(pos[0], pos[1]);
 
 						var vert = multiplyMatrixVector(transform,[0,1,0,1]);
-						var vscale = Math.sqrt(Math.pow(vert[0],2)+Math.pow(vert[1],2));
+						var yscale = Math.sqrt(Math.pow(vert[0],2)+Math.pow(vert[1],2));
 						var hori = multiplyMatrixVector(transform,[1,0,0,1]);
-						var hscale = Math.sqrt(Math.pow(hori[0],2)+Math.pow(hori[1],2));
+						var xscale = Math.sqrt(Math.pow(hori[0],2)+Math.pow(hori[1],2));
 						//console.log(hori,vert);
 						//ctx.scale(xscale,yscale);
 
@@ -108,7 +108,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
 						ctx.rotate(a);
 						// mirror text
-						ctx.scale(-hscale, yscale);
+						ctx.scale(-xscale, yscale);
 						ctx.font = "20px Arial";
 						ctx.textAlign = 'center';
 						ctx.textBaseline = 'middle';
