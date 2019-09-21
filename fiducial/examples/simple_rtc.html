@@ -96,11 +96,11 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
 
-						var yvec = multiplyMatrixVector(transform,[0,1,0,1]);
-						var yscale = Math.sqrt(Math.pow(yvec[0],2)+Math.pow(yvec[1],2));
-						var xvec = multiplyMatrixVector(transform,[1,0,0,1]);
-						var xscale = Math.sqrt(Math.pow(xvec[0],2)+Math.pow(xvec[1],2));
-						console.log(xvec,yvec);
+						var vert = multiplyMatrixVector(transform,[0,1,0,1]);
+						var vscale = Math.sqrt(Math.pow(vert[0],2)+Math.pow(vert[1],2));
+						var hori = multiplyMatrixVector(transform,[1,0,0,1]);
+						var hscale = Math.sqrt(Math.pow(hori[0],2)+Math.pow(hori[1],2));
+						//console.log(hori,vert);
 						//ctx.scale(xscale,yscale);
 
 						// see rotate matrix for cos, sin
@@ -108,7 +108,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
 						ctx.rotate(a);
 						// mirror text
-						ctx.scale(-xscale, yscale);
+						ctx.scale(-hscale, yscale);
 						ctx.font = "20px Arial";
 						ctx.textAlign = 'center';
 						ctx.textBaseline = 'middle';
@@ -132,6 +132,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.beginPath();
 						ctx.moveTo(0, 0);
 						var tip = multiplyMatrixVector(transform,[0,100,0,1]);
+						console.log(tip);
 						ctx.lineTo(tip[0],tip[1]);
 						ctx.stroke();
 						ctx.restore();
