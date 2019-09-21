@@ -97,22 +97,23 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
 
-						var vert = multiplyMatrixVector(transform,[0,100,0,1]);
-						var yscale = Math.sqrt(vert[0]*vert[0]+vert[1]*vert[1])/100;
-						var hori = multiplyMatrixVector(transform,[100,0,0,1]);
-						var xscale = Math.sqrt(hori[0]*hori[0]+hori[1]*hori[1])/100;
-
-						// fiducual distance is the z value
-						var dist = transform[14];
-						var sc = (1 - dist/SCALEA) * SCALEB;
-
 						// see rotate matrix for cos, sin
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
 						var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
 						ctx.rotate(a);
-						// mirror text (-ve x) and tilt x,y
-						ctx.scale(-xscale*sc, yscale*sc);
+
+						// scale
+						var v = multiplyMatrixVector(transform,[0,100,0,1]);
+						var yscale = Math.sqrt(v[0]*v[0]+v[1]*v[1])/100;
+						var h = multiplyMatrixVector(transform,[100,0,0,1]);
+						var xscale = Math.sqrt(h[0]*h[0]+h[1]*h[1])/100;
+						// fiducual distance is the z value (transform[14])
+						var zscale = (1 - transform[14]/SCALEA) * SCALEB;
+						// mirror text (-ve x), tilt x,y and distance z
+						ctx.scale(-xscale*zscale, yscale*zscale);
+
 						ctx.font = "20px Arial";
+						// centre horizontally and vertically
 						ctx.textAlign = 'center';
 						ctx.textBaseline = 'middle';
 						ctx.fillText(id, 0, 0);
@@ -127,8 +128,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.closePath();
 						ctx.stroke();
 
-
-						// line
+						// vertical line
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
 						// ctx.save();
 						// ctx.translate(pos[0], pos[1]);
@@ -138,7 +138,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// ctx.lineTo(tip[0],tip[1]);
 						// ctx.stroke();
 						// ctx.restore();
-
 
 						if (!detectedBarcodeMarkers[id]) {
 							detectedBarcodeMarkers[id] = {
