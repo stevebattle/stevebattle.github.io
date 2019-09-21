@@ -130,14 +130,14 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 
 						// line
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
-						ctx.save();
-						ctx.translate(pos[0], pos[1]);
-						ctx.beginPath();
-						ctx.moveTo(0, 0);
-						var tip = multiplyMatrixVector(transform,[0,100,0,1]);
-						ctx.lineTo(tip[0],tip[1]);
-						ctx.stroke();
-						ctx.restore();
+						// ctx.save();
+						// ctx.translate(pos[0], pos[1]);
+						// ctx.beginPath();
+						// ctx.moveTo(0, 0);
+						// var tip = multiplyMatrixVector(transform,[0,100,0,1]);
+						// ctx.lineTo(tip[0],tip[1]);
+						// ctx.stroke();
+						// ctx.restore();
 
 
 						if (!detectedBarcodeMarkers[id]) {
