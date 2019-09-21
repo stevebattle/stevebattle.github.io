@@ -100,7 +100,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						var yscale = Math.sqrt(Math.pow(vert[0],2)+Math.pow(vert[1],2));
 						var hori = multiplyMatrixVector(transform,[1,0,0,1]);
 						var xscale = Math.sqrt(Math.pow(hori[0],2)+Math.pow(hori[1],2));
-						//console.log(hori,vert);
+						console.log(vert);
 						//ctx.scale(xscale,yscale);
 
 						// see rotate matrix for cos, sin
@@ -132,7 +132,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.beginPath();
 						ctx.moveTo(0, 0);
 						var tip = multiplyMatrixVector(transform,[0,100,0,1]);
-						console.log(tip);
 						ctx.lineTo(tip[0],tip[1]);
 						ctx.stroke();
 						ctx.restore();
