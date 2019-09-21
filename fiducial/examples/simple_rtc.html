@@ -100,14 +100,18 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						var yscale = Math.sqrt(vert[0]*vert[0]+vert[1]*vert[1])/100;
 						var hori = multiplyMatrixVector(transform,[100,0,0,1]);
 						var xscale = Math.sqrt(hori[0]*hori[0]+hori[1]*hori[1])/100;
-						console.log(vert);
+						//console.log(vert);
 						//ctx.scale(xscale,yscale);
+
+						// fiducual distance is the z value
+						var dist = transform[14];
+						console.log(dist);
 
 						// see rotate matrix for cos, sin
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
 						var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
 						ctx.rotate(a);
-						// mirror text
+						// mirror text (-ve x) and tilt x,y
 						ctx.scale(-xscale, yscale);
 						ctx.font = "20px Arial";
 						ctx.textAlign = 'center';
