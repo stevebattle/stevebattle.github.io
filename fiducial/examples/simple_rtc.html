@@ -20,7 +20,7 @@ canvas {
 
 var tw = 1280 / 2;
 var th = 720 / 2;
-var SCALEA = 16, SCALEB = 3;
+var SCALEA = 16, SCALEB = 2;
 
 var hdConstraints = {
 	audio: false,
@@ -104,7 +104,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 
 						// fiducual distance is the z value
 						var dist = transform[14];
-						console.log(dist);
 						var sc = (1 - dist/SCALEA) * SCALEB;
 
 						// see rotate matrix for cos, sin
