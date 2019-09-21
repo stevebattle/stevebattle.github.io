@@ -101,14 +101,14 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						var xvec = multiplyMatrixVector(transform,[1,0,0,1]);
 						var xscale = Math.sqrt(Math.pow(xvec[0],2)+Math.pow(xvec[1],2));
 						console.log(xscale,yscale);
-						ctx.scale(xscale,yscale);
+						//ctx.scale(xscale,yscale);
 
 						// see rotate matrix for cos, sin
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
 						var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
 						ctx.rotate(a);
 						// mirror text
-						ctx.scale(-1, 1);
+						ctx.scale(-xscale, yscale);
 						ctx.font = "20px Arial";
 						ctx.textAlign = 'center';
 						ctx.textBaseline = 'middle';
