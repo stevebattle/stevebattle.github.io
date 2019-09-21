@@ -96,10 +96,10 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
 
-						var vert = multiplyMatrixVector(transform,[0,1,0,1]);
-						var yscale = Math.sqrt(Math.pow(vert[0],2)+Math.pow(vert[1],2));
-						var hori = multiplyMatrixVector(transform,[1,0,0,1]);
-						var xscale = Math.sqrt(Math.pow(hori[0],2)+Math.pow(hori[1],2));
+						var vert = multiplyMatrixVector(transform,[0,100,0,1]);
+						var yscale = Math.sqrt(vert[0]*vert[0]+vert[1]*vert[1])/100;
+						var hori = multiplyMatrixVector(transform,[100,0,0,1]);
+						var xscale = Math.sqrt(hori[0]*hori[0]+hori[1]*hori[1])/100;
 						console.log(vert);
 						//ctx.scale(xscale,yscale);
 
