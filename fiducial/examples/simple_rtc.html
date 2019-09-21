@@ -20,6 +20,7 @@ canvas {
 
 var tw = 1280 / 2;
 var th = 720 / 2;
+var SCALEA = 16, SCALEB = 100;
 
 var hdConstraints = {
 	audio: false,
@@ -100,12 +101,13 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						var yscale = Math.sqrt(vert[0]*vert[0]+vert[1]*vert[1])/100;
 						var hori = multiplyMatrixVector(transform,[100,0,0,1]);
 						var xscale = Math.sqrt(hori[0]*hori[0]+hori[1]*hori[1])/100;
-						//console.log(vert);
-						//ctx.scale(xscale,yscale);
 
 						// fiducual distance is the z value
 						var dist = transform[14];
 						console.log(dist);
+						var sc = (1 - dist/SCALEA) * SCALEB;
+						xscale *= sc;
+						yscale *= sc;
 
 						// see rotate matrix for cos, sin
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
