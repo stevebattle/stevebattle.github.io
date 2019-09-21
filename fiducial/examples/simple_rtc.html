@@ -97,9 +97,9 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.translate(pos[0], pos[1]);
 
 						var yvec = multiplyMatrixVector(transform,[0,1,0,1]);
-						var yscale = Math.sqrt(Math.pow(yvec[0],2),Math.pow(yvec[0],2));
+						var yscale = Math.sqrt(Math.pow(yvec[0],2),Math.pow(yvec[1],2));
 						var xvec = multiplyMatrixVector(transform,[1,0,0,1]);
-						var xscale = Math.sqrt(Math.pow(xvec[0],2),Math.pow(xvec[0],2));
+						var xscale = Math.sqrt(Math.pow(xvec[0],2),Math.pow(xvec[1],2));
 						console.log(xscale,yscale);
 						ctx.scale(xscale,yscale);
 
