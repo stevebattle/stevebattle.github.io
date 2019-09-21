@@ -96,15 +96,16 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
 
-						// shear
-						var sx = 0, sy = 0.5
-						ctx.transform(1,sy,sx,1,0,0);
-						
+						var yvec = multiplyMatrixVector(transform,[0,1,0,1]);
+						var yscale = Math.sqrt(Math.sqr(yvec[0]),Math.sqr(yvec[0]));
+						var xvec = multiplyMatrixVector(transform,[1,0,0,1]);
+						var xscale = Math.sqrt(Math.sqr(xvec[0]),Math.sqr(xvec[0]));
+						ctx.scale(xscale,yscale);
+
 						// see rotate matrix for cos, sin
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
 						var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
 						ctx.rotate(a);
-
 						// mirror text
 						ctx.scale(-1, 1);
 						ctx.font = "20px Arial";
