@@ -7,9 +7,20 @@
 }
 
 video {
+    width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 canvas {
+    width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
 }
 </style>
 
@@ -17,10 +28,8 @@ canvas {
 <script src="../js/artoolkit.api.js"></script>
 
 <div class="container">
-    <video id="video"></video>
-</div>
-<div>
-	<canvas id="canvas"></canvas>
+    <video></video>
+	<canvas></canvas>
 </div>
 
 <script>
