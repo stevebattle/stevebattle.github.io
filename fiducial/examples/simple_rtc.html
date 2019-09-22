@@ -112,8 +112,9 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// plot ID
 						ctx.save();
 						//ctx.translate(pos[0], pos[1]);
-						var label = multiplyMatrixVector(transform,[0,-50,0,1]);
-						ctx.translate(pos[0]+label[0], pos[1]+label[1]);
+						//var label = multiplyMatrixVector(transform,[0,-50,0,1]);
+						//ctx.translate(pos[0]+label[0], pos[1]+label[1]);
+						ctx.translate(vertex[3][0], vertex[3][1]);
 
 						// see rotate matrix for cos, sin
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
@@ -133,8 +134,8 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 
 						ctx.font = "20px Arial";
 						// centre horizontally
-						ctx.textAlign = 'center';
-						ctx.textBaseline = 'middle';
+						//ctx.textAlign = 'center';
+						//ctx.textBaseline = 'middle';
 						ctx.fillStyle = 'green';
 						ctx.fillText(id, 0, 0);
 						ctx.restore();
