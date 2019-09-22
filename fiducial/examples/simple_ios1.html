@@ -7,11 +7,9 @@
 }
 
 video {
-	transform: scale(-1, 1);
 }
 
 canvas {
-	transform: scale(-1, 1);
 }
 </style>
 
@@ -19,7 +17,9 @@ canvas {
 <script src="../js/artoolkit.api.js"></script>
 
 <div class="container">
-	<video id="video"></video>
+    <video id="video"></video>
+</div>
+<div>
 	<canvas id="canvas"></canvas>
 </div>
 
@@ -115,7 +115,7 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						var zscale = (1 - transform[14]/SCALEA) * SCALEB;
 						// the canvas is mirrored (see style) but text isn't
 						// mirror text (-ve x), tilt x,y and distance z
-						ctx.scale(-xscale*zscale, yscale*zscale);
+						ctx.scale(xscale*zscale, yscale*zscale);
 
 						ctx.font = "20px Arial";
 						// centre horizontally and vertically
