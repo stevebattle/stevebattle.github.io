@@ -52,10 +52,8 @@ var hdConstraints = {
   	}
 };
 
-var detectedBarcodeMarkers = {};
-
+var video = document.querySelector('video');
 var canvas = document.querySelector('canvas');
-
 
 function multiplyMatrixVector(matrix, point) {
   //Give a simple variable name to each part of the matrix, a column and row number
@@ -80,7 +78,6 @@ function multiplyMatrixVector(matrix, point) {
 }
 
 navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
-	var video = document.querySelector('video');
 	video.srcObject = stream;
 	video.play();
 
@@ -161,18 +158,17 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// ctx.stroke();
 						// ctx.restore();
 
-						if (!detectedBarcodeMarkers[id]) {
-							detectedBarcodeMarkers[id] = {
-								visible: true,
-								matrix: new Float32Array(16)
-							}
-						}
-						detectedBarcodeMarkers[id].visible = true;
-						detectedBarcodeMarkers[id].matrix.set(transform); // copy matrix
+						// if (!detectedBarcodeMarkers[id]) {
+						// 	detectedBarcodeMarkers[id] = {
+						// 		visible: true,
+						// 		matrix: new Float32Array(16)
+						// 	}
+						// }
+						//detectedBarcodeMarkers[id].visible = true;
+						//detectedBarcodeMarkers[id].matrix.set(transform); // copy matrix
 					}
 				});
 			}
-
 			arController.process();
 		}, 16);
 
