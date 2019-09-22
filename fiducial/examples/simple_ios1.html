@@ -8,21 +8,10 @@
 
 video {
 	transform: scale(-1, 1);
-	width: 100%;
-	height: auto;
-	position: absolute;
-	top: 0;
-	left: 0;
 }
 
 canvas {
 	transform: scale(-1, 1);
-	width: 100%;
-	height: auto;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 10;
 }
 </style>
 
@@ -51,7 +40,7 @@ video.setAttribute('playsinline', '');
 var hdConstraints = {
 	audio: false,
 	video: {
-        //facingMode: 'environment'
+        facingMode: 'environment'
   	}
 };
 
@@ -79,7 +68,7 @@ function multiplyMatrixVector(matrix, point) {
 
 navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
 	video.srcObject = stream;
-    video.play();
+    //video.play();
 
 	var cameraParam = new ARCameraParam();
 	cameraParam.onload = function() {
