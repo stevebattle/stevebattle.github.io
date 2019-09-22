@@ -75,6 +75,13 @@ function multiplyMatrixVector(matrix, point) {
   return [resultX, resultY, resultZ, resultW];
 }
 
+window.addEventListener("orientationchange", function() {
+    if (video.videoWidth)	{
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+    } 
+});
+
 navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
 	video.srcObject = stream;
     //video.play();
