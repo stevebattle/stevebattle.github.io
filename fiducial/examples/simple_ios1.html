@@ -79,6 +79,7 @@ function multiplyMatrixVector(matrix, point) {
 
 window.addEventListener("orientationchange", function() {
     if (video.videoWidth)	{
+        console.log('rotate');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
     } 
