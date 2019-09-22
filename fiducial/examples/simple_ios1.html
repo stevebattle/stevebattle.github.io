@@ -77,94 +77,93 @@ function multiplyMatrixVector(matrix, point) {
   return [resultX, resultY, resultZ, resultW];
 }
 
+function capture() {
+    navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
+        video.srcObject = stream;
+        //video.play();
+
+        var cameraParam = new ARCameraParam();
+        cameraParam.onload = function() {   
+            var arController;
+
+            var interval = setInterval(function() {
+                if (!video.videoWidth)	return;
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                if (!arController) {
+                    arController = new ARController(video, cameraParam);
+                    //arController.debugSetup();
+                    arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
+                    arController.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_4x4);
+
+                    arController.addEventListener('getMarker', function(ev) {
+                        var id = ev.data.marker.idMatrix;
+                        var index = ev.data.index;
+                        var pos = ev.data.marker.pos;
+                        var vertex = ev.data.marker.vertex;
+                        var transform = ev.data.matrix;
+
+                        var ctx = canvas.getContext('2d');
+                        if (index==0) { // clear canvas if this is the first marker
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        }
+
+                        if (id !== -1) {
+                            // bounding box
+                            ctx.beginPath();
+                            ctx.fillStyle = 'white';
+                            ctx.strokeStyle = 'green';
+                            ctx.moveTo(vertex[0][0], vertex[0][1]);
+                            ctx.lineTo(vertex[1][0], vertex[1][1]);
+                            ctx.lineTo(vertex[2][0], vertex[2][1]);
+                            ctx.lineTo(vertex[3][0], vertex[3][1]);
+                            ctx.closePath();
+                            ctx.fill();
+                            ctx.stroke();
+
+                            // plot ID
+                            ctx.save();
+                            ctx.translate(pos[0], pos[1]);
+
+                            // see rotate matrix for cos, sin
+                            // https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
+                            var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
+                            ctx.rotate(a);
+
+                            // scale
+                            var v = multiplyMatrixVector(transform,[0,100,0,1]);
+                            var yscale = Math.sqrt(v[0]*v[0]+v[1]*v[1])/100;
+                            var h = multiplyMatrixVector(transform,[100,0,0,1]);
+                            var xscale = Math.sqrt(h[0]*h[0]+h[1]*h[1])/100;
+                            // fiducual distance is the z value (transform[14])
+                            var zscale = (1 - transform[14]/SCALEA) * SCALEB;
+                            // the canvas is mirrored (see style) but text isn't
+                            // mirror text (-ve x), tilt x,y and distance z
+                            ctx.scale(xscale*zscale, yscale*zscale);
+                            
+                            ctx.font = "bold 20px Arial";
+                            // centre horizontally and vertically
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillStyle = 'green';
+                            ctx.fillText(id, 0, 0);
+                            ctx.restore();
+                        }
+                    });
+                }
+                arController.process();
+            }, 16);
+
+        };
+        cameraParam.src = 'Data/camera_para.dat';
+    });
+}
+
+capture();
+
 window.addEventListener("orientationchange", function() {
-    if (video.videoWidth)	{
-        console.log('rotate');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-    } 
-});
-
-navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
-	video.srcObject = stream;
-    //video.play();
-
-	var cameraParam = new ARCameraParam();
-	cameraParam.onload = function() {
-		
-		var arController;
-
-		var interval = setInterval(function() {
-            if (!video.videoWidth)	return;
-            canvas.width = video.videoWidth;
-			canvas.height = video.videoHeight;
-
-			if (!arController) {
-				arController = new ARController(video, cameraParam);
-				//arController.debugSetup();
-				arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
-				arController.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_4x4);
-
-				arController.addEventListener('getMarker', function(ev) {
-					var id = ev.data.marker.idMatrix;
-					var index = ev.data.index;
-					var pos = ev.data.marker.pos;
-					var vertex = ev.data.marker.vertex;
-					var transform = ev.data.matrix;
-
-					var ctx = canvas.getContext('2d');
-					if (index==0) { // clear canvas if this is the first marker
-						ctx.clearRect(0, 0, canvas.width, canvas.height);
-					}
-
-					if (id !== -1) {
-                        // bounding box
-                        ctx.beginPath();
-                        ctx.fillStyle = 'white';
-						ctx.strokeStyle = 'green';
-						ctx.moveTo(vertex[0][0], vertex[0][1]);
-						ctx.lineTo(vertex[1][0], vertex[1][1]);
-						ctx.lineTo(vertex[2][0], vertex[2][1]);
-						ctx.lineTo(vertex[3][0], vertex[3][1]);
-						ctx.closePath();
-                        ctx.fill();
-                        ctx.stroke();
-
-						// plot ID
-						ctx.save();
-						ctx.translate(pos[0], pos[1]);
-
-						// see rotate matrix for cos, sin
-						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
-						var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
-						ctx.rotate(a);
-
-						// scale
-						var v = multiplyMatrixVector(transform,[0,100,0,1]);
-						var yscale = Math.sqrt(v[0]*v[0]+v[1]*v[1])/100;
-						var h = multiplyMatrixVector(transform,[100,0,0,1]);
-						var xscale = Math.sqrt(h[0]*h[0]+h[1]*h[1])/100;
-						// fiducual distance is the z value (transform[14])
-						var zscale = (1 - transform[14]/SCALEA) * SCALEB;
-						// the canvas is mirrored (see style) but text isn't
-						// mirror text (-ve x), tilt x,y and distance z
-						ctx.scale(xscale*zscale, yscale*zscale);
-                        
-                        ctx.font = "bold 20px Arial";
-						// centre horizontally and vertically
-						ctx.textAlign = 'center';
-						ctx.textBaseline = 'middle';
-						ctx.fillStyle = 'green';
-						ctx.fillText(id, 0, 0);
-						ctx.restore();
-                    }
-                });
-			}
-			arController.process();
-		}, 16);
-
-	};
-	cameraParam.src = 'Data/camera_para.dat';
+    capture();
 });
 
 </script>
