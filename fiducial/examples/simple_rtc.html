@@ -137,11 +137,13 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// centre horizontally and vertically
 						ctx.textAlign = 'center';
 						ctx.textBaseline = 'middle';
+						ctx.fillStyle = 'green';
 						ctx.fillText(id, 0, 0);
 						ctx.restore();
 
 						// bounding box
 						ctx.beginPath();
+						ctx.strokeStyle = 'green';
 						ctx.moveTo(vertex[0][0], vertex[0][1]);
 						ctx.lineTo(vertex[1][0], vertex[1][1]);
 						ctx.lineTo(vertex[2][0], vertex[2][1]);
