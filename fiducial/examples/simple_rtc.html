@@ -132,14 +132,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// mirror text (-ve x), tilt x,y and distance z
 						ctx.scale(-xscale*zscale, yscale*zscale);
 
-						ctx.font = "bold 20px Arial";
-						// centre horizontally and vertically
-						ctx.textAlign = 'center';
-						ctx.textBaseline = 'middle';
-						ctx.fillStyle = 'green';
-						ctx.fillText(id, 0, 0);
-						ctx.restore();
-
 						// bounding box
 						ctx.beginPath();
 						ctx.fillStyle = 'white';
@@ -151,6 +143,14 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						ctx.closePath();
 						ctx.fill();
 						ctx.stroke();
+						
+						ctx.font = "bold 20px Arial";
+						// centre horizontally and vertically
+						ctx.textAlign = 'center';
+						ctx.textBaseline = 'middle';
+						ctx.fillStyle = 'green';
+						ctx.fillText(id, 0, 0);
+						ctx.restore();
 
 						// vertical line
 						// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
