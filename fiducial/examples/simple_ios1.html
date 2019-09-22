@@ -85,7 +85,9 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 		var arController;
 
 		var interval = setInterval(function() {
-			if (!video.videoWidth)	return;
+            if (!video.videoWidth)	return;
+            canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
 
 			if (!arController) {
 				arController = new ARController(video, cameraParam);
