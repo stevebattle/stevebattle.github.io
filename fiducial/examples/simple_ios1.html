@@ -38,6 +38,7 @@ var tw = 1280 / 2;
 var th = 720 / 2;
 var SCALEA = 16, SCALEB = 2;
 var canvas = document.querySelector('canvas');
+var arController;
 
 var video = document.querySelector('video');
 video.style.width = document.width + 'px';
@@ -84,7 +85,6 @@ function capture() {
 
         var cameraParam = new ARCameraParam();
         cameraParam.onload = function() {   
-            var arController;
 
             var interval = setInterval(function() {
                 if (!video.videoWidth)	return;
@@ -163,6 +163,8 @@ function capture() {
 capture();
 
 window.addEventListener("orientationchange", function() {
+    if (arController) arController.dispose();
+    arController = null;
     capture();
 });
 
