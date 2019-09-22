@@ -109,6 +109,18 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 					}
 
 					if (id !== -1) {
+						// bounding box
+						ctx.beginPath();
+						ctx.fillStyle = 'white';
+						ctx.strokeStyle = 'green';
+						ctx.moveTo(vertex[0][0], vertex[0][1]);
+						ctx.lineTo(vertex[1][0], vertex[1][1]);
+						ctx.lineTo(vertex[2][0], vertex[2][1]);
+						ctx.lineTo(vertex[3][0], vertex[3][1]);
+						ctx.closePath();
+						ctx.fill();
+						ctx.stroke();
+
 						// plot ID
 						ctx.save();
 						ctx.translate(pos[0], pos[1]);
@@ -131,18 +143,6 @@ navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream)
 						// the canvas is mirrored (see style) but text isn't
 						// mirror text (-ve x), tilt x,y and distance z
 						ctx.scale(-xscale*zscale, yscale*zscale);
-
-						// bounding box
-						ctx.beginPath();
-						ctx.fillStyle = 'white';
-						ctx.strokeStyle = 'green';
-						ctx.moveTo(vertex[0][0], vertex[0][1]);
-						ctx.lineTo(vertex[1][0], vertex[1][1]);
-						ctx.lineTo(vertex[2][0], vertex[2][1]);
-						ctx.lineTo(vertex[3][0], vertex[3][1]);
-						ctx.closePath();
-						ctx.fill();
-						ctx.stroke();
 						
 						ctx.font = "bold 20px Arial";
 						// centre horizontally and vertically
