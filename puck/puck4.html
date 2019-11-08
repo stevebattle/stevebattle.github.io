@@ -1,0 +1,27 @@
+<html>
+ <head>
+   <title>get light value</title>
+ </head>
+ <body>
+  <script src="https://www.puck-js.com/puck.js"></script>
+  <button onclick="start()">Connect</button>
+  <button onclick="stop()">Stop</button>
+  <script>
+    var t;
+    function getLightValue() {
+      Puck.eval("Puck.light()", function(v) {
+        console.log(v);
+        t = setTimeout(function() {
+          getLightValue();
+        }, 250);
+      });
+    }
+      function start() {
+          getLightValue();
+      }
+      function stop() {
+        clearTimeout(t);
+      }
+  </script>
+ </body>
+</html>

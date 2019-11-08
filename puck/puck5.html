@@ -1,0 +1,27 @@
+<html>
+ <head>
+   <title>get magnetometer value</title>
+ </head>
+ <body>
+  <script src="https://www.puck-js.com/puck.js"></script>
+  <button onclick="start()">Connect</button>
+  <button onclick="stop()">Stop</button>
+  <script>
+    var t;
+    function getMag() {
+      Puck.eval("Puck.mag()", function(m) {
+        console.log(m);
+        t = setTimeout(function() {
+          getMag();
+        }, 500);
+      });
+    }
+      function start() {
+          getMag();
+      }
+      function stop() {
+        clearTimeout(t);
+      }
+  </script>
+ </body>
+</html>
