@@ -11,6 +11,10 @@
     function getMag() {
       Puck.eval("Puck.mag()", function(m) {
         console.log(m);
+        if (m!=null) {
+            document.write(m.x);
+            document.write("<br>");
+        }
         t = setTimeout(function() {
           getMag();
         }, 500);
