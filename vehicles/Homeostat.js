@@ -77,19 +77,9 @@ function Homeostat(n, h, j, p, q) {
     for (var i=0; i<this.n; i++) {
       ax += this.a[i]*x[i];
     }
-    
-    var dy = this.z;
-
-    // l: force on needle given by unit current in milliammeter coil 
-    //    proportional to potential on grid per unit deviation of y
-    //    less force of spring, or gravitation, tending to restore needle, per unit deviation
-    // k: fraction of current sent to milliammeter (-1<=k<=+1)
-    //    less frictional force, assumed proportional to velocity of y, per unit velocity (viscosity)
-    var dz = this.h*ax - this.j*this.z;
-    
     // y is position of the needle
-    this.y += dy*dt;
-    this.z += dz*dt;
+    this.y += this.z*dt;
+    this.z += this.h*ax - this.j*this.z;
       
     // velocity becomes zero when the essential variable goes out of bounds
     this.y = this.saturation(this.y);
@@ -106,7 +96,7 @@ function Homeostat(n, h, j, p, q) {
   this.step = function() {
     // the unit may be set to trigger, t, regardless of y
     // the relay, r, may disable the uniselector
-    if (this.t || (this.r && (this.y<=this.q || this.y>=this.p))) {
+    if (this.t || (this.r && (this.y<=this.q || this.y>=this.p)) || (abs(this.y)<10e-3)) {
       this.t = false;
       // randomize weights, a
       for (var i=0; i<this.n; i++) {

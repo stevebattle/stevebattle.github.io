@@ -23,7 +23,7 @@ function Vehicle6(img,w,l,rate) {
   // configure N homeostat units with additional input parameters P
   this.h = [];
   for (var i=0; i<this.N; i++) {
-      this.h[i] = new Homeostat(this.N+this.P,1,1,1,-1);
+      this.h[i] = new Homeostat(this.N+this.P,0.5,1,1,-1);
       this.h[i].setWeight(i,-0.5); // recurrent connection
       this.h[i].setWeight(this.N+2,1); // essential variable : distance
       this.h[i].randomize(-1,1); // randomize remaining weights
