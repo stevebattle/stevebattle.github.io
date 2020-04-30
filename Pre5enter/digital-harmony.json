@@ -1,0 +1,31 @@
+{ 
+    "default": { 
+        "width":500,
+        "height":500,
+        "comment":"time in seconds",
+        "duration":5,
+        "background":"black"
+    },
+    "clips":[ 
+        { 
+            "comment":"MATRIX Title screen. See https://www.youtube.com/watch?v=ZrKgyY5aDvA",
+            "base": "/digital-harmony/matrix_title/",
+            "src":"/digital-harmony/matrix_title/" 
+        }, 
+        { 
+            "comment":"MATRIX dots",
+            "src":"/digital-harmony/matrix_dots/",
+            "duration":30
+        }, 
+        { 
+            "comment":"MATRIX hexagons",
+            "src":"/digital-harmony/matrix_hex/",
+            "duration":30
+        },
+        { 
+            "comment":"MATRIX dots",
+            "src":"/digital-harmony/matrix_triangle/",
+            "duration":30
+        }
+    ]
+}
