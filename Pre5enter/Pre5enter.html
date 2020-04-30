@@ -66,8 +66,6 @@
             function change() {
                 // setup call to next change after duration
                 duration = conf.clips[i].duration || conf.default.duration ;
-                i = (i+1) % conf.clips.length ;
-                timeout = setTimeout(change, duration * 1000) ;
 
                 // set background colour
                 background = conf.clips[i].background || conf.default.background ;
@@ -116,6 +114,9 @@
                     f.src = source ;
                     checkExists(source,skip,timeout) ;
                 }
+
+                i = (i+1) % conf.clips.length ;
+                timeout = setTimeout(change, duration * 1000) ;
             }
 
             var conf ;
