@@ -14,6 +14,7 @@ var xcenter, ycenter ;
 
 function setup() {
   canvas = createCanvas(500,500) ;
+  background(0) ;
   // draw is called at 10Hz
   frameRate(24) ;
 
