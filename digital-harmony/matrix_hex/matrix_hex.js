@@ -2,7 +2,7 @@
 // https://www.dataisnature.com/?p=2274
 // https://archive.org/stream/DigitalHarmony_201611/Digital%20Harmony#mode/1up
 
-var npoints = 25 ; // number of points in a display
+var npoints = 24 ; // number of points in a display
 var steps = 20 ; // step at the last frame
 var side = 100 ;
 var radius = 150 ;
