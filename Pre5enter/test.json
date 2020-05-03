@@ -5,7 +5,7 @@
         "comment":"time in seconds",
         "duration":5,
         "background":"black",
-        "captionAlignment": "center",
+        "captionAlignment": "left",
         "captionColour": "black"
     },
     "clips":[ 
@@ -18,7 +18,8 @@
         { 
             "comment":"directory assumed to contain index.html",
             "width":760, "height":640,
-            "src":"https://stevebattle.github.io/run-robot-run/" 
+            "src":"https://stevebattle.github.io/run-robot-run/",
+            "captionColour": "white"
         },
         {
             "width":720, "height":712, "background":"white", "duration":10,
@@ -26,8 +27,7 @@
             "base": "https://stevebattle.github.io/LineHuggerP5/",
             "src":"https://stevebattle.github.io/LineHuggerP5/sketch.js",
             "caption": "Line Hugger",
-            "captionAlignment": "left",
-            "captionColour": "white"
+            "captionAlignment": "center"
         },
         {
             "width":800, "height":800, "background":"white", "duration":20,
