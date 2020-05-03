@@ -19,7 +19,7 @@
     <body>
         <figure class="centre">
             <iframe id="iframe" style="border:none;"></iframe>
-            <figcaption id="caption"></figcaption>
+            <figcaption style="" id="caption"></figcaption>
         </figure>
         <script>
             // get parsed JSON configuration
@@ -73,8 +73,8 @@
                 document.body.style.backgroundColor = background ;
 
                 // parameters can be set in default or individual clips
-                f.height = conf.clips[i].height || conf.default.height ; 
-                f.width = conf.clips[i].width || conf.default.width ;
+                frame.height = conf.clips[i].height || conf.default.height ; 
+                frame.width = conf.clips[i].width || conf.default.width ;
 
                 source = conf.clips[i].src ;
                 if (Array.isArray(source) || source.endsWith(".js")) { // single or multiple P5 source files
@@ -101,24 +101,25 @@
                         checkExists(source,skip,timeout) ;
                     }
                     srcdoc += "<\/body><\/html>" ;
-                    f.srcdoc = srcdoc ;
+                    frame.srcdoc = srcdoc ;
                 }
                 else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { 
                     // (animated) gif, jpeg image
-                    f.srcdoc = "<html><img width=" + f.width + " height=" + f.height + " src='" + 
+                    frame.srcdoc = "<html><img width=" + frame.width + " height=" + frame.height + " src='" + 
                     source + "' onerror='parent.skip(" + timeout + ")'><\/html>" ;
                     // skip this clip on load error                
                 } 
                 else { // default is html (may be implied index.html)
                     // srcdoc overrides src
-                    f.removeAttribute("srcdoc") ;
-                    f.src = source ;
+                    frame.removeAttribute("srcdoc") ;
+                    frame.src = source ;
                     checkExists(source,skip,timeout) ;
                 }
 
                 if (conf.clips[i].caption) {
                     caption.innerText = conf.clips[i].caption;
                     caption.style.display = "block";
+                    caption.style.textAlign = conf.clips[i].caption-alignment || conf.default.caption-alignment ; 
                 }
                 else caption.style.display = "none";
 
@@ -133,7 +134,7 @@
             // curl -I https://stevebattle.github.io/Pre5enter/Pre5enter.json
             //dataURL = "https://stevebattle.github.io/Pre5enter/Pre5enter.json" ;
 
-            var f = document.getElementById("iframe");
+            var frame = document.getElementById("iframe");
             var caption = document .getElementById("caption"); 
             var timeout = null; // for the timeout
             var i = 0;

@@ -5,7 +5,7 @@
         "comment":"time in seconds",
         "duration":5,
         "background":"black",
-        "caption-style": "text-align: center"
+        "caption-alignment": "center"
     },
     "clips":[ 
         { 
