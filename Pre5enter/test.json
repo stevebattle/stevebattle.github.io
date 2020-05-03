@@ -22,7 +22,6 @@
             "width":760, "height":640,
             "src":"https://stevebattle.github.io/run-robot-run/",
             "captionColour": "white",
-            "captionSize": "200%",
             "captionLink": "https://stevebattle.github.io/run-robot-run/AnimatedAndroidJS.pde"
         },
         {
@@ -31,6 +30,7 @@
             "base": "https://stevebattle.github.io/LineHuggerP5/",
             "src":"https://stevebattle.github.io/LineHuggerP5/sketch.js",
             "caption": "Line Hugger",
+            "captionSize": "200%",
             "captionAlignment": "center"
         },
         {
