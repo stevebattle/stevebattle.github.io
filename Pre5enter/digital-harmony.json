@@ -23,7 +23,7 @@
         { 
             "comment":"MATRIX circle",
             "src":"/digital-harmony/matrix_circle/",
-            "duration":30,
+            "duration":25,
             "caption": "matrix_circle.js",
             "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_circle/matrix_circle.js"
         }, 

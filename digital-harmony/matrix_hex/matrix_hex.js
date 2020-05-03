@@ -7,6 +7,7 @@ var steps = 20 ; // step at the last frame
 var side = 100 ;
 var radius = 150 ;
 var xcenter, ycenter ;
+var startTime = 25;
 
 function setup() {
   canvas = createCanvas(500,500) ;
@@ -51,7 +52,8 @@ function draw() {
   stroke('white') ;
 
   // step in overall cycle (1 = full cycle)
-  var time = (frameCount-1) / steps + 30;
+  var time = (frameCount-1) / steps +startTime;
+  console.log(time);
   
   for (var p=1; p<=npoints; p++) {
     // t indicates position along lissajous
