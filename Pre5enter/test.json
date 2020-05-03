@@ -7,7 +7,8 @@
         "background":"black",
         "captionAlignment": "left",
         "captionColour": "black",
-        "captionFont": "sans-serif"
+        "captionFont": "sans-serif",
+        "captionSize": "initial"
     },
     "clips":[ 
         { 
@@ -21,7 +22,8 @@
             "width":760, "height":640,
             "src":"https://stevebattle.github.io/run-robot-run/",
             "caption": "run robot run",
-            "captionColour": "white"
+            "captionColour": "white",
+            "captionSize": "large"
         },
         {
             "width":720, "height":712, "background":"white", "duration":10,
