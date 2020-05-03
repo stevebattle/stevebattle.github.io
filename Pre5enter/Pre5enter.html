@@ -107,7 +107,8 @@
                     // (animated) gif, jpeg image
                     frame.srcdoc = "<html><img width=" + frame.width + " height=" + frame.height + " src='" + 
                     source + "' onerror='parent.skip(" + timeout + ")'><\/html>" ;
-                    // skip this clip on load error                
+                    // skip this clip on load error
+                    checkExists(source,skip,timeout) ;             
                 } 
                 else { // default is html (may be implied index.html)
                     // srcdoc overrides src
@@ -119,7 +120,7 @@
                 if (conf.clips[i].caption) {
                     caption.innerText = conf.clips[i].caption;
                     caption.style.display = "block";
-                    caption.style.textAlign = conf.clips[i].caption-alignment || conf.default.caption-alignment ; 
+                    caption.style.textAlign = conf.clips[i].captionAlignment || conf.default.captionAlignment ; 
                 }
                 else caption.style.display = "none";
 
@@ -141,7 +142,6 @@
             getJSON(dataURL, function(err, data) {
                 if (err != null) {
                     alert('Cannot load Pre5enter configuration: ' + err);
-
                 } else {
                     conf = data ;
                     change();

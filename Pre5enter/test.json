@@ -5,7 +5,8 @@
         "comment":"time in seconds",
         "duration":5,
         "background":"black",
-        "captionAlignment": "center"
+        "captionAlignment": "center",
+        "captionColour": "black"
     },
     "clips":[ 
         { 
@@ -24,7 +25,9 @@
             "comment":"base required to load graphic resources in P5",
             "base": "https://stevebattle.github.io/LineHuggerP5/",
             "src":"https://stevebattle.github.io/LineHuggerP5/sketch.js",
-            "caption": "Line Hugger"
+            "caption": "Line Hugger",
+            "captionAlignment": "left",
+            "captionColour": "white"
         },
         {
             "width":800, "height":800, "background":"white", "duration":20,
