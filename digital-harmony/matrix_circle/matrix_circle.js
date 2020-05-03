@@ -24,8 +24,8 @@ function setup() {
 function lissajous(a,b,t,delta,r) {
   // add PI to bring the initial state to the front
   // delta provides an offset to animate the lissajous
-  var x = r * sin(a*t + delta +PI) + xcenter ;    
-  var y = r * sin(b*t +PI) + ycenter ;
+  var x = r * sin(a*t + delta) + xcenter ;    
+  var y = r * sin(b*t) + ycenter ;
   circle(x,y,10) ;
 }
 
