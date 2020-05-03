@@ -4,7 +4,8 @@
         "height":500,
         "comment":"time in seconds",
         "duration":5,
-        "background":"black"
+        "background":"black",
+        "captionColour": "white"
     },
     "clips":[ 
         { 
@@ -15,17 +16,20 @@
         { 
             "comment":"MATRIX dots",
             "src":"/digital-harmony/matrix_dots/",
-            "duration":30
+            "duration":30,
+            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_dots/matrix_dots.js"
         }, 
         { 
             "comment":"MATRIX hexagons",
             "src":"/digital-harmony/matrix_hex/",
-            "duration":30
+            "duration":30,
+            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_hex/matrix_hex.js"
         },
         { 
-            "comment":"MATRIX dots",
+            "comment":"MATRIX triangle",
             "src":"/digital-harmony/matrix_triangle/",
-            "duration":30
+            "duration":30,
+            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_triangle/matrix_triangle.js"
         }
     ]
 }
