@@ -121,6 +121,8 @@
                     var content = conf.clips[i].caption || conf.clips[i].captionLink ;
                     caption.innerHTML = `<a href="${conf.clips[i].captionLink}">${content}</a>`;
                     caption.style.display = "block";
+                    document.linkColor = conf.clips[i].linkColour || conf.default.linkColour || conf.clips[i].linkColor || conf.default.linkColor || document.linkColor;
+                    document.vlinkColor = conf.clips[i].linkVistedColour || conf.default.linkVistedColour || conf.clips[i].linkVistedColor || conf.default.linkVistedColor || document.vlinkColor;
                 }
                 else if (conf.clips[i].caption) {
                     caption.innerText = conf.clips[i].caption;
@@ -130,7 +132,8 @@
                 caption.style.textAlign = conf.clips[i].captionAlignment || conf.default.captionAlignment ; 
                 caption.style.color = conf.clips[i].captionColour || conf.default.captionColour || conf.clips[i].captionColor || conf.default.captionColor ; 
                 caption.style.fontFamily = conf.clips[i].captionFont || conf.default.captionFont ; 
-                caption.style.fontSize = conf.clips[i].captionSize || conf.default.captionSize ; 
+                caption.style.fontSize = conf.clips[i].captionSize || conf.default.captionSize ;
+                
 
                 i = (i+1) % conf.clips.length ;
                 timeout = setTimeout(change, duration * 1000) ;
