@@ -23,7 +23,8 @@
             "src":"https://stevebattle.github.io/run-robot-run/",
             "caption": "run robot run",
             "captionColour": "white",
-            "captionSize": "large"
+            "captionSize": "200%",
+            "captionLink": "https://stevebattle.github.io/run-robot-run/AnimatedAndroidJS.pde"
         },
         {
             "width":720, "height":712, "background":"white", "duration":10,
