@@ -21,7 +21,7 @@ function setup() {
 // source: https://processing.org/examples/regularpolygon.html
 
 function polygon(x, y, radius, npoints) {
-  var angle = TWO_PI / npoints ;
+  var angle = TAU / npoints ;
   beginShape();
   for (var a = 0 ; a < TAU ; a += angle) {
     var sx = x + cos(a) * radius;

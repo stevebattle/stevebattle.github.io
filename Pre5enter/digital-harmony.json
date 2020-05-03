@@ -11,6 +11,11 @@
     },
     "clips":[ 
         { 
+            "comment":"MATRIX pre Titles",
+            "src":"/digital-harmony/matrix_pre_title/",
+            "duration": 10
+        }, 
+        { 
             "comment":"MATRIX Title screen. See https://www.youtube.com/watch?v=ZrKgyY5aDvA",
             "base": "/digital-harmony/matrix_title/",
             "src":"/digital-harmony/matrix_title/" 
