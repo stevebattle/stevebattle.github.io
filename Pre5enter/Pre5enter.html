@@ -17,9 +17,10 @@
         </style>
     </head>
     <body>
-        <div class="centre">
+        <figure class="centre">
             <iframe id="iframe" style="border:none;"></iframe>
-        </div>
+            <figcaption id="caption"></figcaption>
+        </figure>
         <script>
             // get parsed JSON configuration
             function getJSON(url, callback) {
@@ -115,6 +116,12 @@
                     checkExists(source,skip,timeout) ;
                 }
 
+                if (conf.clips[i].caption) {
+                    caption.innerText = conf.clips[i].caption;
+                    caption.style.display = "block";
+                }
+                else caption.style.display = "none";
+
                 i = (i+1) % conf.clips.length ;
                 timeout = setTimeout(change, duration * 1000) ;
             }
@@ -125,12 +132,15 @@
             // CORS is supported by github. Verify this with:
             // curl -I https://stevebattle.github.io/Pre5enter/Pre5enter.json
             //dataURL = "https://stevebattle.github.io/Pre5enter/Pre5enter.json" ;
-            var f = document .getElementById("iframe");
+
+            var f = document.getElementById("iframe");
+            var caption = document .getElementById("caption"); 
             var timeout = null; // for the timeout
             var i = 0;
             getJSON(dataURL, function(err, data) {
                 if (err != null) {
                     alert('Cannot load Pre5enter configuration: ' + err);
+
                 } else {
                     conf = data ;
                     change();

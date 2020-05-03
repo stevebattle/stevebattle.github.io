@@ -21,7 +21,8 @@
             "width":720, "height":712, "background":"white", "duration":10,
             "comment":"base required to load graphic resources in P5",
             "base": "https://stevebattle.github.io/LineHuggerP5/",
-            "src":"https://stevebattle.github.io/LineHuggerP5/sketch.js"
+            "src":"https://stevebattle.github.io/LineHuggerP5/sketch.js",
+            "caption": "Line Hugger"
         },
         {
             "width":800, "height":800, "background":"white", "duration":20,
