@@ -19,6 +19,7 @@
             "comment":"directory assumed to contain index.html",
             "width":760, "height":640,
             "src":"https://stevebattle.github.io/run-robot-run/",
+            "caption": "run robot run",
             "captionColour": "white"
         },
         {
