@@ -39,7 +39,7 @@ function draw() {
     var a ;
     if (p%2==0) { // even (clockwise)
       a = TAU * step * p +PI/2 ;
-      stroke('magenta') ;
+      stroke('red') ;
     }
     else { // odd (counter-clockwise)
       // + = CCW rotation
