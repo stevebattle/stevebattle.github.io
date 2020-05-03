@@ -122,8 +122,6 @@
                     caption.innerHTML = `<a id="link" href="${conf.clips[i].captionLink}">${content}</a>`;
                     caption.style.display = "block";
                     var link = document.getElementById("link");
-                    //document.body.link = conf.clips[i].linkColour || conf.default.linkColour || conf.clips[i].linkColor || conf.default.linkColor || document.body.Link;
-                    //document.body.vLink = conf.clips[i].linkVistedColour || conf.default.linkVistedColour || conf.clips[i].linkVistedColor || conf.default.linkVistedColor || document.body.vLink;
                     link.style.color = conf.clips[i].captionColour || conf.default.captionColour || conf.clips[i].captionColor || conf.default.captionColor ;
                 }
                 else if (conf.clips[i].caption) {
@@ -134,7 +132,7 @@
                 caption.style.textAlign = conf.clips[i].captionAlignment || conf.default.captionAlignment ; 
                 caption.style.color = conf.clips[i].captionColour || conf.default.captionColour || conf.clips[i].captionColor || conf.default.captionColor ; 
                 caption.style.fontFamily = conf.clips[i].captionFont || conf.default.captionFont ; 
-                caption.style.fontSize = conf.clips[i].captionSize || conf.default.captionSize ;
+                caption.style.fontSize = conf.clips[i].captionSize || conf.default.captionSize || "initial";
                 
 
                 i = (i+1) % conf.clips.length ;

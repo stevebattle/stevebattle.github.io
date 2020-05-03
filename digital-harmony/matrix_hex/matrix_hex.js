@@ -43,7 +43,8 @@ function lissajous(a,b,t,delta,r,s) {
 
 function draw() {
   // lissajous parameters "figure of 8"
-  a=2, b=1 ;
+  //a=2, b=1 ;
+  a=3, b=2 ;
 
   // black background
   background(0) ;
