@@ -4,13 +4,15 @@
         "height":500,
         "comment":"time in seconds",
         "duration":5,
-        "background":"black"
+        "background":"black",
+        "caption-style": "text-align: center"
     },
     "clips":[ 
         { 
             "comment":"missing html",
             "width":770, "height":650,
-            "src":"https://stevebattle.github.io/animated-android/missing.html" 
+            "src":"https://stevebattle.github.io/animated-android/missing.html",
+            "duration":1
         }, 
         { 
             "comment":"directory assumed to contain index.html",
