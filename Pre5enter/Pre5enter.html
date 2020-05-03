@@ -119,10 +119,12 @@
 
                 if (conf.clips[i].captionLink) {
                     var content = conf.clips[i].caption || conf.clips[i].captionLink ;
-                    caption.innerHTML = `<a href="${conf.clips[i].captionLink}">${content}</a>`;
+                    caption.innerHTML = `<a id="link" href="${conf.clips[i].captionLink}">${content}</a>`;
                     caption.style.display = "block";
-                    document.linkColor = conf.clips[i].linkColour || conf.default.linkColour || conf.clips[i].linkColor || conf.default.linkColor || document.linkColor;
-                    document.vlinkColor = conf.clips[i].linkVistedColour || conf.default.linkVistedColour || conf.clips[i].linkVistedColor || conf.default.linkVistedColor || document.vlinkColor;
+                    var link = document.getElementById("link");
+                    //document.body.link = conf.clips[i].linkColour || conf.default.linkColour || conf.clips[i].linkColor || conf.default.linkColor || document.body.Link;
+                    //document.body.vLink = conf.clips[i].linkVistedColour || conf.default.linkVistedColour || conf.clips[i].linkVistedColor || conf.default.linkVistedColor || document.body.vLink;
+                    link.style.color = conf.clips[i].captionColour || conf.default.captionColour || conf.clips[i].captionColor || conf.default.captionColor ;
                 }
                 else if (conf.clips[i].caption) {
                     caption.innerText = conf.clips[i].caption;
