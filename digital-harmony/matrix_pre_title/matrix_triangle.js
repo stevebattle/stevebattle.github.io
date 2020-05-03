@@ -4,7 +4,7 @@
 // Adapted from John Whitney
 
 var npoints = 31 ; // number of points in a display
-var nframes = 100 ; // number of frames for this run
+var nframes = 1000 ; // number of frames for this run
 var stepstart = 0 ; // step at the first frame
 var stepend = 1/60 ; // step at the last frame
 
