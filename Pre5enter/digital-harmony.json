@@ -6,7 +6,8 @@
         "duration":5,
         "background":"black",
         "captionColour": "white",
-        "captionFont": "sans-serif"
+        "captionFont": "sans-serif",
+        "captionAlignment": "center"
     },
     "clips":[ 
         { 
