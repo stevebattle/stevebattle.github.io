@@ -22,10 +22,10 @@
         }, 
         { 
             "comment":"MATRIX dots",
-            "src":"/digital-harmony/matrix_dots/",
+            "src":"/digital-harmony/matrix_circle/",
             "duration":30,
-            "caption": "matrix_dots.js",
-            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_dots/matrix_dots.js"
+            "caption": "matrix_circle.js",
+            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_circle/matrix_circle.js"
         }, 
         { 
             "comment":"MATRIX hexagons",
