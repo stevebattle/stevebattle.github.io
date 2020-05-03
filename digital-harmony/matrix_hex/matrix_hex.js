@@ -35,8 +35,8 @@ function polygon(x, y, radius, npoints) {
 
 function lissajous(a,b,t,delta,r,s) {
   // delta provides an offset to animate the lissajous
-  var x = r * sin(a*t + delta +PI) + xcenter ;    
-  var y = r * sin(b*t +PI) + ycenter ; 
+  var x = r * sin(a*t + delta) + xcenter ;    
+  var y = r * sin(b*t) + ycenter ; 
   // hexagon
   polygon(x,y,s,6) ;
 }
