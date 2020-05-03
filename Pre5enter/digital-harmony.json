@@ -11,7 +11,7 @@
     },
     "clips":[ 
         { 
-            "comment":"MATRIX pre Titles",
+            "comment":"MATRIX pre-titles",
             "src":"/digital-harmony/matrix_pre_title/",
             "duration": 10
         }, 
@@ -21,7 +21,7 @@
             "src":"/digital-harmony/matrix_title/" 
         }, 
         { 
-            "comment":"MATRIX dots",
+            "comment":"MATRIX circle",
             "src":"/digital-harmony/matrix_circle/",
             "duration":30,
             "caption": "matrix_circle.js",
