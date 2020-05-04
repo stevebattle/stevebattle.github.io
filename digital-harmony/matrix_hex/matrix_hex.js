@@ -53,7 +53,6 @@ function draw() {
 
   // step in overall cycle (1 = full cycle)
   var time = (frameCount-1) / steps +startTime;
-  console.log(time);
   
   for (var p=1; p<=npoints; p++) {
     // t indicates position along lissajous

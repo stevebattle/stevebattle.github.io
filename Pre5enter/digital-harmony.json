@@ -40,6 +40,13 @@
             "duration":30,
             "caption": "matrix_triangle.js",
             "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_triangle/matrix_triangle.js"
+        },
+        { 
+            "comment":"MATRIX bar",
+            "src":"/digital-harmony/matrix_bar/",
+            "duration":30,
+            "caption": "matrix_bar.js",
+            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_bar/matrix_bar.js"
         }
     ]
 }
