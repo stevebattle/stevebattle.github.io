@@ -50,7 +50,7 @@ function draw() {
 
   // time = seconds into the animation
   var time = frameCount / rate ;
-  var side = min(max(timeScale*floor(time-timeOffset),minSide),maxSide);
+  var side = min(max(timeScale*(time-timeOffset),minSide),maxSide);
 
   for (var p=1; p<=npoints; p++) {
     // t is position along lissajous

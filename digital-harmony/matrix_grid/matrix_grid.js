@@ -8,7 +8,7 @@ var minSide = 10, maxSide = 120 ;
 var radius = 160 ;
 var xcenter, ycenter ;
 var startTime = 60;
-var timeOffset = 18; // time of switch
+var timeOffset = 17; // time of switch
 var timeScale = 6;
 
 // lissajous parameters "figure of 8"
@@ -39,7 +39,7 @@ function draw() {
 
   // step in overall cycle (1 = full cycle)
   var time = frameCount / rate + startTime;
-  var side = min(max(timeScale*floor(60-time+timeOffset),minSide),maxSide);
+  var side = min(max(timeScale*(60-time+timeOffset),minSide),maxSide);
 
   for (var p=1; p<=npoints; p++) {
     // t indicates position along lissajous
