@@ -11,7 +11,7 @@
     },
     "clips":[ 
         { 
-            "comment":"MATRIX pre-titles",
+            "comment":"MATRIX pre-title",
             "src":"/digital-harmony/matrix_pre_title/",
             "duration": 10
         }, 
@@ -35,11 +35,11 @@
             "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_triangle/matrix_triangle.js"
         },
         { 
-            "comment":"MATRIX bar",
-            "src":"/digital-harmony/matrix_bar/",
+            "comment":"MATRIX grid",
+            "src":"/digital-harmony/matrix_grid/",
             "duration":30,
-            "caption": "matrix_bar.js",
-            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_bar/matrix_bar.js"
+            "caption": "matrix_grid.js",
+            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_grid/matrix_grid.js"
         }
     ]
 }
