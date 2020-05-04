@@ -4,10 +4,11 @@
 
 var npoints = 24 ; // number of points in the display
 var rate = 20 ;
-var minSide = 10;
-var maxSide = 100 ;
+var minSide = 10, maxSide = 100 ;
 var radius = 150 ;
 var xcenter, ycenter ;
+var timeOffset = 20; // time of switch
+var timeScale = 4;
 
 // lissajous parameters
 var a=3, b=2 ;
@@ -49,8 +50,7 @@ function draw() {
 
   // time = seconds into the animation
   var time = frameCount / rate ;
-  
-  side = min(max(floor(5*time-90),minSide),maxSide);
+  var side = min(max(timeScale*floor(time-timeOffset),minSide),maxSide);
 
   for (var p=1; p<=npoints; p++) {
     // t is position along lissajous

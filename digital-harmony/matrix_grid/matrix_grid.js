@@ -4,10 +4,12 @@
 
 var npoints = 24 ; // number of points in a display
 var rate = 20 ;
-var side = 120 ;
+var minSide = 10, maxSide = 120 ;
 var radius = 160 ;
 var xcenter, ycenter ;
-var startTime = 25;
+var startTime = 60;
+var timeOffset = 18; // time of switch
+var timeScale = 6;
 
 // lissajous parameters "figure of 8"
 var a=1, b=2 ;
@@ -20,7 +22,6 @@ function setup() {
   xcenter = width/2 ;
   ycenter = height/2 ;
 }
-
 
 // lissajous figure
 
@@ -38,14 +39,21 @@ function draw() {
 
   // step in overall cycle (1 = full cycle)
   var time = frameCount / rate + startTime;
+  var side = min(max(timeScale*floor(60-time+timeOffset),minSide),maxSide);
 
   for (var p=1; p<=npoints; p++) {
     // t indicates position along lissajous
     var t = p / npoints * time ;    
     lissajous(a,b,t,0,radius, function(x,y) {
-      // vertical grid
-      strokeWeight(2);
-      line(x,y+side/2,x,y-side/2) ;      
+      // circle or vertical grid
+      if (side==minSide) {
+        fill(255);
+        ellipse(x,y,minSide,minSide) ;
+      }
+      else {
+        strokeWeight(2);
+        line(x,y+side/2,x,y-side/2) ;
+      }
     }) ;
   }
 }
