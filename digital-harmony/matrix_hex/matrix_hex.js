@@ -59,7 +59,7 @@ function draw() {
       // circle or hexagon
       if (side==minSide) {
         fill(255);
-        ellipse(x,y,10,10) ;
+        ellipse(x,y,minSide,minSide) ;
       }
       else {
         noFill();
