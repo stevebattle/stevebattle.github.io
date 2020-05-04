@@ -21,16 +21,9 @@
             "src":"/digital-harmony/matrix_title/" 
         }, 
         { 
-            "comment":"MATRIX circle",
-            "src":"/digital-harmony/matrix_circle/",
-            "duration":25,
-            "caption": "matrix_circle.js",
-            "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_circle/matrix_circle.js"
-        }, 
-        { 
             "comment":"MATRIX hexagons",
             "src":"/digital-harmony/matrix_hex/",
-            "duration":30,
+            "duration":60,
             "caption": "matrix_hex.js",
             "captionLink": "https://github.com/stevebattle/stevebattle.github.io/blob/master/digital-harmony/matrix_hex/matrix_hex.js"
         },
