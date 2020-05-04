@@ -3,11 +3,14 @@
 // https://archive.org/stream/DigitalHarmony_201611/Digital%20Harmony#mode/1up
 
 var npoints = 24 ; // number of points in the display
-var rate = 20 ; // draw is called at 20Hz
+var rate = 20 ;
 var minSide = 10;
 var maxSide = 100 ;
 var radius = 150 ;
 var xcenter, ycenter ;
+
+// lissajous parameters
+var a=3, b=2 ;
 
 function setup() {
   canvas = createCanvas(500,500) ;
@@ -40,9 +43,6 @@ function lissajous(a,b,t,delta,r,f) {
 }
 
 function draw() {
-  // lissajous parameters
-  var a=3, b=2 ;
-
   // black background
   background(0) ;
   stroke('white') ;

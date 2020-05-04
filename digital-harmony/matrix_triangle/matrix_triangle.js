@@ -5,9 +5,9 @@
 // Adapted from John Whitney
 
 var npoints = 32 ; // number of points in a display
+var rate = 20 ; // draw is called at 20Hz
 var nframes = 40 ; // number of frames for this run
-var stepstart = 0 ; // step at the first frame
-var stepend = 1/60 ; // step at the last frame
+var stepRate = 1/150 ; // step at the last frame
 
 var radius = 100 ; // radius
 var xcenter, ycenter ;
@@ -15,9 +15,7 @@ var xcenter, ycenter ;
 function setup() {
   canvas = createCanvas(500,500) ;
   background(0) ;
-  // draw is called at 10Hz
-  frameRate(24) ;
-
+  frameRate(rate) ;
   xcenter = width/2 ; // x center
   ycenter = height/2 ; // y center
 }
@@ -29,11 +27,10 @@ function draw() {
   translate (xcenter, ycenter) ;
   rotate(-PI/2);
   
-  // continuous cycle for column E
-  var time = (frameCount-1) / (nframes-1);
+  var time = frameCount / rate;
 
-  // step in overall cycle (1 = full cycle)
-  step = stepstart + (time * (stepend - stepstart)) ;
+  // step in overall cycle
+  step = time * stepRate ;
   
   for (p=1; p<=npoints; p++) {
     var a ;
