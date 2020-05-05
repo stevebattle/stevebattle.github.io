@@ -18,7 +18,9 @@
         { 
             "comment":"MATRIX Title screen. See https://www.youtube.com/watch?v=ZrKgyY5aDvA",
             "base": "/digital-harmony/matrix_title/",
-            "src":"/digital-harmony/matrix_title/" 
+            "src":"/digital-harmony/matrix_title/",
+            "caption":"Based on Matrix III (1972) by John Whitney",
+            "captionLink": "https://www.youtube.com/watch?v=ZrKgyY5aDvA" 
         }, 
         { 
             "comment":"MATRIX hexagons",
