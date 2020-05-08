@@ -103,7 +103,7 @@
                     srcdoc += "<\/body><\/html>" ;
                     frame.srcdoc = srcdoc ;
                 }
-                else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg")) { 
+                else if (source.endsWith(".gif") || source.endsWith(".jpeg")  || source.endsWith(".jpg") || source.endsWith(".png")) { 
                     // (animated) gif, jpeg image
                     frame.srcdoc = "<html><img width=" + frame.width + " height=" + frame.height + " src='" + 
                     source + "' onerror='parent.skip(" + timeout + ")'><\/html>" ;
