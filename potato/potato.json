@@ -24,7 +24,8 @@
         },
         { 
             "comment":"berries",
-            "src":"/potato/images/berries.png"
+            "src":"/potato/images/berries.png",
+            "width": 651, "height": 753
         },
         { 
             "comment":"sundog",
