@@ -18,12 +18,12 @@
         { 
             "comment":"flower",
             "src":"/potato/images/flower.png",
-            "width": "50%", "height": "50%"
+            "height": "80%"
         },
         { 
             "comment":"abstract3",
             "src":"/potato/images/abstract3.png",
-            "width": "50%", "height": "50%"
+            "height": "80%"
         },
         { 
             "comment":"berries",
@@ -33,7 +33,7 @@
         { 
             "comment":"sundog",
             "src":"/potato/images/sundog.png",
-            "width": "50%", "height": "50%"
+            "height": "50%"
         },
         { 
             "comment":"sundog code",
