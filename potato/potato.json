@@ -35,7 +35,8 @@
         { 
             "comment":"sundog code",
             "src":"/potato/sundog/sketch.js",
-            "captionLink": "/potato/sundog/sketch.js"
+            "captionLink": "/potato/sundog/sketch.js",
+            "width": 500, "height": 500
         },
         { 
             "comment":"sun1",
