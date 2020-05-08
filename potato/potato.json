@@ -48,7 +48,8 @@
         },
         { 
             "comment":"star",
-            "src":"/potato/images/star.png"
+            "src":"/potato/images/star.png",
+            "width": 580, "height": 659
         }
     ]
 }
