@@ -1,6 +1,5 @@
 { 
     "default": { 
-        "width":500,
         "height":500,
         "comment":"time in seconds",
         "duration":10,
@@ -13,28 +12,23 @@
         { 
             "comment":"Potato Print Programming",
             "src":"/potato/cover.png",
-            "captionLink": "/potato/potato.pdf",
-            "width": "100%", "height": "100%"
+            "captionLink": "/potato/potato.pdf"
         }, 
         { 
             "comment":"flower",
-            "src":"/potato/images/flower.png",
-            "width": "90%", "height": "90%"
+            "src":"/potato/images/flower.png"
         },
         { 
             "comment":"abstract3",
-            "src":"/potato/images/abstract3.png",
-            "width": "90%", "height": "90%"
+            "src":"/potato/images/abstract3.png"
         },
         { 
             "comment":"berries",
-            "src":"/potato/images/berries.png",
-            "width": 651, "height": 753
+            "src":"/potato/images/berries.png"
         },
         { 
             "comment":"sundog",
-            "src":"/potato/images/sundog.png",
-            "width": "90%", "height": "90%"
+            "src":"/potato/images/sundog.png"
         },
         { 
             "comment":"sundog code",
@@ -43,18 +37,15 @@
         },
         { 
             "comment":"sun1",
-            "src":"/potato/images/sun1.png",
-            "width": 753, "height": 840
+            "src":"/potato/images/sun1.png"
         },
         { 
             "comment":"face2",
-            "src":"/potato/images/face2.png",
-            "width": 528, "height": 532
+            "src":"/potato/images/face2.png"
         },
         { 
             "comment":"star",
-            "src":"/potato/images/star.png",
-            "width": 580, "height": 659
+            "src":"/potato/images/star.png"
         }
     ]
 }
