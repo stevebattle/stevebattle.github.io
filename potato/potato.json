@@ -1,0 +1,51 @@
+{ 
+    "default": { 
+        "width":500,
+        "height":500,
+        "comment":"time in seconds",
+        "duration":10,
+        "background":"white",
+        "captionColour": "black",
+        "captionFont": "sans-serif",
+        "captionAlignment": "center"
+    },
+    "clips":[ 
+        { 
+            "comment":"Potato Print Programming",
+            "src":"/potato/potato.png",
+            "captionLink": "/potato/potato.pdf" 
+        }, 
+        { 
+            "comment":"flower",
+            "src":"/potato/images/flower.png"
+        },
+        { 
+            "comment":"abstract3",
+            "src":"/potato/images/abstract3.png"
+        },
+        { 
+            "comment":"berries",
+            "src":"/potato/images/berries.png"
+        },
+        { 
+            "comment":"sundog",
+            "src":"/potato/images/sundog.png"
+        },
+        { 
+            "comment":"sundog code",
+            "src":"/potato/sundog/sketch.js"
+        },
+        { 
+            "comment":"sun1",
+            "src":"/potato/images/sun1.png"
+        },
+        { 
+            "comment":"face2",
+            "src":"/potato/images/face2.png"
+        },
+        { 
+            "comment":"star",
+            "src":"/potato/images/star.png"
+        }
+    ]
+}
