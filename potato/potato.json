@@ -23,7 +23,7 @@
         { 
             "comment":"abstract3",
             "src":"/potato/images/abstract3.png",
-            "width": 596, "height": 1066
+            "width": "50%", "height": "50%"
         },
         { 
             "comment":"berries",
