@@ -13,7 +13,7 @@
             "comment":"Potato Print Programming",
             "src":"/potato/cover.png",
             "captionLink": "/potato/potato.pdf",
-            "width": 479, "height": 335
+            "height": "110%"
         }, 
         { 
             "comment":"flower",
@@ -40,7 +40,8 @@
         },
         { 
             "comment":"sun1",
-            "src":"/potato/images/sun1.png"
+            "src":"/potato/images/sun1.png",
+            "width": 753, "height": 840
         },
         { 
             "comment":"face2",
