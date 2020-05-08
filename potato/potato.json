@@ -37,7 +37,8 @@
         },
         { 
             "comment":"sundog code",
-            "src":"/potato/sundog/sketch.js"
+            "src":"/potato/sundog/sketch.js",
+            "captionLink": "/potato/sundog/sketch.js"
         },
         { 
             "comment":"sun1",
