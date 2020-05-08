@@ -13,17 +13,18 @@
         { 
             "comment":"Potato Print Programming",
             "src":"/potato/cover.png",
-            "captionLink": "/potato/potato.pdf" 
+            "captionLink": "/potato/potato.pdf",
+            "width": "80%", "height": "80%"
         }, 
         { 
             "comment":"flower",
             "src":"/potato/images/flower.png",
-            "height": "80%"
+            "width": "80%", "height": "80%"
         },
         { 
             "comment":"abstract3",
             "src":"/potato/images/abstract3.png",
-            "height": "80%"
+            "width": "80%", "height": "80%"
         },
         { 
             "comment":"berries",
@@ -33,7 +34,7 @@
         { 
             "comment":"sundog",
             "src":"/potato/images/sundog.png",
-            "height": "50%"
+            "width": "80%", "height": "80%"
         },
         { 
             "comment":"sundog code",
