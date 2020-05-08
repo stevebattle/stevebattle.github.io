@@ -14,12 +14,12 @@
             "comment":"Potato Print Programming",
             "src":"/potato/cover.png",
             "captionLink": "/potato/potato.pdf",
-            "width": "80%", "height": "80%"
+            "width": "100%", "height": "100%"
         }, 
         { 
             "comment":"flower",
             "src":"/potato/images/flower.png",
-            "width": "80%", "height": "80%"
+            "width": "90%", "height": "90%"
         },
         { 
             "comment":"abstract3",
@@ -34,7 +34,7 @@
         { 
             "comment":"sundog",
             "src":"/potato/images/sundog.png",
-            "width": "80%", "height": "80%"
+            "width": "90%", "height": "90%"
         },
         { 
             "comment":"sundog code",
