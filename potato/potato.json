@@ -12,7 +12,8 @@
         { 
             "comment":"Potato Print Programming",
             "src":"/potato/cover.png",
-            "captionLink": "/potato/potato.pdf"
+            "captionLink": "/potato/potato.pdf",
+            "height": 669, "width": 958
         }, 
         { 
             "comment":"flower",
