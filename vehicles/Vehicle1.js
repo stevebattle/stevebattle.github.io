@@ -9,23 +9,20 @@ function Vehicle1(img,w,l) {
   /* differential steering based on http://rossum.sourceforge.net/papers/DiffSteer/ */
   
   this.solve = function(rate,src) {
-    // calculate inverse distance from light source
-    //var d = 1 - (this.distanceTo(src)/(this.diagonal/2));
+    // calculate  distance from light source
     var d = this.distanceTo(src);
 
     // apparent brightness b
     var b = this.LUM/d;
 
     // angle to light source
-    //var l = cos(this.angleWith(src))/2 +0.5;
     var a = this.angleWith(src);
 
     // Lambert's cosine law with half-rectification
     var l = cos(a)>0 ? cos(a) : 0;
   
-    // motor velocity proportional to input
+    // motor velocity proportional to input with saturation
     // vehicle 1 is activated by light
-    //var s = d*l*this.F;
     var s = min(b*l,this.SATURATION)*this.F;
     
     // change in orientation over time
