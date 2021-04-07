@@ -26,7 +26,8 @@ function setup() {
   // parent <div> in the html
   try { canvas.parent('sketch'); } catch(err) {}
   src = new Source(src_image,VSIDE,width/2,height/2);
-  v = new Vehicle2a(v2a_image,VWIDTH,VLENGTH);
+  //v = new Vehicle2a(v2a_image,VWIDTH,VLENGTH);
+  v = new Vehicle2b(v2b_image,VWIDTH,VLENGTH);
 }
 
 function draw() {
