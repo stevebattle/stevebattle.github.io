@@ -14,7 +14,7 @@ function Vehicle1(img,w,l) {
     var d = this.distanceTo(src);
 
     // apparent brightness b
-    var b = LUM/d;
+    var b = this.LUM/d;
 
     // angle to light source
     //var l = cos(this.angleWith(src))/2 +0.5;
