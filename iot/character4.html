@@ -1,0 +1,178 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script type="text/javascript" src="n3.js"></script>
+    <script type="text/javascript" src="dynamic-rdfa.js"></script>
+    <style>
+      .thumbnail {
+        border: 1px solid #ddd ;
+        border-radius: 4px ;
+        padding: 5px ;
+        width: 150px ;
+      }
+      .grid-container1col {
+        display: grid;
+        grid-template-columns: auto;
+        background-color: rgb(240,248,255);
+      }
+      .grid-container2col {
+        display: grid;
+        grid-template-columns: 200px auto;
+        background-color: rgb(240,248,255);
+        column-gap: 10px;
+      }
+      .grid-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(211, 211, 211, 1);
+      }
+      .numbered::before {
+        content: '\A';
+        white-space: pre;
+      }
+      .numbered::after { 
+        content: ". "
+      }
+      .carousel {
+        list-style-type: none;
+      }
+      .body-text {
+        font-size: medium;
+        font-family: sans-serif;
+      }
+
+      .collapsible-heading.collapsed .fa-chevron-down,
+      .collapsible-heading .fa-chevron-right {
+        display: none;
+      }
+
+      .collapsible-heading.collapsed .fa-chevron-right,
+      .collapsible-heading .fa-chevron-down {
+        display: inline-block;
+      }
+
+      i.fa {
+        cursor: pointer;
+        margin-right: 5px;
+      }
+
+      .collapsed ~ .panel-body {
+        padding: 0;
+      }
+
+    </style>
+    <script>
+      // image carousel function
+      register((count)=> {
+        if (count%4==0) {
+          $('.carousel').each(function () {
+            // check focus
+            var focus = $(this).closest('[focus]');
+
+            // is any image currently selected?
+            var selected = $(this).find('li[selected]');
+            // if not selected then select the first item
+            if (selected.length==0) selected = $(this).find('img:not([src=""]):first').closest('li');
+
+            // cycle images
+            if (count && selected.length && focus.length) { // select next item
+              selected.removeAttr('selected');
+              selected = selected.next('li');
+              // wrap-around to the first item
+              if (selected.length==0) selected = $(this).find('img:not([src=""]):first').closest('li');
+              if (selected.length) selected.attr('selected','');
+            }
+            // show selected element
+            if (selected.length) selected.attr('selected','').show();
+            // hide deselected elements
+            $(this).find('li:not([selected])').each(function() { $(this).hide(); });
+          });
+        }
+      });
+
+      // reverse bubble sort
+      register((count)=> {
+        $('[sort]').each(function() {
+          path = $(this).attr('sort');
+          var l = $(this).children().length;
+          for (var i=l-1; i>0; i--) {
+          //for (var i=0; i<l; i++) {
+            var e = $(this).children().eq(i-1);
+            //var e = $(this).children().eq(i);
+            // value of this element
+            var p = parseInt($(e).find(path).first().text());
+            if ($(e).next().length) {
+              // value of the next element
+              var q = parseInt($(e).next().find(path).first().text());
+              if (p>q) { // swap elements
+                $(e).next().insertBefore(e);
+              }
+            }
+          };
+        });
+      });
+
+      // focus (adds and removes focus attribute)
+      register((count)=>{
+        $('.focus').each(function() {
+          // disable existing focus handlers
+          $(this).off('focusin').off('focusout');
+          // enable focus on div
+          $(this).attr('tabindex',-1);
+          // add handlers
+          $(this).focusin(function() {
+            $(this).attr('focus','');
+          });
+          $(this).focusout(function() {
+            $(this).removeAttr('focus');
+          });
+        });
+      });
+    </script>
+  </head>
+  <body onload="rdfa($('body'))"
+    prefix="skos: http://www.w3.org/2004/02/skos/core# owl: http://www.w3.org/2002/07/owl#"
+    vocab="http://datadock.io/keynsham/ndp/id/definition/">
+    <div dataset="http://keynsham.github.io/images_csv_20180601_203823%202.nt">
+      <div dataset="http://keynsham.github.io/character.nq" class="grid-container1col">
+        <div about="http://datadock.io/keynsham/ndp/id/dataset/character.csv" sort="> div > span[property='area-number']">
+          <div rel="skos:member" resource class="grid-item grid-container2col focus">
+            <ul prefix="images: http://datadock.io/keynsham/ndp/id/dataset/images.csv#" resource class="carousel">
+              <li rev="images:area-url" resource>
+                <img rel="images:image-url" src class="thumbnail">
+              </li>
+            </ul>
+            <div dataset-pattern="^(.*?)(/id/)(.*?)$" dataset="$1/data/$3.nq"
+              prefix="character: http://datadock.io/keynsham/ndp/id/dataset/character.csv#">
+              <div class="body-text">
+                <span class="numbered" property="area-number"></span>
+                <span property="character-area"></span>
+              </div>
+              <br>
+              <div rel="character:landscape" resource class="collapsible">
+                <span dataset-pattern="^(.*?)(/page/)(.*?)$" dataset="$1/data/$3.nq">
+                  <div class="collapsible-heading" class="panel-heading collapsed" data-toggle="collapse" >
+                      <i class="fa fa-fw fa-chevron-down"></i>
+                      <i class="fa fa-fw fa-chevron-right"></i>Landscape
+                  </div>
+                  <span rel="owl:sameAs" resource-pattern="^https(.*?)(/page/)(.*?)$" resource="http$1/id/$3">
+                    <span property="landuse-text"></span>
+                  </span>
+                </span>
+              </div>
+              <div rel="character:settlement" resource>
+                <span dataset-pattern="^(.*?)(/page/)(.*?)$" dataset="$1/data/$3.nq">
+                  <span rel="owl:sameAs" resource-pattern="^https(.*?)(/page/)(.*?)$" resource="http$1/id/$3">
+                    <span property="buildings-text" content></span>
+                    <span property="landmarks-text" content></span>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

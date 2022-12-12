@@ -1,0 +1,20 @@
+/* style.css */
+
+html, body { height: 100%; }
+  
+body {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* the canvas is 800px square */
+#sketch {
+    width: 800px;
+}
+
+.caption { 
+    margin: 10px;
+    width: 400px;
+}

@@ -1,0 +1,841 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script type="text/javascript" src="n3.js"></script>
+    <script type="text/javascript" src="dynamic-rdfa.js"></script>
+    <style>
+      .thumbnail {
+        border: 1px solid #ddd ;
+        border-radius: 4px ;
+        padding: 5px ;
+        width: 150px ;
+      }
+      .container1 {
+        display: grid;
+        grid-template-columns: auto;
+        background-color: rgb(240,248,255);
+      }
+      .container2 {
+        display: grid;
+        grid-template-columns: auto 210px;
+        background-color: rgb(240,248,255);
+        column-gap: 10px;
+      }
+      .item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(211, 211, 211, 1);
+        padding-left: 10px;
+      }
+      .numbered::before {
+        content: '\A';
+        white-space: pre;
+      }
+      .numbered::after { 
+        content: ". "
+      }
+      .carousel {
+        list-style-type: none;
+      }
+      .text {
+        font-size: medium;
+        font-family: sans-serif;
+      }
+
+      .collapsible-heading {
+        background-color: #777;
+        color: white;
+        margin: 0 0 .2em 0;
+      }
+      .collapsible-heading.collapsed .collapse,
+      .collapsible-heading .expand {
+        display: none;
+      }
+      .collapsible-heading.collapsed .expand,
+      .collapsible-heading .collapse {
+        display: inline-block;
+      }
+      .collapsed ~ .collapsible-content {
+        display: none;
+        background-color: #f1f1f1;
+      }
+      .collapsible-content {
+        display: inline-block;
+        background-color: #f1f1f1;
+      }
+      /* make the chevron clickable */
+      span.fa {
+        cursor: pointer;
+        margin-right: 5px;
+      }
+
+      .landform::before {
+        content: "landform: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .landuse::before {
+        content: "landuse: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .landcover::before {
+        content: "landcover: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .boundaries::before {
+        content: "boundaries: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .sizes::before {
+        content: "sizes: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .routeways::before {
+        content: "routeways: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .structures::before {
+        content: "structures: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .water::before {
+        content: "water: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .enclosure::before {
+        content: "enclosure: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .view::before {
+        content: "view: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .landmarks::before {
+        content: "landmarks: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .scenic::before {
+        content: "scenic: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .activities::before {
+        content: "activities: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .positive::before {
+        content: "positive: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .negative::before {
+        content: "negative: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .topography::before {
+        content: "topography: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .layout::before {
+        content: "layout: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .spaces::before {
+        content: "spaces: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .greenery::before {
+        content: "greenery: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .wildlife::before {
+        content: "wildlife: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .roads::before {
+        content: "roads: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .views-out::before {
+        content: "views-out: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .views-in::before {
+        content: "views-in: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .buildings::before {
+        content: "buildings: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .roofs::before {
+        content: "roofs: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .materials::before {
+        content: "materials: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .details::before {
+        content: "details: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+      .date::before {
+        content: "date: ";
+        font-size: medium;
+        font-family: sans-serif;
+        font-weight: bold;      
+      }
+
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+      }
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+      .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+      }
+      .modal-close:hover, .modal-close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .tab { margin-left: 40px; }
+
+      </style>
+    <script>
+      // image carousel function
+      register((count)=> {
+        if (count%2==0) {
+          $('.carousel').each(function () {
+            // check focus
+            var focus = $(this).closest('.focus');
+
+            // is any image currently selected?
+            var active = $(this).find('.active-carousel');
+            // if not selected then select the first item
+            if (active.length==0) active = $(this).find('img:not([src=""]):first').closest('.carousel-item');
+
+            // cycle images
+            if (count && active.length && focus.length) { // select next item
+              active.removeClass('active-carousel');
+              active = active.next('.carousel-item');
+              // wrap-around to the first item
+              if (active.length==0) active = $(this).find('img:not([src=""]):first').closest('.carousel-item');
+              if (active.length) active.addClass('active-carousel');
+            }
+            // show selected element
+            if (active.length) active.addClass('active-carousel').show();
+            // hide deselected elements
+            $(this).find('.carousel-item:not(.active-carousel)').each(function() { $(this).hide(); });
+          });
+        }
+      });
+
+      // reverse bubble sort
+      register((count)=> {
+        if (count==0) return;
+        $('[sort-ascending]').each(function() {
+          path = $(this).attr('sort-ascending');
+          var l = $(this).parent().children().length;
+          for (var i=l-1; i>0; i--) {
+            var e = $(this).parent().children().eq(i-1);
+            // value of this element
+            var p = parseInt($(e).find(path).first().text());
+            if (!p) p = parseInt($(e).find(path).first().attr('content'));
+            if ($(e).next().length) {
+              // value of the next element
+              var q = parseInt($(e).next().find(path).first().text());
+              if (!q) q = parseInt($(e).next().find(path).first().attr('content'));
+              if (p>q) { // swap elements
+                $(e).next().insertBefore(e);
+              }
+            }
+          };
+        });
+      });
+
+      // item focus (adds and removes focus class)
+      register((count)=>{
+        $('.item').each(function() {
+          // disable existing focus handlers
+          $(this).off('focusin').off('focusout');
+          // enable focus on div
+          $(this).attr('tabindex',-1);
+          // add handlers
+          $(this).focusin(function() {
+            $(this).addClass('focus');
+            refresh();
+          });
+          $(this).focusout(function() {
+            $(this).removeClass('focus');
+            refresh();
+          });
+        });
+      });
+
+      // collapse and expand
+      register((count)=>{
+        $('.collapsible-heading:not(:has(>span))').each(function() {
+          // add collapse and expand controls
+          $(this).prepend("<span class='collapse'></span><span class='expand'></span>");
+        });
+        $('.collapse').each(function() {
+          if ($(this).parent().hasClass('search')) $(this).addClass("fa fa-fw fa-search-minus");
+          else $(this).addClass("fa fa-fw fa-chevron-down");
+          // disable existing click handlers
+          $(this).off('click');
+          $(this).click(function() {
+            $(this).parent().addClass('collapsed');
+          });
+        });
+        $('.expand').each(function() {
+          if ($(this).parent().hasClass('search')) $(this).addClass("fa fa-fw fa-search-plus");
+          else $(this).addClass("fa fa-fw fa-chevron-right");
+          // disable existing click handlers
+          $(this).off('click');
+          $(this).click(function() {
+            $(this).parent().removeClass('collapsed');
+          });
+        });
+      });
+
+      // invisible when out of focus
+      register((count)=>{
+        $('.invisibility').each(function() {
+          // check focus
+          var focus = $(this).closest('.focus');    
+          if (focus.length) $(this).show();
+          else $(this).hide();
+        })
+      });
+
+      // hold rdfa expansion until in focus
+      register((count)=>{
+        $('.hold').each(function() {
+           // check focus
+           var focus = $(this).closest('.focus');
+           if (focus.length) {
+             $(this).removeClass('hold');
+             process($(this),0);
+           }         
+        });
+      });
+
+      // expand rdfa for search
+      register((count)=>{
+        $('.search:not(.collapsed)').each(function() {
+          var held = $(this).attr('held');
+          if (held) {
+            $('body').find(held).each(function() {
+              if ($(this).hasClass('hold')) {
+                $(this).removeClass('hold');
+                process($(this),0);
+              }
+            });
+          }
+        });
+      });
+
+      function containsValue(str,value) {
+        if (str==undefined || !str.includes(value)) return false;
+        var a = str.split(' ');
+        for (var i=0; i<a.length; i++) {
+          if (a[i]==value) return true;
+        }
+        return false;      
+      }
+
+      function addValue(str,value) {
+        var a = str.split(' ');
+        for (var i=0; i<a.length; i++) {
+          if (a[i]==value) return str;
+        }
+        if (str) return str+" "+value;
+        else return value;       
+      }
+
+      function addValues(str,values) {
+        if (values==undefined) return str;
+        var a = values.split(' ');
+        for (var i=0; i<a.length; i++) {
+          if (str) str = addValue(str,a[i]);
+          else str = a[i];
+        }
+        return str;
+      }
+
+      function removeValue(str,value) {
+        var a = str.split(' ');
+        var b = "";
+        for (var i=0; i<a.length; i++) {
+          if (a[i]!=value) {
+            if (b) b = b+" "+a[i];
+            else b = a[i];             
+          }
+        }
+        return b;
+      }
+
+
+      // expand facet heading
+      register((count)=>{
+        $('[facet-heading]').each(function() {
+          var h = $(this).attr('facet-heading');
+          var i = $(this).attr('facet-item');
+          var p = $(this).attr('facet-path');
+          var n = $(this).attr('facet-null'); // optional
+          if (n) {
+            $(this).append(`<div class="collapsible-heading collapsed text search">${h}</div>\
+              <div class="collapsible-content tab facet-control" search-item="${i}" facet-path="${p}" null-facet='${n}'>\
+              </div>`);
+          }
+          else {
+            $(this).append(`<div class="collapsible-heading collapsed text search">${h}</div>\
+              <div class="collapsible-content tab facet-control" search-item="${i}" facet-path="${p}"></div>`);           
+          }
+          $(this).removeAttr('facet-heading');
+        });
+      });
+      
+      // expand null-facet
+      register((count)=>{
+        $('[null-facet]').each(function() {
+          var f = $(this).attr('null-facet');
+          $(this).append(`<input type='checkbox' value='${f}' checked class="null-facet-control"><span class="text">UNKNOWN</span><br>`);
+          $(this).removeAttr('null-facet');
+        });
+      });
+
+      // populate facets and add change handlers
+      register((count)=>{
+        $('.facet-control').each(function() {
+          var control = $(this);
+          var item = $(this).attr('search-item');
+          var path = $(this).attr('facet-path');
+          $(item).find(path).each(function() {
+            var content = $(this).attr('content');
+
+            // initial state before nodes on hold are expanded
+            if (!$(this).hasClass('instantiated')) $(this).attr('facet','UNINSTANTIATED');
+
+            // record matched facets (all at this stage)
+            //if (!content) content = $(this).text();
+            if (!content) return;
+            if (!($(this).attr('facet') || $(this).attr('facet')=="") || $(this).attr('facet')=="UNINSTANTIATED") {
+              $(this).attr('facet',content);
+            }
+            var a = content.split(' ');
+            for (var i=0; i<a.length; i++) {
+              var value = a[i];
+              var input = control.children(`input[value='${value}']`);
+              if (value && input.length==0) {
+                control.append(`<input type='checkbox' value='${value}' checked><span class="text">${value}</span><br>`);
+                input = control.children(`input[value='${value}']`);
+                $(input).change(function() {
+                  var value = this.value;
+                  var checked = this.checked;
+                  // filter data for this facet
+                  $(item).find(path).each(function() {
+                    var facet = $(this).attr('facet');
+                    var content = $(this).attr('content');
+                    //if (!content) content = $(this).text();
+                    // if checked and value in content then add value to facets
+                    // allow content="" for uninstantiated rdfa property
+                    if (checked && containsValue(content,value)) {
+                      facet = addValue(facet,value);
+                      $(this).attr('facet',facet);
+                      //console.log(content,checked,$(this).attr('facet'));
+                    }
+                    // if unchecked and value in facet then remove value from facet
+                    else if (!checked && containsValue(content,value)) {
+                      facet = removeValue(facet,value);
+                      $(this).attr('facet',facet);
+                      //console.log(content,checked,$(this).attr('facet'));
+                    }
+                  });
+                });
+              }
+            }
+          });
+        });
+      });
+
+      // update count for each facet control (except null-inputs)
+      register((count)=>{
+        $('.facet-control').each(function() {
+          var control = $(this);
+          var item = $(this).attr('search-item');
+          var path = $(this).attr('facet-path');
+          $(this).children('input').each(function() {
+            var value = $(this).attr('value');
+            var n=0;
+            $('body').find(path).each(function() {
+              var content = $(this).attr('content');
+              if (containsValue(content,value)) n++;
+            });
+            var facet_label = $(this).next('span');
+            var facet_count = facet_label.children('span');
+            if (facet_count.length>0) facet_count.text(` (${n})`);
+            else facet_label.append(`<span> (${n})</span>`);
+          });
+        });
+      });
+
+      // update count for each null facet control
+      register((count)=>{
+        $('.null-facet-control').each(function() {
+          var item = $(this).parent().attr('search-item');
+          var path = $(this).parent().attr('facet-path');
+          var value = $(this).attr('value');
+          var n=0;
+          $(item).each(function() {
+            var p = $(this).find(path);
+            if (p.length==0) n++;
+          });
+          var facet_label = $(this).next('span');
+          var facet_count = facet_label.children('span');
+          if (facet_count.length>0) {
+            facet_count.text(` (${n})`);
+          }
+          else {
+            facet_label.append(`<span> (${n})</span>`);
+          }
+        });
+      });
+
+      // add dummy facets to each item for missing null-facet controls
+      register((count)=>{
+        $('.null-facet-control').each(function() {
+          var item = $(this).parent().attr('search-item');
+          var path = $(this).parent().attr('facet-path');
+          var value = $(this).attr('value');
+          var checked = this.checked;
+          $(item).each(function() {
+            var p = $(this).find(path);
+            if (p.length==0) { // null
+              // does the search item contain the null facet?
+              var f = $(this).find(`.facet[value='${value}']`);
+              if (checked && f.length==0) {
+                // add facet to search item
+                $(this).append(`<div class='facet' facet='${value}' value='${value}'></div>`);
+              }
+              else if (!checked && f.length>0) f.attr('facet','');
+              else if (checked && f.length>0) f.attr('facet',value);
+            }
+            else { // no need for the extra facet here
+              var f = $(this).find(`.facet[value='${value}']`);
+              f.remove();
+            }
+          });
+        });
+      });
+
+      // visible items must have support from every facet
+      register((count)=>{
+        $('.search-item').each(function() {
+          var support = true;
+          var facet = null;
+          // iterate over elements classified as facets
+          $(this).find('.facet').each(function() {
+            var f = $(this).attr('facet');
+            //console.log(f);
+            facet = addValues(facet,$(this).attr('facet'));
+            if (!$(this).attr('facet')) {
+              support = false;
+              return false ; // break out of each
+            }
+            else return true;
+          });
+          if (facet==null) support = false;
+          //console.log('*',support);
+          // if there are no matching facets, eg. no 'landscape' then this is equivalent to true
+          //console.log(facet);
+          if (support) $(this).show();
+          else $(this).hide();
+        });
+      });
+
+      function modal(value,id) {
+        var src = value.attr('src');
+        var modal = document.getElementById(id);
+        $(modal).find('.modal-content').attr('src',src);
+        modal.style.display = "block";
+        var control = $(modal).find('.modal-close');
+        control.off('click');
+        control.click(function() {
+          modal.style.display = "none";
+        });
+      }
+
+    </script>
+  </head>
+  <body onload="process($('body'),1000)"
+    prefix="skos: http://www.w3.org/2004/02/skos/core# owl: http://www.w3.org/2002/07/owl#"
+    vocab="http://datadock.io/keynsham/ndp/id/definition/">
+
+    <!-- faceted search -->
+    <!-- null-item (required for non-existent values of any facet) should be unique within search-item -->
+    <div class="collapsible">
+      <div class="collapsible-heading collapsed text search">Faceted search</div>
+      <div class="collapsible-content tab">
+        <div class="collapsible">
+          <div class="collapsible-heading collapsed text search" held="div[rel='character:landscape']">Landscape</div>
+          <div class="collapsible-content tab">
+            <div class="collapsible" facet-heading="landform"
+              facet-item=".search-item" facet-path="div[property='landform']" facet-null='null-landform'>
+            </div>
+            <div class="collapsible" facet-heading="landcover"
+              facet-item=".search-item" facet-path="div[property='landcover']" facet-null='null-landcover'>
+            </div>
+            <div class="collapsible" facet-heading="landuse"
+              facet-item=".search-item" facet-path="div[property='landuse']" facet-null='null-landuse'>
+            </div>
+            <div class="collapsible" facet-heading="boundaries"
+              facet-item=".search-item" facet-path="div[property='boundaries']" facet-null='null-boundaries'>
+            </div>
+            <div class="collapsible" facet-heading="sizes"
+              facet-item=".search-item" facet-path="div[property='sizes']" facet-null='null-sizes'>
+            </div>
+            <div class="collapsible" facet-heading="routeways"
+              facet-item=".search-item" facet-path="div[property='routeways']" facet-null='null-routeways'>
+            </div>
+            <div class="collapsible" facet-heading="structures"
+              facet-item=".search-item" facet-path="div[property='structures']" facet-null="null-structures">
+            </div>
+            <div class="collapsible" facet-heading="water" 
+              facet-item=".search-item" facet-path="div[property='water']" facet-null="null-water">
+            </div>
+            <div class="collapsible" facet-heading="enclosure" 
+              facet-item=".search-item" facet-path="div[property='enclosure']" facet-null="null-enclosure">
+            </div>
+            <div class="collapsible" facet-heading="views" 
+              facet-item=".search-item" facet-path="div[property='views']" facet-null="null-views">
+            </div>
+            <div class="collapsible" facet-heading="landmarks" facet-item=".search-item" 
+              facet-path="div[rel='character:landscape']>div>div>div[property='landmarks']" 
+              facet-null="null-landscape-landmarks">
+            </div>
+          </div>
+        </div>
+        <div class="collapsible">
+          <div class="collapsible-heading collapsed text search" held="div[rel='character:settlement']">Settlement</div>
+          <div class="collapsible-content tab">
+            <div class="collapsible" facet-heading="topography"
+              facet-item=".search-item" facet-path="div[property='topography']" facet-null='null-topography'>
+            </div>
+            <div class="collapsible" facet-heading="layout"
+              facet-item=".search-item" facet-path="div[property='layout']" facet-null='null-layout'>
+            </div>
+            <div class="collapsible" facet-heading="spaces"
+              facet-item=".search-item" facet-path="div[property='spaces']" facet-null='null-spaces'>
+            </div>
+            <div class="collapsible" facet-heading="greenery"
+              facet-item=".search-item" facet-path="div[property='greenery']" facet-null='null-greenery'>
+            </div>
+            <div class="collapsible" facet-heading="wildlife"
+              facet-item=".search-item" facet-path="div[property='wildlife']" facet-null='null-wildlife'>
+            </div>
+            <div class="collapsible" facet-heading="roads"
+              facet-item=".search-item" facet-path="div[property='roads']" facet-null='null-roads'>
+            </div>
+            <div class="collapsible" facet-heading="roads"
+              facet-item=".search-item" facet-path="div[property='roads']" facet-null='null-roads'>
+            </div>
+            <div class="collapsible" facet-heading="landmarks" facet-item=".search-item" 
+              facet-path="div[rel='character:settlement']>div>div>div[property='landmarks']" 
+              facet-null='null-settlement-landmarks'>
+            </div>
+            <div class="collapsible" facet-heading="buildings"
+              facet-item=".search-item" facet-path="div[property='buildings']" facet-null='null-buildings'>
+            </div>
+            <div class="collapsible" facet-heading="roofs"
+              facet-item=".search-item" facet-path="div[property='roofs']" facet-null='null-roofs'>
+            </div>
+            <div class="collapsible" facet-heading="materials"
+              facet-item=".search-item" facet-path="div[property='materials']" facet-null='null-materials'>
+            </div>
+            <div class="collapsible" facet-heading="details"
+              facet-item=".search-item" facet-path="div[property='details']" facet-null='null-details'>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div dataset="https://keynsham.github.io/images_csv_20180601_203823%202.nt">
+      <div dataset="https://keynsham.github.io/character.nq" class="container1">
+        <div about="http://datadock.io/keynsham/ndp/id/dataset/character.csv">
+          <div rel="skos:member" resource class="item search-item container2" 
+            sort-ascending=">div>div>span[property='area-number']">
+
+            <div dataset-pattern="^http\:(.*?)(/id/)(.*?)$" dataset="https:$1/data/$3.nq"
+              prefix="character: http://datadock.io/keynsham/ndp/id/dataset/character.csv#">
+              <div class="text">
+                <span class="numbered" property="area-number"></span>
+                <span property="character-area"></span>
+              </div>
+              <br>
+              <div rel="character:landscape" resource class="collapsible invisibility hold">
+                <div dataset-pattern="^(.*?)(/page/)(.*?)$" dataset="$1/data/$3.nq">
+                  <div class="collapsible-heading collapsed text">Landscape</div>
+                  <div rel="owl:sameAs" resource-pattern="^https\:(.*?)(/page/)(.*?)$" resource="http:$1/id/$3"
+                    class="collapsible-content">
+                    <div property="landform-text" class="landform text"></div>
+                    <div property="landuse-text" class="landuse text"></div>
+                    <div property="landcover-text" class="landcover text"></div>
+                    <div property="boundaries-text" class="boundaries text"></div>
+                    <div property="sizes-text" class="sizes text"></div>
+                    <div property="routeways-text" class="routeways text"></div>
+                    <div property="structures-text" class="structures text"></div>
+                    <div property="water-text" class="water text"></div>
+                    <div property="enclosure-text" class="enclosure text"></div>
+                    <div property="view-text" class="view text"></div>
+                    <div property="landmarks-text" class="landmarks text"></div>
+                    <div property="scenic-text" class="scenic text"></div>
+                    <div property="activities-text" class="activities text"></div>
+                    <div property="positive-text" class="positive text"></div>
+                    <div property="negative-text" class="negative text"></div>
+                    <div property="date" class="date text"></div>
+                    <div property="landform" content class="facet"></div>
+                    <div property="landcover" content class="facet"></div>
+                    <div property="landuse" content class="facet"></div>
+                    <div property="boundaries" content class="facet"></div>
+                    <div property="sizes" content class="facet"></div>
+                    <div property="routeways" content class="facet"></div>
+                    <div property="structures" content class="facet"></div>
+                    <div property="water" content class="facet"></div>
+                    <div property="enclosure" content class="facet"></div>
+                    <div property="views" content class="facet"></div>
+                    <div property="landmarks" content class="facet"></div>
+                  </div>
+                </div>
+              </div>
+              <div rel="character:settlement" typeof="owl:Thing" class="collapsible invisibility hold">
+                <div dataset-pattern="^(.*?)(/page/)(.*?)$" dataset="$1/data/$3.nq">
+                  <div class="collapsible-heading collapsed text">Settlement</div>
+                  <div rel="owl:sameAs" resource-pattern="^https(.*?)(/page/)(.*?)$" resource="http$1/id/$3"
+                    class="collapsible-content">
+                    <div property="topography-text" class="topography text"></div>
+                    <div property="layout-text" class="layout text"></div>
+                    <div property="spaces-text" class="spaces text"></div>
+                    <div property="greenery-text" class="greenery text"></div>
+                    <div property="wildlife-text" class="wildlife text"></div>
+                    <div property="roads-text" class="roads text"></div>
+                    <div property="landmarks-text" class="landmarks text"></div>
+                    <div property="views-out-text" class="views-out text"></div>
+                    <div property="views-in-text" class="views-in text"></div>
+                    <div property="buildings-text" class="buildings text"></div>
+                    <div property="roofs-text" class="roofs text"></div>
+                    <div property="materials-text" class="materials text"></div>
+                    <div property="details-text" class="details text"></div>
+                    <div property="positive-text" class="positive text"></div>
+                    <div property="negative-text" class="negative text"></div>
+                    <div property="date" class="date text"></div>
+                    <div property="topography" content class="facet"></div>
+                    <div property="layout" content class="facet"></div>
+                    <div property="spaces" content class="facet"></div>
+                    <div property="greenery" content class="facet"></div>
+                    <div property="wildlife" content class="facet"></div>
+                    <div property="roads" content class="facet"></div>
+                    <div property="landmarks" content class="facet"></div>
+                    <div property="buildings" content class="facet"></div>
+                    <div property="roofs" content class="facet"></div>
+                    <div property="materials" content class="facet"></div>
+                    <div property="details" content class="facet"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div prefix="images: http://datadock.io/keynsham/ndp/id/dataset/images.csv#" class="carousel">
+              <div rev="images:area-url" resource class="carousel-item">
+                <img rel="images:image-url" src class="thumbnail" onclick="modal($(this),'modal-image')">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- modal image popup -->
+    <div id="modal-image" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content">
+    </div>
+
+  </body>
+</html>
