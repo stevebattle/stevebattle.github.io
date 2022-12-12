@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="n3.js"></script>
+    <script>
+      const { DataFactory } = n3 ;
+      const { namedNode, literal, defaultGraph, quad } = DataFactory ;
+      const parser = new n3.Parser() ;
+      var store = new n3.Store() ;
+      var datasets = [] ;
+
+      function uri(href,vocab,mappings) {
+        // see http://urlregex.com
+        var regex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/ ;
+        if (href.match(regex)) {
+          return href ;
+        }
+        // TODO resolve CURIE
+        return vocab + href ;
+      }
+
+
+      // RDFa processing rules: https://www.w3.org/TR/rdfa-core/
+
+      function processRDFa(value,localDefaultVocabulary,parentSubject,currentPropertyValue) {
+          var newSubject = null ;
+
+          // process added dataset property
+          if (value.attr('dataset') && !datasets.includes(value.attr('dataset'))) {
+            datasets.push(value.attr('dataset')) ;
+            $.get(value.attr('dataset'), function(data) {
+              // remove all stray zero-width no-break spaces (65279)
+              data = data.replace(/\ufeff/g, "");
+              parser.parse(data, (error, quad, prefixes) => {
+                if (quad) store.addQuad(quad) ;
+                else processRDFa(value,localDefaultVocabulary,parentSubject,currentPropertyValue) ;
+              });
+            });
+            return ;
+          }
+
+          // rule 2
+          if (value.attr('vocab')) localDefaultVocabulary = value.attr('vocab') ;
+
+          // rule 5.2
+          if (value.attr('resource') || value.attr('resource')==="") newSubject = value.attr('resource') ;
+
+          // fill in href & src
+          if (value.attr('href')==="") value.attr('href',parentSubject) ;
+          if (value.attr('src')==="") value.attr('src',parentSubject) ;
+
+          // rule 11
+          if (value.attr('property')) {
+            currentPropertyValue = uri(value.attr('property'),localDefaultVocabulary,null) ;
+          }
+
+          // query
+          if (currentPropertyValue && (newSubject==="" || ($(value).children().length==0 && !$(value).text()))) {
+
+            //results = store.getQuads(namedNode(parentSubject),namedNode(currentPropertyValue),null,null) ;
+            var results = store.getObjects(parentSubject,currentPropertyValue,null) ;
+            $(results).each(function(index,o) {
+              var clone = $(value).clone() ;
+              clone.appendTo($(value).parent()) ;
+
+              if (o.termType=='Literal') {
+                clone.text(o.value) ;
+              }
+              else if (o.termType=='NamedNode') {
+                if (clone.attr('resource')==="") {
+                  clone.attr('resource',o.id) ;
+                }
+                clone.children().each( function() { 
+                  processRDFa($(this),localDefaultVocabulary,o.id,null) ; 
+                })
+              }
+
+            }) ;
+
+            // delete the original value
+            $(value).remove() ;          
+          }
+          else {
+            // rule 13
+            if (newSubject) {
+              parentSubject = newSubject ;
+            }
+            value.children().each( function() { 
+              processRDFa($(this),localDefaultVocabulary,parentSubject,currentPropertyValue) ; 
+            }) ;
+          }
+      }
+
+      function rdfa(here) {
+        processRDFa(here,null,document.URL,null) ;
+      }
+
+    </script>
+  </head>
+  <body onload="rdfa($('body'))">
+    <div dataset="http://keynsham.github.io/character.nq" vocab="http://www.w3.org/2004/02/skos/core#">
+      <ul resource="http://datadock.io/keynsham/ndp/id/dataset/character.csv">
+        <li property="member" resource>
+          <a href>
+            <span property="prefLabel"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

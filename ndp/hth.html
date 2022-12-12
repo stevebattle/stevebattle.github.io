@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="n3.js"></script>
+    <script type="text/javascript" src="dynamic-rdfa.js"></script>
+  </head>
+  <body onload="process($('body'),1000)" prefix="rdfs: http://www.w3.org/2000/01/rdf-schema# dc: http://purl.org/dc/elements/1.1/ ssn: http://www.w3.org/ns/ssn/ sosa: http://www.w3.org/ns/sosa/">
+    <div dataset="https://sa-battle.github.io/hth.ttl">
+        <div resource="http://www.example.com/hub">
+            <h1 property="rdfs:comment"></h1>
+            <ul rel="ssn:hasSubSystem" resource>
+                <li dataset-pattern="^(.*)$" dataset="$1.ttl">
+                    <span><span property="rdfs:label"></span> &nbsp;
+                      <span property="dc:identifier"></span></span>
+                    <ul rel="sosa:hosts" resource>
+                        <li property="rdfs:label"></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div resource="https://sa-battle.github.io/hth.ttl">
+          <span rel="dc:rights" href>license</span>
+        </div>
+    </div>
+  </body>
+</html>

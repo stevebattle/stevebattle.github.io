@@ -1,0 +1,29 @@
+<html>
+<head>
+    <script src="n3.js"></script>
+<script>
+
+const { DataFactory } = n3;
+const { namedNode, literal, defaultGraph, quad } = DataFactory;
+
+query_property = 'http://purl.org/dc/terms/title';
+
+parser = new n3.Parser();
+store = new n3.Store();
+
+const myQuad = quad(
+  namedNode('https://ruben.verborgh.org/profile/#me'),
+  namedNode('http://xmlns.com/foaf/0.1/givenName'),
+  literal('Ruben', 'en'),
+  defaultGraph(),
+);
+
+console.log(myQuad.subject.value);         // https://ruben.verborgh.org/profile/#me
+console.log(myQuad.object.value);          // Ruben
+console.log(myQuad.object.datatype.value); // http://www.w3.org/1999/02/22-rdf-syntax-ns#langString
+console.log(myQuad.object.language);       // en
+
+</script>
+</head>
+<body></body>
+</html>

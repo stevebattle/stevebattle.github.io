@@ -98,12 +98,15 @@ function capture() {
                     arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
                     arController.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_4x4);
 
+
                     arController.addEventListener('getMarker', function(ev) {
                         var id = ev.data.marker.idMatrix;
                         var index = ev.data.index;
                         var pos = ev.data.marker.pos;
                         var vertex = ev.data.marker.vertex;
                         var transform = ev.data.matrix;
+
+                        console.log(id);
 
                         var ctx = canvas.getContext('2d');
                         if (index==0) { // clear canvas if this is the first marker

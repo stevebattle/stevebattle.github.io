@@ -1,0 +1,347 @@
+<html>
+<body>
+<style>
+.container {
+  margin: 0 auto;
+  position: relative;
+}
+
+video {
+    width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+canvas {
+    width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+}
+</style>
+
+<script src="../build/artoolkit.debug.js"></script>
+<script src="../js/artoolkit.api.js"></script>
+
+<div class="container">
+    <video></video>
+	<canvas></canvas>
+</div>
+
+<script>
+
+var tw = 1280 / 2;
+var th = 720 / 2;
+var SCALEA = 16, SCALEB = 2;
+var canvas = document.querySelector('canvas');
+var cameraParam;
+var arController;
+
+var video = document.querySelector('video');
+video.style.width = document.width + 'px';
+video.style.height = document.height + 'px';
+video.setAttribute('autoplay', '');
+video.setAttribute('muted', '');
+video.setAttribute('playsinline', '');
+
+var frame = []
+var frameCount = 0
+var grid = []
+
+var hdConstraints = {
+	audio: false,
+	video: {
+        facingMode: 'environment',
+        maxWidth: tw,
+		maxHeight: th
+  	}
+};
+
+function multiplyMatrixVector(matrix, point) {
+  //Give a simple variable name to each part of the matrix, a column and row number
+  var c0r0 = matrix[ 0], c1r0 = matrix[ 1], c2r0 = matrix[ 2], c3r0 = matrix[ 3];
+  var c0r1 = matrix[ 4], c1r1 = matrix[ 5], c2r1 = matrix[ 6], c3r1 = matrix[ 7];
+  var c0r2 = matrix[ 8], c1r2 = matrix[ 9], c2r2 = matrix[10], c3r2 = matrix[11];
+  var c0r3 = matrix[12], c1r3 = matrix[13], c2r3 = matrix[14], c3r3 = matrix[15];
+  //Now set some simple names for the point
+  var x = point[0];
+  var y = point[1];
+  var z = point[2];
+  var w = point[3];
+  //Multiply the point against each part of the 1st column, then add together
+  var resultX = (x * c0r0) + (y * c0r1) + (z * c0r2) + (w * c0r3);
+  //Multiply the point against each part of the 2nd column, then add together
+  var resultY = (x * c1r0) + (y * c1r1) + (z * c1r2) + (w * c1r3);
+  //Multiply the point against each part of the 3rd column, then add together
+  var resultZ = (x * c2r0) + (y * c2r1) + (z * c2r2) + (w * c2r3);
+  //Multiply the point against each part of the 4th column, then add together
+  var resultW = (x * c3r0) + (y * c3r1) + (z * c3r2) + (w * c3r3);
+  return [resultX, resultY, resultZ, resultW];
+}
+
+function rotateScaleAroundOrigin(x, y, radians, ox, oy, sx, sy) {
+    var rx = ox + Math.cos(radians) * (x - ox)*sx + Math.sin(radians) * (y - oy)*sy;
+    var ry = oy + -Math.sin(radians) * (x - ox)*sx + Math.cos(radians) * (y - oy)*sy;
+    return [rx, ry];
+}
+
+// Check the direction these three points rotate
+function RotationDirection(p1x, p1y, p2x, p2y, p3x, p3y) {
+  if (((p3y - p1y) * (p2x - p1x)) > ((p2y - p1y) * (p3x - p1x)))
+    return 1;
+  else if (((p3y - p1y) * (p2x - p1x)) == ((p2y - p1y) * (p3x - p1x)))
+    return 0;
+  
+  return -1;
+}
+
+function containsSegment(x1, y1, x2, y2, sx, sy) {
+  if (x1 < x2 && x1 < sx && sx < x2) return true;
+  else if (x2 < x1 && x2 < sx && sx < x1) return true;
+  else if (y1 < y2 && y1 < sy && sy < y2) return true;
+  else if (y2 < y1 && y2 < sy && sy < y1) return true;
+  else if (x1 == sx && y1 == sy || x2 == sx && y2 == sy) return true;
+  return false;
+}
+
+function intersects(x1, y1, x2, y2, x3, y3, x4, y4) {
+  var f1 = RotationDirection(x1, y1, x2, y2, x4, y4);
+  var f2 = RotationDirection(x1, y1, x2, y2, x3, y3);
+  var f3 = RotationDirection(x1, y1, x3, y3, x4, y4);
+  var f4 = RotationDirection(x2, y2, x3, y3, x4, y4);
+  
+  // If the faces rotate opposite directions, they intersect.
+  var intersect = f1 != f2 && f3 != f4;
+  
+  // If the segments are on the same line, we have to check for overlap.
+  if (f1 == 0 && f2 == 0 && f3 == 0 && f4 == 0) {
+    intersect = containsSegment(x1, y1, x2, y2, x3, y3) || containsSegment(x1, y1, x2, y2, x4, y4) ||
+    containsSegment(x3, y3, x4, y4, x1, y1) || containsSegment(x3, y3, x4, y4, x2, y2);
+  }
+  
+  return intersect;
+}
+
+function lineIntersectsBox(x1, y1, x2, y2,box) {
+    b =   
+        intersects(x1, y1, x2, y2,box[0][0],box[0][1],box[1][0],box[1][1]) ||
+        intersects(x1, y1, x2, y2,box[1][0],box[1][1],box[2][0],box[2][1]) ||
+        intersects(x1, y1, x2, y2,box[2][0],box[2][1],box[3][0],box[3][1]) ||
+        intersects(x1, y1, x2, y2,box[3][0],box[3][1],box[0][0],box[0][1]) ;
+    return b;
+}
+
+function addVertical(u,l) {
+    for (row in grid) {
+        col = grid[row].indexOf(u);
+        if (col>=0) { // add l below
+            if (!grid[row+1]) grid[row+1]=[];
+            grid[row+1][col] = l;
+            return;
+        }
+    }
+    for (row in grid) {
+        col = grid[row].indexOf(l);
+        if (col>=0) {
+            if (row==0) { // add row above
+                grid.unshift([]); // insert empty first row
+                grid[0][col] = u;
+            }
+            else {
+                grid[row-1][col] = u;
+            }
+            return;
+        }
+    }
+}
+
+function addHorizontal(l,r) {
+    for (row in grid) {
+        col = grid[row].indexOf(l)
+        if (col>=0) { // add r right
+            grid[row][col+1] = r;
+            return;
+        }
+    }
+    for (row in grid) {
+        col = grid[row].indexOf(r)
+        if (col==0) { // add l left in new column
+            for (i in grid) grid[i].unshift(undefined);
+            grid[row][0] = l;
+        }
+        else grid[row][col-1] = l; 
+        return;
+    }
+} 
+
+function capture() {
+    navigator.mediaDevices.getUserMedia(hdConstraints).then(function success(stream) {
+        video.srcObject = stream;
+
+        cameraParam = new ARCameraParam();
+        cameraParam.onload = function() {   
+
+            var interval = setInterval(function() {
+                if (!video.videoWidth)	return;
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                // refresh the frame
+                frame = [];
+                frameCount++;
+
+                if (!arController) {
+                    arController = new ARController(video, cameraParam);
+                    //arController.debugSetup();
+                    arController.setPatternDetectionMode( artoolkit.AR_MATRIX_CODE_DETECTION );
+                    arController.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_4x4);
+
+
+                    arController.addEventListener('getMarker', function(ev) {
+                        var id = ev.data.marker.idMatrix;
+                        var index = ev.data.index;
+                        var pos = ev.data.marker.pos;
+                        var vertex = ev.data.marker.vertex;
+                        var transform = ev.data.matrix;
+
+                        // keep id in the frame with a deep copy of the vertices
+                        frame[id] =JSON.parse(JSON.stringify(vertex));
+
+
+                        var ctx = canvas.getContext('2d');
+                        if (index==0) { // clear canvas if this is the first marker
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        }
+
+                        if (id !== -1) {
+                            // bounding box
+                            // The vertices are not consistent with orientation
+                            ctx.beginPath();
+                            ctx.fillStyle = 'white';
+                            ctx.strokeStyle = 'green';
+                            ctx.moveTo(vertex[0][0], vertex[0][1]);
+                            ctx.lineTo(vertex[1][0], vertex[1][1]);
+                            ctx.lineTo(vertex[2][0], vertex[2][1]);
+                            ctx.lineTo(vertex[3][0], vertex[3][1]);
+                            ctx.closePath();
+                            ctx.fill();
+                            ctx.stroke();
+
+                            // plot ID
+                            ctx.save();
+                            // move the context origin to the centre
+                            ctx.translate(pos[0], pos[1]);
+
+                            // rotate the context so that it's upright
+                            // see rotate matrix for cos, sin
+                            // https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web
+                            var a = Math.atan2(transform[0],-transform[1]) - Math.PI/2;
+                            ctx.rotate(a);
+
+                            // scale
+                            var v = multiplyMatrixVector(transform,[0,100,0,1]);
+                            var yscale = Math.sqrt(v[0]*v[0]+v[1]*v[1])/100;
+                            var h = multiplyMatrixVector(transform,[100,0,0,1]);
+                            var xscale = Math.sqrt(h[0]*h[0]+h[1]*h[1])/100;
+                            // fiducial distance is the z value (transform[14])
+                            var zscale = (1 - transform[14]/SCALEA) * SCALEB;
+                            // the canvas is mirrored (see style) but text isn't
+                            // mirror text (-ve x), tilt x,y and distance z
+                            ctx.scale(xscale*zscale, yscale*zscale);
+                            
+                            ctx.font = "bold 20px Arial";
+                            // centre horizontally and vertically
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillStyle = 'green';
+                            ctx.fillText(id, 0, 0);
+
+                            ctx.restore();
+
+                            // draw a vertical line centred on the code
+                            var v = 250 * zscale;
+                            rota = rotateScaleAroundOrigin(pos[0],pos[1]-v/2,-a,pos[0], pos[1], xscale, yscale)
+                            rotb = rotateScaleAroundOrigin(pos[0],pos[1]+v/2,-a,pos[0], pos[1], xscale, yscale)
+                            ctx.beginPath();
+                            ctx.strokeStyle = 'red';
+                            ctx.moveTo(rota[0], rota[1]);
+                            ctx.lineTo(rotb[0], rotb[1]);
+                            ctx.closePath();
+                            ctx.stroke();
+
+                            // add lone id if this is the first one found
+                            if (grid.length==0) {
+                                grid = [[id]];
+                            }
+
+                            // check for intersections with other codes in the frame vertically
+                            for (x in frame) { // iterate though observed ids
+                                if (x!=id) {
+                                    if (lineIntersectsBox(pos[0],pos[1],rota[0],rota[1],frame[x])) {
+                                        console.log(""+frameCount+" "+id+" below "+parseInt(x));
+                                        addVertical(parseInt(x),id);
+                                    }
+                                    if (lineIntersectsBox(pos[0],pos[1],rotb[0],rotb[1],frame[x])) {
+                                        console.log(""+frameCount+" "+id+" above "+parseInt(x));
+                                        addVertical(id,parseInt(x));
+                                    }
+                                }
+                            }
+
+                            // draw a horizontal line centred on the code
+                            // The code cards are twice as wide as they are high
+                            var h = 500 * zscale;
+                            rota = rotateScaleAroundOrigin(pos[0]-h/2,pos[1],-a,pos[0], pos[1], xscale, yscale)
+                            rotb = rotateScaleAroundOrigin(pos[0]+h/2,pos[1],-a,pos[0], pos[1], xscale, yscale)
+                            ctx.beginPath();
+                            ctx.strokeStyle = 'blue';
+                            ctx.moveTo(rota[0], rota[1]);
+                            ctx.lineTo(rotb[0], rotb[1]);
+                            ctx.closePath();
+                            ctx.stroke();
+
+                            // check for intersections with other codes in the frame horizontally
+                            for (x in frame) { // iterate though observed ids
+                                if (x!=id) {
+                                    if (lineIntersectsBox(pos[0],pos[1],rota[0],rota[1],frame[x])) {
+                                        console.log(""+frameCount+" "+id+" right of "+parseInt(x));
+                                        addHorizontal(parseInt(x),id);
+                                    }
+                                    if (lineIntersectsBox(pos[0],pos[1],rotb[0],rotb[1],frame[x])) {
+                                        console.log(""+frameCount+" "+id+" left of "+parseInt(x));
+                                        addHorizontal(id,parseInt(x));
+                                    }
+                                }
+                            }
+
+                            console.log(grid);
+                        }
+                    });
+                }
+                arController.process();
+            }, 16);
+
+        };
+        cameraParam.src = 'Data/camera_para.dat';
+        //cameraParam.src = 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat';
+    });
+}
+
+capture();
+
+window.addEventListener("orientationchange", function() {
+    //if (cameraParam) cameraParam.dispose();
+    //cameraParam = null;
+    if (arController) arController.dispose();
+    arController = null;
+    capture();
+});
+
+</script>
+
+</body>
+</html>
