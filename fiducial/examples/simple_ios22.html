@@ -293,8 +293,7 @@ function capture() {
                             }
 
                             // draw a horizontal line centred on the code
-                            // The code cards are twice as wide as they are high
-                            var h = 500 * zscale;
+                            var h = 250 * zscale;
                             rota = rotateScaleAroundOrigin(pos[0]-h/2,pos[1],-a,pos[0], pos[1], xscale, yscale)
                             rotb = rotateScaleAroundOrigin(pos[0]+h/2,pos[1],-a,pos[0], pos[1], xscale, yscale)
                             ctx.beginPath();
@@ -326,8 +325,8 @@ function capture() {
             }, 16);
 
         };
-        cameraParam.src = 'Data/camera_para.dat';
-        //cameraParam.src = 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat';
+        //cameraParam.src = 'Data/camera_para.dat';
+        cameraParam.src = 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat';
     });
 }
 
