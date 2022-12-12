@@ -1,7 +1,7 @@
 SIZE = 800;
 CELLS = 1000;
 R = 50;
-HORIZON = 350;
+HORIZON = 351;
 CODES = [90^1,90^4,90^32,90^128,90^2,90^8,90^16,90^64] // codes 1 bit difference from 90
 // 90^1 radial spokes
 // 90^2 clockwise spiral
