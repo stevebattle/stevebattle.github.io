@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <script>
+      var images = [
+        "AngelTodorov.png",
+        "AnourTaylor.png",
+        "BhoneMin.png",
+        "CallumJones.jpg",
+        "ConnorMackintosh.png",
+        "DikshyantaUprety.png",
+        "FindlayBox.png",
+        "JamesBryer.png",
+        "JenoLabodi.png",
+        "JohnHoyos.png",
+        "KassimSanusi.JPG",
+        "KristynaTumova.png",
+        "MaxShone.png",
+        "MoodyThaloth.jpg",
+        "NikolayBinev.jpg",
+        "ReeceNicholls.png",
+        "SamuelHolbrook.png",
+        "SofiaRains.png"
+        // Add more image filenames as needed
+      ];
+
+      function displayRandomImage() {
+        var randomIndex = Math.floor(Math.random() * images.length);
+        var randomImage = images[randomIndex];
+
+        var imgElement = document.createElement("img");
+        imgElement.src = "images/" + randomImage;
+
+        var container = document.getElementById("imageContainer");
+        // Clear previous image
+        container.innerHTML = "";
+        container.appendChild(imgElement);
+      }
+
+      // Change image every 5 seconds (5000 milliseconds)
+      setInterval(displayRandomImage, 5000);
+    </script>
+  </head>
+  <body>
+    <div id="imageContainer"></div>
+  </body>
+</html>
