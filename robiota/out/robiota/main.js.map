@@ -1,0 +1,1 @@
+{"version":3,"file":"\/Users\/sa-battle\/Documents\/clojure\/box2d\/out\/robiota\/main.js","sources":["main.cljs"],"lineCount":16,"mappings":";AAAA;;;;;;;AAMA,0DAAA,QAAA,lEAAC,AAAAA,mDAASC;AAAV,AAA6B,OAACC;;AAC9B,0DAAA,OAAA,jEAAC,AAAAF,mDAASC;AAAV,AAA4B,OAACE","names":["robiota.main\/goog$module$goog$object","js\/window","robiota.sketch\/setup","robiota.sketch\/step"]}

@@ -1,0 +1,166 @@
+<html>
+    <head>
+        <title>Robiota</title>
+        <script type="text/javascript" src="build/Box2D_v2.2.1_min.js"></script>
+        <script type="text/javascript" src="helpers/embox2d-helpers.js"></script>
+        <script type="text/javascript" src="helpers/embox2d-html5canvas-debugDraw.js"></script>
+        
+        <script>
+
+        const e_shapeBit = 0x0001;
+        const e_jointBit = 0x0002;
+        const e_aabbBit = 0x0004;
+        const e_pairBit = 0x0008;
+        const e_centerOfMassBit = 0x0010;
+
+        var world;
+        var canvas;
+        var context;
+        var PTM = 12; // zoom
+        var canvasOffset = { x: 0, y: 0 }; 
+        var viewCenterPixel = { x:320, y:240 };
+        var lastTime;
+        var rate=50; // target frameRate
+        var frameRate; // actual frameRate
+
+        function myRound(val,places) {
+            let c = 1;
+            for (var i = 0; i < places; i++) c *= 10;
+            return Math.round(val*c)/c;
+        }
+
+        function getWorldPointFromPixelPoint(pixelPoint) {
+            return {                
+                x: (pixelPoint.x - canvasOffset.x)/PTM,
+                y: (pixelPoint.y - (canvas.height - canvasOffset.y))/PTM
+            };
+        }
+
+        function setViewCenterWorld(b2vecpos, instantaneous) {
+            var currentViewCenterWorld = getWorldPointFromPixelPoint( viewCenterPixel );
+            var toMoveX = b2vecpos.get_x() - currentViewCenterWorld.x;
+            var toMoveY = b2vecpos.get_y() - currentViewCenterWorld.y;
+            var fraction = instantaneous ? 1 : 0.25;
+            canvasOffset.x -= myRound(fraction * toMoveX * PTM, 0);
+            canvasOffset.y += myRound(fraction * toMoveY * PTM, 0);
+        }
+
+        function createWorld() { 
+            if (world!=null) Box2D.destroy(world);
+            world = new Box2D.b2World( new Box2D.b2Vec2(0.0, 0.0) ); // 0,0 for zero gravity
+            world.SetDebugDraw(myDebugDraw);
+            setup();
+            setViewCenterWorld( new b2Vec2(0,0), true ); // centre at origin
+
+            // see: https://gist.github.com/BrianMacIntosh/fefca14bcc5ff82491f3
+            let contactListener = new Box2D.JSContactListener();
+            
+            contactListener.BeginContact = function(contact) {
+                contact = Box2D.wrapPointer(contact, Box2D.b2Contact);
+                //[contact logic here]
+            }
+            contactListener.EndContact = function(contact) {
+                contact = Box2D.wrapPointer(contact, Box2D.b2Contact);
+                //[contact logic here]
+            }
+            contactListener.PreSolve = function(contact, oldManifold) {
+                contact = Box2D.wrapPointer(contact, Box2D.b2Contact);
+                oldManifold = Box2D.wrapPointer(oldManifold, Box2D.b2Manifold);
+                //[contact logic here]
+            }
+            contactListener.PostSolve = function(contact, impulse) {
+                contact = Box2D.wrapPointer(contact, Box2D.b2Contact);
+                impulse = Box2D.wrapPointer(impulse, Box2D.b2ContactImpulse);
+                //[contact logic here]
+            }
+            world.SetContactListener(contactListener);
+        }
+
+        function init() {
+            canvas = document.getElementById("canvas");
+            context = canvas.getContext( '2d' );
+            
+            canvasOffset.x = canvas.width/2;
+            canvasOffset.y = canvas.height/2;
+            
+             // init flags
+            myDebugDraw = getCanvasDebugDraw();
+            myDebugDraw.SetFlags(e_shapeBit | e_jointBit);
+
+            lastTime = Date.now(); 
+        }
+
+        function draw(timestamp) {
+            let t = Date.now();
+            if ((t - lastTime)>(1000/rate)) {
+                frameRate = 1000/(t - lastTime);
+                lastTime = t;
+                try { step(); }
+                catch (err) { // nuke the site from orbit
+                    //location.reload();
+                }
+            }
+            world.Step(1/60, 3, 2);
+
+
+            //black background
+            context.fillStyle = 'rgb(0,0,0)';
+            context.fillRect( 0, 0, canvas.width, canvas.height );
+            context.save();            
+            context.translate(canvasOffset.x, canvasOffset.y);
+            context.scale(1,-1);                
+            context.scale(PTM,PTM);
+            context.lineWidth /= PTM;    
+            context.fillStyle = 'rgb(255,255,0)';
+            world.DrawDebugData();
+            context.restore();
+        }
+
+        window.requestAnimFrame = (function(){
+            return  window.requestAnimationFrame       || 
+                window.webkitRequestAnimationFrame || 
+                window.mozRequestAnimationFrame    || 
+                window.oRequestAnimationFrame      || 
+                window.msRequestAnimationFrame     || 
+                function( callback ) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        function animate() {
+            requestAnimFrame( animate );
+            draw();
+        }
+
+        function afterDocumentLoaded(){
+            using(Box2D, "b2.+");
+            init();
+            createWorld();
+            animate();
+        };
+
+        var Box2D;
+        if (!Box2D) Box2D = (typeof Box2D !== 'undefined' ? Box2D : null) || Module; 
+        Box2D().then(function(r){
+            Box2D = r;
+            Module = Box2D;
+            if (document.readyState === "complete") afterDocumentLoaded();
+            else window.onload = afterDocumentLoaded;
+        });
+
+        </script> 
+    </head>
+    <body>
+        <div style="text-align:center">
+            <h2>Robiota</h2>          
+            <!-- If the size of the canvas changes, also change viewCenterPixel in embox2d-html5canvas-testbed.js -->
+            <div style="margin:auto;width:640px;padding:2px;border:1px solid #888;text-align:left">            
+                <canvas id="canvas" width="640" height="480" tabindex='1'></canvas>
+            </div>        
+        </div>
+        <main>
+        </main>
+        <script src="out/main.js"></script>
+    </body>
+</html>
+

@@ -1,0 +1,4 @@
+{:main robiota.main
+ :output-to "out/main.js"
+ :output-dir "out"
+ :optimizations :none}
