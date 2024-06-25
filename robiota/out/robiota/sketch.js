@@ -13,6 +13,7 @@ robiota.sketch.HEX_RADIUS = (1);
 robiota.sketch.CIRCLE_RADIUS = 0.75;
 robiota.sketch.TRI_RADIUS = 0.75;
 robiota.sketch.DRAG = (10);
+robiota.sketch.DRAG_ANGULAR = (16);
 robiota.sketch.CENTERING = 0.05;
 robiota.sketch.parts = cljs.core.volatile_BANG_.call(null,null);
 robiota.sketch.posi = cljs.core.volatile_BANG_.call(null,null);
@@ -214,9 +215,13 @@ var l = (u["LEFT_EYE"]);
 var r = (u["RIGHT_EYE"]);
 var dragVector = v.GetLinearVelocity();
 var dragAngle = (Math.PI + Math.atan2((dragVector["y"]),(dragVector["x"])));
-var d = Math.sqrt((Math.pow((dragVector["x"]),(2)) + Math.pow((dragVector["y"]),(2))));
-var force = (new b2Vec2(((d * robiota.sketch.DRAG) * Math.cos(dragAngle)),((d * robiota.sketch.DRAG) * Math.sin(dragAngle))));
+var drag = Math.sqrt((Math.pow((dragVector["x"]),(2)) + Math.pow((dragVector["y"]),(2))));
+var force = (new b2Vec2(((drag * robiota.sketch.DRAG) * Math.cos(dragAngle)),((drag * robiota.sketch.DRAG) * Math.sin(dragAngle))));
+var dragAngular = v.GetAngularVelocity();
+var torque = ((- dragAngular) * robiota.sketch.DRAG_ANGULAR);
 v.ApplyLinearImpulse(force,v.GetWorldCenter());
+
+v.ApplyTorque(torque,true);
 
 (u["LEFT_MOTOR"] = r);
 

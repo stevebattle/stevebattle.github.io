@@ -15,6 +15,7 @@
 (def CIRCLE_RADIUS 0.75)
 (def TRI_RADIUS 0.75)
 (def DRAG 10)
+(def DRAG_ANGULAR 16)
 (def CENTERING 0.05)
 
 (def parts (volatile! nil))
@@ -158,17 +159,23 @@
 ;;   )
 
 (defn solveCell [p] 
- (let [
-       v (:body p)
+ (let [v (:body p)
        u (aget v "userData")
        l (aget u "LEFT_EYE")
        r (aget u "RIGHT_EYE")
+
+       ;; linear drag
        dragVector (.GetLinearVelocity v)
-       dragAngle (+ Math/PI (Math/atan2 (aget dragVector "y") (aget dragVector "x")) ) 
-       d (Math/sqrt (+ (Math/pow (aget dragVector "x") 2) (Math/pow (aget dragVector "y") 2))) ;; drag
-       force (js/b2Vec2. (* d DRAG (Math/cos dragAngle)) (* d DRAG (Math/sin dragAngle)))
+       dragAngle (+ Math/PI (Math/atan2 (aget dragVector "y") (aget dragVector "x")))
+       drag (Math/sqrt (+ (Math/pow (aget dragVector "x") 2) (Math/pow (aget dragVector "y") 2))) ;; drag
+       force (js/b2Vec2. (* drag DRAG (Math/cos dragAngle)) (* drag DRAG (Math/sin dragAngle)))
+
+       ;; angular drag
+       dragAngular (.GetAngularVelocity v)
+       torque (* (- dragAngular) DRAG_ANGULAR)
        ]
    (.ApplyLinearImpulse v force (.GetWorldCenter v))
+   (.ApplyTorque v torque true)
    (aset u "LEFT_MOTOR" r)
    (aset u "RIGHT_MOTOR" l)
    ))
