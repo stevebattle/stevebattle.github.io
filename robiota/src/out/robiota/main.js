@@ -12,5 +12,11 @@ return robiota.sketch.setup.call(null);
 robiota.main.goog$module$goog$object.set.call(null,window,"step",(function (){
 return robiota.sketch.step.call(null);
 }));
+robiota.main.goog$module$goog$object.set.call(null,window,"beginContact",(function (p1__551_SHARP_){
+return robiota.sketch.beginContact.call(null,p1__551_SHARP_);
+}));
+robiota.main.goog$module$goog$object.set.call(null,window,"endContact",(function (p1__552_SHARP_){
+return robiota.sketch.endContact.call(null,p1__552_SHARP_);
+}));
 
 //# sourceMappingURL=main.js.map

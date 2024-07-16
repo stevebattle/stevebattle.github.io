@@ -112,4 +112,4 @@ goog.addDependency("../clojure/browser/repl/preload.js", ['clojure.browser.repl.
 goog.addDependency("events/eventwrapper.js", ['goog.events.EventWrapper'], []);
 goog.addDependency("events/eventlike.js", ['goog.events.EventLike'], []);
 goog.addDependency("../robiota/sketch.js", ['robiota.sketch'], ['cljs.core']);
-goog.addDependency("../robiota/main.js", ['robiota.main'], ['robiota.sketch', 'cljs.core', 'goog.object']);
+goog.addDependency("../robiota/main.js", ['robiota.main'], ['robiota.sketch', 'goog.object', 'cljs.core']);
