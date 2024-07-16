@@ -16,7 +16,7 @@
         var world;
         var canvas;
         var context;
-        var PTM = 10; // zoom
+        var PTM = 6; // zoom
         var canvasOffset = { x: 0, y: 0 }; 
         var viewCenterPixel = { x:320, y:240 };
         var lastTime;
@@ -57,11 +57,11 @@
             
             contactListener.BeginContact = function(contact) {
                 contact = Box2D.wrapPointer(contact, Box2D.b2Contact);
-                //[contact logic here]
+                beginContact(contact);
             }
             contactListener.EndContact = function(contact) {
                 contact = Box2D.wrapPointer(contact, Box2D.b2Contact);
-                //[contact logic here]
+                endContact(contact);
             }
             contactListener.PreSolve = function(contact, oldManifold) {
                 contact = Box2D.wrapPointer(contact, Box2D.b2Contact);
@@ -97,7 +97,7 @@
                 lastTime = t;
                 try { step(); }
                 catch (err) { // nuke the site from orbit
-                    //location.reload();
+                    location.reload();
                 }
             }
             world.Step(1/60, 3, 2);
