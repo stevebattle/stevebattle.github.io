@@ -99,7 +99,7 @@ function draw() {
 function analysis(v) {
   //var a = v.a % TAU;
   var xi = ceil(map(v.ll,X_min,X_max,0,BUCKETS))-1;
-  console.log("check brightness", v.dd, v.ll, xi);
+  //console.log("check brightness", v.dd, v.ll, xi);
   var yi = floor(map(v.dd,Y_min,Y_max,0,BUCKETS));
   if (xi<0) { xi = 0 ; }
   if (yi<0) { yi = 0; }
