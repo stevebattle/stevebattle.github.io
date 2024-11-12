@@ -22,11 +22,16 @@ const Y_min = 0;
 var Y_max = 0;
 const EPOCH = 600; // needs multiple epochs because there is >1 stable state
 var epoch = EPOCH;
+// X is the sensor, Y is the distance
 var pXY = new Array(BUCKETS).fill(new Array(BUCKETS).fill(0));
+var qY = new Array(BUCKETS).fill(0); //baseline probability
+
 var epoch_count = 0;
 const EPOCH_STABILISATION = 300;
 var iXY = 0;
 var hY = 0;
+var hYQ = 0;
+var kl = 0;
 
 function preload() {
   bg_image = loadImage("data/bg800x800.jpg");
@@ -46,13 +51,28 @@ function setup() {
   v = new Vehicle1(v1_image,V1WIDTH,VLENGTH);
   
   // initialise P(X,Y)
-  Y_max = sqrt(sq(800)*2);
+  Y_max = sqrt(sq(width/2)*2);
   pXY = new Array(BUCKETS);
   for (var xi=0; xi<BUCKETS; xi++) {
     pXY[xi] = new Array(BUCKETS).fill(0);
   } 
   v.ll = 0;
   v.dd = 0;
+  
+  // determine priors Q(Y)
+  let pos = src.position;
+  for (let x=0; x<50; x++) {
+    for (let y=0; y<50; y++) {
+      //v.setPosition(x/100*width,y/100*height);
+      let d = sqrt(pow(x/50*width-400,2)+pow(y/50*height-400,2));
+      //console.log(d);
+      let i = floor(map(d,Y_min,Y_max,0,BUCKETS));
+      if (i==BUCKETS) { i--; }
+      qY[i]++ ;
+    }
+  }
+  normalise(qY);
+  console.log("baseline:",qY);
 }
 
 function draw() {
@@ -65,14 +85,22 @@ function draw() {
   v.checkBorders();
   analysis(v);
   fill("white");
-  text('  H(Y) = '+ hY.toFixed(2), 20, 100); 
-  text("I(X;Y) = " + iXY.toFixed(2), 20, 50); 
+  textSize(30);
+  text('  H(Y,W) = '+ hYQ.toFixed(2), 20, 50); 
+  text('  H(Y) = '+ hY.toFixed(2), 52, 100); 
+  text("I(X;Y) = " + iXY.toFixed(2), 554, 50); 
+  text("KL(Y||W) = " + kl.toFixed(2), 510, 100);
+  
+  textSize(20);
+  // for baseline see: https://www.iguazio.com/glossary/baseline-models/#:~:text=A%20random%20baseline%20generates%20predictions,not%2Dspam%20with%20equal%20probability.
+  text("W: distance baseline  X: eye  Y: distance",50, 770);
 }
 
 function analysis(v) {
   //var a = v.a % TAU;
   var xi = ceil(map(v.ll,X_min,X_max,0,BUCKETS))-1;
-  var yi = round(map(v.dd,Y_min,Y_max,0,BUCKETS));
+  console.log("check brightness", v.dd, v.ll, xi);
+  var yi = floor(map(v.dd,Y_min,Y_max,0,BUCKETS));
   if (xi<0) { xi = 0 ; }
   if (yi<0) { yi = 0; }
   if (yi>=BUCKETS) { yi = BUCKETS-1; }
@@ -113,16 +141,22 @@ function normalise(p) {
 
 function nextEpoch() {
   console.log(++epoch_count);
-  
+  //let pX = marginalX(pXY);
   let pY = marginalY(pXY);
-  console.log("P(Y)");
-  print1(pY);
+  //console.log("P(X)",pX);
+  console.log("P(Y)",pY);
   console.log("");
   
   // mutual information
   iXY = mutualInfo(pXY);
   hY = entropy(pY);
+  hYQ = crossEntropy(pY,qY);
+  // KL (Kullback–Leibler divergence) is cross entropy - entropy
+  // the KL divergence is the average number of extra bits needed to encode the data
+  // due to the fact that we used distribution q to encode the data instead of the true distribution p
+  kl = hYQ-hY;
   console.log("H(Y) = ",hY,"I(X;Y) = ",iXY);
+  console.log("H(Y,W) = ",hYQ,"KL(Y||W) = ",kl);
   console.log(" ");
 
   epoch = EPOCH;
@@ -139,12 +173,23 @@ function print1(p) {
   console.log(line);
 }
 
-function entropy(pX) {
+function entropy(p) {
   var H = 0;
   for (let i=0; i<BUCKETS; i++) {
-    let t = log2(pX[i]);
+    let t = log2(p[i]);
     if (isFinite(t) && !isNaN(t)) {
-      H += pX[i] * t;
+      H += p[i] * t;
+    }
+  }
+  return -H;
+}
+
+function crossEntropy(p,q) {
+  var H = 0;
+  for (let i=0; i<BUCKETS; i++) {
+    let t = p[i] * log2(q[i]);
+    if (isFinite(t) && !isNaN(t)) {
+      H += t;
     }
   }
   return -H;
