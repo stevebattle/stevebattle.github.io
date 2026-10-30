@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Paperclip Computer</title>
+    <style>
+        :root {
+            --b: #07111f;
+            --p: #111d2e;
+            --l: #2c3d55;
+            --t: #e8eef7;
+            --m: #96a8bd;
+            --o: #f5b942;
+            --a: #40bff5;
+            --g: #66e3a4;
+            --r: #ff7d7d
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--b);
+            color: var(--t);
+            font: 14px system-ui
+        }
+
+        header,
+        main {
+            max-width: 1550px;
+            margin: auto;
+            padding: 18px
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(26px, 4vw, 42px)
+        }
+
+        h2 {
+            font-size: 17px;
+            margin: 0 0 10px
+        }
+
+        .muted {
+            color: var(--m)
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 14px
+        }
+
+        .panel {
+            background: var(--p);
+            border: 1px solid var(--l);
+            border-radius: 14px;
+            padding: 14px
+        }
+
+        .wide {
+            grid-column: 1/-1
+        }
+
+        textarea {
+            width: 100%;
+            height: 330px;
+            background: #040b14;
+            color: #ddecff;
+            border: 1px solid var(--l);
+            border-radius: 9px;
+            padding: 12px;
+            font: 13px ui-monospace, monospace
+        }
+
+        button,
+        input {
+            font: inherit
+        }
+
+        button {
+            color: white;
+            background: #20334c;
+            border: 1px solid #476080;
+            border-radius: 8px;
+            padding: 8px 11px;
+            cursor: pointer
+        }
+
+        button:hover {
+            background: #2b4565
+        }
+
+        .primary {
+            background: #087b50
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 10px 0
+        }
+
+        .status,
+        pre {
+            background: #050c16;
+            border-radius: 8px;
+            padding: 9px;
+            white-space: pre-wrap
+        }
+
+        .good {
+            color: var(--g)
+        }
+
+        .bad {
+            color: var(--r)
+        }
+
+        .regs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px
+        }
+
+        .reg {
+            text-align: center;
+            background: #07111f;
+            border: 1px solid var(--l);
+            border-radius: 10px;
+            padding: 8px
+        }
+
+        .reg b {
+            display: block;
+            color: var(--g);
+            font: 26px ui-monospace
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px
+        }
+
+        .cores {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px
+        }
+
+        label {
+            color: var(--m);
+            font-size: 12px
+        }
+
+        input[type=number] {
+            width: 100%;
+            background: #07111f;
+            color: white;
+            border: 1px solid var(--l);
+            border-radius: 7px;
+            padding: 7px;
+            margin-top: 3px
+        }
+
+        .scroll {
+            overflow: auto;
+            max-height: 530px;
+            border: 1px solid var(--l);
+            border-radius: 9px
+        }
+
+        table {
+            border-collapse: collapse;
+            min-width: 1390px;
+            width: 100%;
+            font: 11px ui-monospace
+        }
+
+        th,
+        td {
+            border-right: 1px solid #26364c;
+            border-bottom: 1px solid #1d2b3e;
+            padding: 5px;
+            text-align: center
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background: #192a40;
+            z-index: 2
+        }
+
+        .order {
+            color: var(--o)
+        }
+
+        .addr {
+            color: var(--a)
+        }
+
+        tr.current {
+            background: #6c531f66
+        }
+
+        .lamp {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid #566982
+        }
+
+        .lamp.on.order {
+            background: var(--o);
+            box-shadow: 0 0 7px var(--o)
+        }
+
+        .lamp.on.addr {
+            background: var(--a);
+            box-shadow: 0 0 7px var(--a)
+        }
+
+        td.src {
+            text-align: left;
+            white-space: nowrap;
+            min-width: 210px
+        }
+
+        .bits {
+            white-space: nowrap;
+            letter-spacing: 1px
+        }
+
+        .log {
+            height: 180px;
+            overflow: auto;
+            color: #a9bad0;
+            font: 11px ui-monospace
+        }
+
+        @media(max-width:900px) {
+            .layout {
+                grid-template-columns: 1fr
+            }
+
+            .wide {
+                grid-column: auto
+            }
+        }
+
+        a:link {
+            color: yellow;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: orange;
+            background-color: transparent;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Paperclip Computer</h1>
+        <div class="muted">Assembler & Simulator based on <a href="http://www.computer-timeline.com/wp-content/uploads/2023/02/How_To_Build_A_Working_Digital_Computer_Jun67.pdf">How To Build A Working Digital Computer</a></div>
+        <p class="muted">Paste assembly, assemble it into drum contacts, inspect all 26 bits, and execute it.</p>
+    </header>
+    <main class="layout">
+        <section class="panel">
+            <h2>Assembly source</h2><textarea id="source" spellcheck="false">// Add A and B
+RIN A
+TRA
+RIN B
+ADD
+RUT DISPLAY
+ANS</textarea>
+            <div class="row">
+                <button class="primary" id="assemble">Assemble</button>
+                <button id="upload">Upload</button>
+                <input id="fileInput" type="file" accept=".asm,text/plain" hidden>
+                <button id="save">Download</button>
+            </div>
+            <div id="asmStatus" class="status">Ready.</div>
+        </section>
+        <section class="panel">
+            <h2>Machine</h2>
+            <div class="regs">
+                <div class="reg">PC<b id="pc">1</b></div>
+                <div class="reg">ACC<b id="acc">0</b></div>
+                <div class="reg">X<b id="x">0</b></div>
+                <div class="reg">OUTPUT<b id="out">-</b></div>
+            </div>
+            <div class="inputs row"><label>Input A<input id="inA" type="number" min="0" max="15"
+                        value="3"></label><label>Input B<input id="inB" type="number" min="0" max="15"
+                        value="4"></label></div>
+            <div id="cores" class="cores"></div>
+            <div class="row"><button class="primary" id="run">Run</button><button id="step">Step</button><button
+                    id="pause">Pause</button><button id="pc1">PC to 1</button><button id="reset">Reset
+                    all</button><label>Delay <input id="delay" type="range" min="50" max="1000" step="50"
+                        value="300"></label></div>
+            <div id="runStatus" class="status">Ready.</div>
+            <pre id="log" class="log">No execution yet.</pre>
+        </section>
+        <section class="panel wide">
+            <h2>Drum contacts and 26-bit words</h2>
+            <p class="muted">Amber: ten order tracks. Blue: sixteen address/control tracks. The highlighted row is the
+                next word to execute. During Run, the simulator pauses before RIN A or RIN B so you can enter a value;
+                click Run again to continue.</p>
+            <div class="scroll">
+                <table>
+                    <thead>
+                        <tr id="head"></tr>
+                    </thead>
+                    <tbody id="drum"></tbody>
+                </table>
+            </div>
+        </section>
+        <section class="panel wide">
+            <h2>Syntax</h2>
+            <p>Comments begin with <code>//</code>, <code>;</code>, or <code>#</code>. Labels are assigned to original
+                jump contacts 1–4. A label may be on its own line or before an instruction.</p>
+            <pre>turn:
+RIN B
+...
+JUP turn
+
+WORD RIN A 1
+BITS 10000000001000000000000000</pre>
+        </section>
+    </main>
+    <script>
+        const ORDERS = ['RIN', 'ADD', 'SUB', 'SHR', 'SHL', 'TRA', 'RUT', 'STO', 'COJ', 'JUP'];
+        const ADDRS = ['A', 'B', 'C', 'CORE1', 'CORE2', 'CORE3', 'CORE4', 'CORE5', '1', '2', '3', '4', 'DISPLAY', '10^0', '10^1', 'ANS'];
+        const TRACKS = [...ORDERS, ...ADDRS], empty = () => Object.fromEntries(TRACKS.map(t => [t, false]));
+        let program = [], labelContacts = {}, jumpTargets = {}, pc = 0, acc = 0, x = 0, out = null, cores = [0, 0, 0, 0, 0], halted = false, timer = null, steps = 0, waitingForInput = false, inputAccepted = false;
+        const $ = id => document.getElementById(id), clamp = n => ((Number(n) || 0) % 16 + 16) % 16;
+        function clean(s) { return s.replace(/\/\/.*$|;.*$|#.*$/, '').trim() } function toks(s) { return s.replace(/,/g, ' ').trim().split(/\s+/).filter(Boolean).map(t => t.toUpperCase()) }
+        function assemble() { try { stop(); const rows = []; const defs = {}; let pending = []; $('source').value.split(/\r?\n/).forEach((raw, i) => { let s = clean(raw); if (!s) return; let m = s.match(/^([A-Za-z_]\w*):\s*(.*)$/); if (m) { const n = m[1].toUpperCase(); if (n in defs) throw Error(`Line ${i + 1}: duplicate label ${n}`); defs[n] = rows.length; pending.push(n); s = m[2].trim(); if (!s) return } rows.push({ line: i + 1, text: s, raw: raw.trim(), marks: pending.splice(0) }) }); if (rows.length > 65) throw Error('Maximum drum capacity is 65 words.'); const names = Object.keys(defs); if (names.length > 4) throw Error('Only four jump labels are available.'); labelContacts = Object.fromEntries(names.map((n, i) => [n, String(i + 1)])); jumpTargets = Object.fromEntries(names.map((n, i) => [String(i + 1), defs[n]])); program = rows.map(r => { let ts = toks(r.text), w = empty(); if (!ts.length) return w; if (ts[0] === 'BITS') { let b = ts.slice(1).join(''); if (!/^[01]{26}$/.test(b)) throw Error(`Line ${r.line}: BITS requires exactly 26 digits`); TRACKS.forEach((t, i) => w[t] = b[i] === '1') } else { let op = ts.shift(); if (op === 'WORD') { } else if (op === 'ANS') w.ANS = true; else if (ORDERS.includes(op)) w[op] = true; else throw Error(`Line ${r.line}: unknown order ${op}`); ts.forEach(t => { t = labelContacts[t] || t; if (!TRACKS.includes(t)) throw Error(`Line ${r.line}: unknown contact or label ${t}`); w[t] = true }) } r.marks.forEach(n => w[labelContacts[n]] = true); return { ...w, _src: r.raw } }); resetAll(false); $('asmStatus').className = 'status good'; $('asmStatus').textContent = `Assembled ${program.length} words. ${names.length ? 'Labels: ' + names.map(n => `${n}=${labelContacts[n]} -> word ${defs[n] + 1}`).join(', ') : 'No labels.'}`; render() } catch (e) { $('asmStatus').className = 'status bad'; $('asmStatus').textContent = e.message } }
+        function bits(w) { return TRACKS.map(t => w[t] ? '1' : '0').join('') } function coreIndex(w) { for (let i = 1; i <= 5; i++)if (w['CORE' + i]) return i - 1; return -1 } function jumpContact(w) { for (let i = 1; i <= 4; i++)if (w[String(i)]) return String(i); return null }
+        function execute(fromRun = false) { if (halted || !program.length) return; const waitingWord = program[pc]; if (fromRun && waitingWord.RIN && (waitingWord.A || waitingWord.B) && !inputAccepted) { stop(); waitingForInput = true; inputAccepted = true; $('runStatus').textContent = `Input required at word ${pc + 1}: set Input ${waitingWord.A ? 'A' : 'B'}, then click Run to continue.`; render(); return; } waitingForInput = false; inputAccepted = false; if (steps++ >= 10000) return halt('Safety stop'); const w = program[pc], oldPc = pc, oldA = acc, oldX = x, c = coreIndex(w), j = jumpContact(w), ops = ORDERS.filter(o => w[o]); let next = (pc + 1) % program.length; for (const op of ops) { if (op === 'RIN') { if (w.A) acc = clamp($('inA').value); else if (w.B) acc = clamp($('inB').value); else if (c >= 0) acc = cores[c] } else if (op === 'TRA') x = acc; else if (op === 'ADD') acc = clamp(acc + x); else if (op === 'SUB') acc = clamp(acc - x); else if (op === 'SHL') acc = clamp(acc << (Number(j) || 1)); else if (op === 'SHR') acc = acc >> (Number(j) || 1); else if (op === 'STO' && c >= 0) cores[c] = acc; else if (op === 'RUT') out = acc; else if (op === 'JUP') { if (j == null || jumpTargets[j] == null) return halt(`JUP: missing target ${j || ''}`); next = jumpTargets[j]; writeLog(`JUP ${j} -> word ${next + 1}`) } else if (op === 'COJ' && acc === 0) { if (j == null || jumpTargets[j] == null) return halt(`COJ: missing target ${j || ''}`); next = jumpTargets[j]; writeLog(`COJ ${j} -> word ${next + 1}`) } } writeLog(`${oldPc + 1}: ${w._src || bits(w)} | ACC ${oldA}->${acc}, X ${oldX}->${x}`); pc = next; if (w.ANS && ops.length === 0) halt('ANS reached'); else render() }
+        function run() { if (halted) return; $('runStatus').textContent = 'Running'; stop(); if (inputAccepted) { execute(true); if (halted) return; } timer = setInterval(() => execute(true), +$('delay').value) } function stop() { if (timer) { clearInterval(timer); timer = null } } function halt(msg) { stop(); halted = true; $('runStatus').textContent = 'Stopped: ' + msg; render() } function pcTo1() { stop(); pc = 0; halted = false; waitingForInput = false; inputAccepted = false; $('runStatus').textContent = 'PC set to 1; registers preserved.'; render() } function resetAll(clear = true) { stop(); pc = 0; acc = 0; x = 0; out = null; cores = [0, 0, 0, 0, 0]; halted = false; steps = 0; waitingForInput = false; inputAccepted = false; if (clear) $('log').textContent = 'No execution yet.'; $('runStatus').textContent = 'Ready.'; render() }
+        function writeLog(s) { $('log').textContent = ($('log').textContent === 'No execution yet.' ? '' : $('log').textContent + '\n') + s; $('log').scrollTop = $('log').scrollHeight } function esc(s) { return s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])) }
+        function render() { $('pc').textContent = program.length ? pc + 1 : '-'; $('acc').textContent = acc; $('x').textContent = x; $('out').textContent = out ?? '-';[...$('cores').querySelectorAll('input')].forEach((e, i) => { if (document.activeElement !== e) e.value = cores[i] }); $('head').innerHTML = '<th>#</th><th>Source</th>' + TRACKS.map(t => `<th class="${ORDERS.includes(t) ? 'order' : 'addr'}">${t}</th>`).join('') + '<th>26 bits</th>'; $('drum').innerHTML = program.map((w, i) => `<tr class="${i === pc && !halted ? 'current' : ''}"><td>${i + 1}</td><td class="src">${esc(w._src || '')}</td>${TRACKS.map(t => `<td><span class="lamp ${w[t] ? 'on' : ''} ${ORDERS.includes(t) ? 'order' : 'addr'}"></span></td>`).join('')}<td class="bits"><span class="order">${bits(w).slice(0, 10)}</span> <span class="addr">${bits(w).slice(10)}</span></td></tr>`).join('') }
+        $('cores').innerHTML = cores.map((_, i) => `<label>CORE${i + 1}<input type="number" min="0" max="15" value="0" data-core="${i}"></label>`).join(''); $('cores').oninput = e => { if (e.target.dataset.core != null) cores[+e.target.dataset.core] = clamp(e.target.value) }; $('assemble').onclick = assemble; $('step').onclick = () => execute(false); $('run').onclick = run; $('pause').onclick = () => { stop(); $('runStatus').textContent = 'Paused' }; $('pc1').onclick = pcTo1; $('reset').onclick = () => resetAll(); $('upload').onclick = () => $('fileInput').click(); $('fileInput').onchange = e => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = () => { $('source').value = reader.result; $('asmStatus').className = 'status'; $('asmStatus').textContent = `Loaded ${file.name}. Click Assemble to assemble it.`; }; reader.onerror = () => { $('asmStatus').className = 'status bad'; $('asmStatus').textContent = 'Could not read the selected file.'; }; reader.readAsText(file); e.target.value = ''; }; $('save').onclick = () => { let u = URL.createObjectURL(new Blob([$('source').value], { type: 'text/plain' })), a = document.createElement('a'); a.href = u; a.download = 'paperclip-program.asm'; a.click(); URL.revokeObjectURL(u) }; assemble();
+    </script>
+</body>
+
+</html>
