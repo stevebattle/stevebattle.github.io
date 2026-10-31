@@ -4,7 +4,7 @@ PAPERCLIP COMPUTER 26-BIT DRUM ASSEMBLER & SIMULATOR
 QUICK START
 ===========
 
-1. Open paperclip_computer_simulator_fixed.html in a modern web browser.
+1. Open the paperclip computer in a modern web browser.
    No installation, internet connection, or web server is required.
 
 2. Paste a program into the Assembly source box, or use the addition
@@ -71,7 +71,7 @@ RUT DISPLAY    Copy ACC to the output display.
 ANS            Stop the program.
 
 
-QUICK START EXAMPLE 2: MISERE NIM
+QUICK START EXAMPLE 2: MISÈRE NIM
 =================================
 
 This is single-pile misere Nim. A player may take 1, 2, or 3 counters.
@@ -79,7 +79,7 @@ The player who takes the last counter loses.
 
 Paste this program:
 
-// Misere Nim
+// Misère Nim
 // CORE1 = CORE1 must initially be 1, 5, 9 or 13.
 // CORE2 = constant 4
 // CORE3 = computer's most recent move
@@ -164,16 +164,16 @@ Comments may begin with any of these markers:
 Orders
 ------
 
-RIN    Read an input or core-memory value into ACC.
-ADD    Add X to ACC using four-bit wraparound arithmetic.
-SUB    Subtract X from ACC using four-bit wraparound arithmetic.
-SHR    Shift ACC right.
-SHL    Shift ACC left using four-bit wraparound.
-TRA    Copy ACC to X.
-RUT    Copy ACC to the output display.
-STO    Store ACC in a selected core-memory word.
-COJ    Jump to a label when ACC is zero.
-JUP    Jump unconditionally to a label.
+RIN  A, B, C COREn     Reads the selected value into the accumulator.
+ADD  —                 Adds the X register to the accumulator.
+SUB  —                 Subtracts the X register from the accumulator.
+SHR  1–4               Shifts the accumulator right by the specified amount.
+SHL  1–4               Shifts the accumulator left by the specified amount.
+TRA  —                 Transfers the accumulator to the X register.
+RUT  DISPLAY           Sends the accumulator to the selected output.
+STO  C CORE1–CORE5     Stores the accumulator in the selected core location.
+COJ  1–4               Conditionally jumps to the specified drum location.
+JUP  1–4               Unconditionally jumps to the specified drum location.
 
 Address and control contacts
 ----------------------------
@@ -234,8 +234,103 @@ BITS must be followed by exactly 26 binary digits.
 THE 26-BIT DRUM DISPLAY
 =======================
 
+The machine separates program storage from data storage. Data is held in the "core-memory" unit while the program is held on a rotating drum.
+Contacts on the drum directly activate the computer's control lines. The instruction drum described in the book is one-hot encoded. There is a physical contact for each command and address. Consequently, more than one address/control contact can be active simultaneously.
+
 Each assembled row represents one drum word. The drum supports up to 65
-words. The display shows:
+words. The original design has 10 instruction/command selections and 16 address or modifier selections:
+
+COMMAND FIELD                 ADDRESS/CONTROL FIELD
+
+10 independent bits          16 independent bits
+        │                            │
+        ▼                            ▼
+
+STO TRA ADD JUP ... RUT       A B C1 C2 ... 1 2 3 4 ...
+
+In addition there are 2 timing contacts and 1 common contact, giving 29 physical contacts.
+
+
+10 command contacts
+16 address/control contacts
+ 2 timing contacts
+ 1 common electrical contact
+------------------------------------------------
+29 physical contacts
+
+
+
+The 10 'order' tracks are:
+
+RIN
+ADD
+SUB
+SHR
+SHL
+TRA
+RUT
+STO
+COJ
+JUP
+
+The 16 original address tracks are:
+
+Address A
+Address B
+Address C
+Core 1
+Core 2
+Core 3
+Core 4
+Core 5
+1
+2
+3
+4
+DISPLAY (ACC)
+10⁰
+10¹
+ANS
+
+Addresses A and B select between the two input encoders.
+
+C identifies core-memory input. The STO command requires more than one address line simultaneously. It activates Address bit C to enable the Core Panel along with Core n bit to indicate which word to store the value of the accumulator in.
+
+COMMAND
+   STO  X
+
+ADDRESS
+   C    X       selects Core Memory
+   C2   X       selects core word 2
+
+Lines 1–4 specify shift counts or jump references.
+
+DISPLAY (ACC) requests the accumulator display, while 10⁰ and 10¹ select the two decimal-output positions.
+
+ANS requests the answer display
+
+Imagine the drum unrolled into a flat sheet. Each row is a program step and each column corresponds to a wire/contact. Because these are independent contacts, the operand/control section isn't restricted to selecting exactly one thing. A drum position can potentially activate multiple control lines simultaneously. The two timing tracks can be excluded from the 26-bit instruction word.
+
+        26 CONTACT TRACKS ACROSS THE DRUM
+
+        R A S S S T R S C J A B C C C C C C 1 2 3 4 D 1 1 A
+        I D U H H R U T O U       1 2 3 4 5         I 0 0 N
+        N D B R L A T O J P                         S ^ ^ S
+                                                    P 0 1
+
+RIN A   X . . . . . . . . . X . . . . . . . . . . . . . . .
+TRA     . . . . . X . . . . . . . . . . . . . . . . . . . .
+RIN B   X . . . . . . . . . . X . . . . . . . . . . . . . .
+ADD     . X . . . . . . . . . . . . . . . . . . . . . . . .
+RUT     . . . . . . X . . . . . . . . . . . . . . . X . . .
+ANS     . . . . . . . . . . . . . . . . . . . . . . . . . X
+
+The simulator preserves the original machine’s 10-order plus 16-address multi-hot format,
+
+Display
+=======
+
+The display shows:
 
 - the source instruction;
 - ten amber order contacts;
