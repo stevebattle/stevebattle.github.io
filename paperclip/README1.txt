@@ -50,7 +50,7 @@ Reset all Resets PC, ACCUMULATOR, EXTENSION, X REGISTER, TENS, UNITS,
 QUICK START EXAMPLE 1: ADDITION
 ===============================
 
-Paste:
+In the Assembler panel at startup:
 
 // Add INPUT A and INPUT B
 RIN A
@@ -62,11 +62,12 @@ RUT UNITS ANS
 Then:
 
 1. Click Assemble.
-2. Set INPUT A to 3 and INPUT B to 4.
+2. Set INPUT A and INPUT B to a pair of single digit numbers.
 3. Click Run.
 4. The program reads both encoder values without pausing.
-5. UNITS becomes 7 and the red ANS lamp lights.
-6. Run pauses after RUT UNITS ANS so the result can be inspected.
+5. The 4-bit sum is formed in the ACCUMULATOR 
+6. RUT UNITS ANS sets the UNITS decoder to the sum and lights the ANS lamp.
+7. The lit ANS lamp causes the simulator to pause so the result can be inspected.
 
 Important: plain RIN A and RIN B do not request new operator input. They
 simply read whatever value is currently present on the encoder.
@@ -79,39 +80,32 @@ RIN B ANS
 In Run mode, the simulator pauses before such an instruction. Change the
 requested encoder value and click Run again to execute the RIN.
 
+To run the program again, reset the PC to 1.
 
-QUICK START EXAMPLE 2: MISERE NIM
+
+QUICK START EXAMPLE 2: MISÈRE NIM
 =================================
 
-Single-pile misere Nim allows the player to remove 1, 2 or 3 pebbles. The
-player who takes the last pebble loses. The supplied Nim example uses the
-computer strategy of taking 4 minus the player's move.
+Single-pile misère Nim allows the player to remove 1, 2 or 3 pebbles. The player who takes the last pebble loses. The supplied Nim example uses the computer strategy of taking 4 minus the player's move. The possible starting piles for this strategy are 5, 9 and 13. The human player goes first.
 
-Recommended initial core settings:
+1. Load and Assemble the program
+2. You need to set the cores manually:
 
-CORE1 = 13     current pile; 5 or 9 may also be used
-CORE2 = 1      constant 1
-CORE3 = 4      constant 4
+CORE1 = 13     size of pile; 5 (0101), 9 (1001), or 13 (1101) may be used.
+CORE2 = 1      constant 1 (0001)
+CORE3 = 4      constant 4 (0100)
 CORE4 = 0      player's current move
 CORE5 = 0      computer's most recent move
 
-The useful winning starting piles for this strategy are 5, 9 and 13.
-
-The important input instruction is:
-
-RIN B ANS
-
-When Run reaches this word:
-
-1. The current pile is already visible as a decimal value in TENS/UNITS.
-2. ANS lights red.
-3. Execution pauses before RIN B is executed.
-4. Enter 1, 2 or 3 in INPUT B.
-5. Click Run.
-6. The player's move is stored in CORE4.
-7. The computer's move is stored in CORE5.
-8. The remaining pile is written back to CORE1.
-9. The program updates TENS/UNITS and returns for the next move.
+3. Run the program
+4. The size of the pile is decoded as a decimal value in TENS/UNITS.
+5. When it reaches RIN B ANS, the ANS lights red, and it pauses for your move.
+6. Enter 1, 2 or 3 in INPUT B.
+7. Click Run.
+8. The player's move is stored in CORE4.
+9. The computer's computed move is stored in CORE5.
+10. The remaining pile is written back to CORE1.
+11. The program updates TENS/UNITS and returns for the next move.
 
 For example, from 13 pebbles:
 
