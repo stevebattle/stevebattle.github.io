@@ -1,4 +1,4 @@
-// Misere Nim
+// Misère Nim
 //
 // Initial settings:
 // Core 1 = starting pile: 5, 9, or 13
