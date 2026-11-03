@@ -1,21 +1,27 @@
 // Misère Nim
 //
-// Initial settings:
-// Core 1 = starting pile: 5, 9, or 13
+// Core 1 = starting pile: 5, 9, or D hexadecimal (13 decimal)
 // Core 2 = constant 1
 // Core 3 = constant 4
-// Core 4 = computer's most recent move (initially 0)
-// Core 5 = scratch: decimal 10 during display conversion
+// Core 4 = computer's most recent move, initially 0
+// Core 5 = scratch, initially 0; later holds decimal 10
 // Input B = player's move: 1, 2, or 3
 //
-// The program begins by displaying core 1 in the DECODER.
-// After every computer move it returns to 'show' before requesting input.
+// Markers 1-3 search forwards. Marker 4 searches backwards.
 // Taking the last pebble loses.
 
-show:
+// Initialise all five core words.
+RIN 1 D
+RIN 2 1
+RIN 3 4
+RIN 4 0
+RIN 5 0
+
+// Display the current pile in the DECODER.
+4: RIN 2
+
 // Build decimal 10: (1 << 3) + (1 << 1).
-// ADD now clears X, so save the result in core 5 before using it.
-RIN 2
+// ADD clears X, so save the result in core 5 before using it.
 SHL 3
 TRA
 RIN 2
@@ -28,27 +34,27 @@ TRA
 // Calculate pile - 10. A negative result sets SIGN.
 RIN 1
 SUB
-COJ one_digit
+COJ 1
 
 // Pile is 10-15: ACC contains the units digit and TENS is 1.
 RUT UNITS
 RIN 2
 RUT TENS
-JUP turn
+JUP 2
 
-one_digit:
+1: RIN 1
+
 // Pile is 0-9: copy it to UNITS, then generate zero for TENS.
-RIN 1
 RUT UNITS
 TRA
 RIN 1
 SUB
 RUT TENS
-JUP turn
+JUP 2
 
-turn:
+2: RIN B ANS
+
 // Wait for and apply the player's move.
-RIN B ANS
 TRA
 RIN 1
 SUB
@@ -60,7 +66,7 @@ RIN 2
 TRA
 RIN 1
 SUB
-COJ lost
+COJ 3
 
 // Computer move = 4 - player's move.
 // Re-read the unchanged INPUT B value without pausing.
@@ -75,10 +81,15 @@ TRA
 RIN 1
 SUB
 STO 1
-JUP show
 
-lost:
+// Marker 4 searches backwards to the display routine.
+JUP 4
+
+// The lost position carries both marker 3 and marker 4.
+// COJ 3 reaches it forwards; JUP 4 loops back to it backwards.
+3:
+4: RIN 1
+
 // Player took the final pebble: display 00 and signal answer ready.
-RIN 1
 RUT TENS UNITS ANS
-JUP lost
+JUP 4
