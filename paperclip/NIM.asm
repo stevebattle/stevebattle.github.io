@@ -50,7 +50,6 @@ TRA
 RIN 1
 SUB
 RUT MSH
-JUP 2
 
 2: RIN B ANS
 
@@ -85,11 +84,8 @@ STO 1
 // Marker 4 searches backwards to the display routine.
 JUP 4
 
-// The lost position carries both marker 3 and marker 4.
-// COJ 3 reaches it forwards; JUP 4 loops back to it backwards.
-3:
-4: RIN 1
+// Player took the final pebble.
+3: RIN 1
 
-// Player took the final pebble: display 00 and signal answer ready.
+// Display 00 and signal answer ready.
 RUT LSH MSH ANS
-JUP 4
