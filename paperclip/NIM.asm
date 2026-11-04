@@ -37,19 +37,19 @@ SUB
 COJ 1
 
 // Pile is 10-15: ACC contains the units digit and TENS is 1.
-RUT UNITS
+RUT LSH
 RIN 2
-RUT TENS
+RUT MSH
 JUP 2
 
 1: RIN 1
 
 // Pile is 0-9: copy it to UNITS, then generate zero for TENS.
-RUT UNITS
+RUT LSH
 TRA
 RIN 1
 SUB
-RUT TENS
+RUT MSH
 JUP 2
 
 2: RIN B ANS
@@ -91,5 +91,5 @@ JUP 4
 4: RIN 1
 
 // Player took the final pebble: display 00 and signal answer ready.
-RUT TENS UNITS ANS
+RUT LSH MSH ANS
 JUP 4
