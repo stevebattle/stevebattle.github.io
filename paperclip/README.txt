@@ -15,7 +15,7 @@ The interface is organised around the main machine units:
 ENCODER          one hexadecimal-digit INPUT A and INPUT B
 DECODER          one hexadecimal-digit TENS and UNITS, plus ANS
 ARITHMETIC UNIT  ACCUMULATOR, EXTENSION and X REGISTER
-CORE MEMORY      five writable four-bit words
+WORD MEMORY      five writable four-bit words
 PROGRAM          65-position program drum
 
 QUICK START
@@ -25,7 +25,7 @@ QUICK START
 3. Click Assemble.
 4. Click Run, or use Step to execute one drum position at a time.
 
-Programs may initialise core memory themselves using RIN, so manual core
+Programs may initialise word memory themselves using RIN, so manual core
 setup is no longer necessary when those initialisation instructions are
 included.
 
@@ -36,10 +36,10 @@ Run       Executes continuously until an instruction explicitly requires
 Step      Executes exactly one drum position. It does not perform the
           automatic Run-mode pause before an input request.
 Pause     Stops automatic execution without changing machine state.
-PC to 1   Sets the program drum to position 1 while preserving registers,
-          decoder, encoders and core memory.
-Reset all Resets PC/drum position, ACCUMULATOR, EXTENSION, X REGISTER,
-          TENS, UNITS, INPUT A, INPUT B, cores, ANS and execution state.
+Drum to 1 Sets the program drum to position 1 while preserving registers,
+          decoder, encoders and word memory.
+Reset all Resets the drum position, ACCUMULATOR, EXTENSION, X REGISTER,
+          TENS, UNITS, INPUT A, INPUT B, words, ANS and execution state.
 
 QUICK START EXAMPLE 1: ADDITION
 ===============================
@@ -50,7 +50,7 @@ RIN A
 TRA
 RIN B
 ADD
-RUT UNITS ANS
+RUT LSH ANS
 
 Then:
 1. Click Assemble.
@@ -60,7 +60,7 @@ Then:
 5. TRA copies ACC to X.
 6. RIN B reads B into ACC.
 7. ADD forms ACC + X, then clears X to zero.
-8. RUT UNITS ANS writes the low four accumulator bits to UNITS, lights ANS
+8. RUT LSH ANS writes the low four accumulator bits to UNITS, lights ANS
    and pauses Run for inspection.
 
 For 3 + 4, UNITS displays 7. Inputs and decoder positions may also display
@@ -82,13 +82,13 @@ player taking the last pebble loses. The supplied Nim program uses the
 strategy of taking 4 minus the player's move. Useful starting piles are 5,
 9 and 13.
 
-The program now initialises all five core words itself at the beginning:
+The program now initialises all five memory words itself at the beginning:
 
-RIN 1 D    // Core 1 = starting pile, 13 decimal
-RIN 2 1    // Core 2 = constant 1
-RIN 3 4    // Core 3 = constant 4
-RIN 4 0    // Core 4 = computer's most recent move
-RIN 5 0    // Core 5 = scratch
+RIN 1 D    // WORD 1 = starting pile, 13 decimal
+RIN 2 1    // WORD 2 = constant 1
+RIN 3 4    // WORD 3 = constant 4
+RIN 4 0    // WORD 4 = computer's most recent move
+RIN 5 0    // WORD 5 = scratch
 
 The second operand is one hexadecimal digit, 0-F, representing the complete
 four-bit value to be loaded. Thus the starting pile can be changed to 5 or 9
@@ -104,19 +104,19 @@ RIN B ANS
 
 ANS lights and Run pauses before the RIN is executed. Enter 1, 2 or 3 in
 INPUT B and click Run. The program then performs the player's move, computes
-the computer's response, stores that response in core 4, updates core 1 and
+the computer's response, stores that response in WORD 4, updates WORD 1 and
 refreshes the decoder.
 
 Because ADD and SUB clear X, the Nim program explicitly reloads X where
-necessary. Core 5 temporarily preserves decimal 10 during the pile-display
+necessary. WORD 5 temporarily preserves decimal 10 during the pile-display
 conversion.
 
 Example:
 
 Starting pile    13
 INPUT B           3
-Computer move     1  (core 4)
-Remaining pile    9  (core 1)
+Computer move     1  (WORD 4)
+Remaining pile    9  (WORD 1)
 DECODER          09
 
 The current Nim program also demonstrates the physical marker mechanism.
@@ -153,26 +153,26 @@ than one drum position.
 Instruction summary
 -------------------
 RIN  A, B, 1-5; optional ANS
-     Read INPUT A, INPUT B or a numbered core word into ACC. For a numeric
+     Read INPUT A, INPUT B or a numbered memory word into ACC. For a numeric
      operand 1-5 the assembler automatically activates the physical C and
-     corresponding Core address contacts. Plain external RIN reads
+     corresponding C1-C5 address contacts. Plain external RIN reads
      immediately; RIN A/B ANS pauses Run for operator input.
      CORE1-CORE5 are retained as aliases for compatibility.
 
 RIN  1-5 0-F
-     Initialise the selected core word with one hexadecimal digit. The first
+     Initialise the selected memory word with one hexadecimal digit. The first
      operand selects the core and the second represents the four-bit value.
-     Example: RIN 2 5 initialises core 2 to 0101.
+     Example: RIN 2 5 initialises WORD 2 to 0101.
 
 ADD
      Add the low four X bits to the low four accumulator stages. Carry is
      represented in the fifth 2^4/SIGN accumulator stage. After the addition
-     completes, X is cleared to zero. DISPLAY (ACC) is added automatically.
+     completes, X is cleared to zero. RTN is added automatically.
 
 SUB
      Subtract X from the low four accumulator stages. Borrow/negative sets
      the 2^4/SIGN stage. After subtraction completes, X is cleared to zero.
-     DISPLAY (ACC) is added automatically.
+     RTN is added automatically.
 
 SHR  1-4
      Shift the combined five-stage accumulator and four-stage extension path
@@ -181,7 +181,7 @@ SHR  1-4
 
 SHL  1-4
      Shift the combined accumulator/extension path left by the specified
-     number of positions. DISPLAY (ACC) is added automatically.
+     number of positions. RTN is added automatically.
 
 TRA
      Copy ACC[3:0] to the separate X register. DISPLAY (ACC) is added
@@ -194,13 +194,13 @@ RUT  TENS and/or UNITS; optional ANS
      added automatically.
 
 STO  1-5
-     Store ACC[3:0] in the numbered core word. The assembler automatically
-     activates the physical C, selected Core and DISPLAY contacts.
+     Store ACC[3:0] in the numbered memory word. The assembler automatically
+     activates the physical C, selected C1-C5 and RTN contacts.
 
 COJ  1-4
      Conditional jump. If accumulator 2^4/SIGN is 1, search for the first
      occurrence of the specified marker. Markers 1-3 are searched forwards;
-     marker 4 is searched backwards. DISPLAY (ACC) is added automatically.
+     marker 4 is searched backwards. RTN is added automatically.
 
 JUP  1-4
      Unconditional marker search. Markers 1-3 roll the drum forwards to the
@@ -214,8 +214,8 @@ RIN 1
 RIN 2 5
 STO 5
 SHR 2
-RUT UNITS
-RUT TENS UNITS ANS
+RUT LSH
+RUT MSH UNITS ANS
 1: RIN B ANS
 JUP 1
 
@@ -226,16 +226,16 @@ lines. Their interpretation depends on the active order.
 
 For core initialisation with RIN they form a four-bit data value:
 
-line 1 = 2^0
-line 2 = 2^1
-line 3 = 2^2
-line 4 = 2^3
+line 1 = 2^3
+line 2 = 2^2
+line 3 = 2^1
+line 4 = 2^0
 
 For example:
 
 RIN 2 5
 
-selects core 2 and activates lines 1 and 3, representing 0101 (hexadecimal
+selects WORD 2 and activates lines 1 and 3, representing 0101 (hexadecimal
 5). These contacts are genuinely assembled onto the drum word; they are not
 merely assembler metadata.
 
@@ -281,16 +281,16 @@ STO 3
 STO 4
 STO 5
 
-The assembler automatically asserts C as well as the selected Core contact.
+The assembler automatically asserts C as well as the selected C1-C5 contact.
 CORE1-CORE5 remain accepted as aliases.
 
 A RIN with a second hexadecimal operand initialises the selected core:
 
-RIN 1 0    initialise core 1 to 0000
-RIN 2 5    initialise core 2 to 0101
-RIN 3 1    initialise core 3 to 0001
-RIN 4 A    initialise core 4 to 1010
-RIN 5 F    initialise core 5 to 1111
+RIN 1 0    initialise WORD 1 to 0000
+RIN 2 5    initialise WORD 2 to 0101
+RIN 3 1    initialise WORD 3 to 0001
+RIN 4 A    initialise WORD 4 to 1010
+RIN 5 F    initialise WORD 5 to 1111
 
 The hexadecimal digit is an assembler convenience for the four physical
 1-4 lines. In the book's octal drum notation these are contact bits rather
@@ -315,7 +315,7 @@ RIN B ANS
     Light ANS and, in Run mode, pause before reading INPUT B. Change INPUT B
     and click Run again.
 
-RUT UNITS ANS
+RUT LSH ANS
     Write ACC[3:0] to UNITS, light ANS and pause Run for inspection.
 
 Execution can continue after an ANS pause by clicking Run again.
@@ -370,13 +370,13 @@ TENS and UNITS likewise display one hexadecimal digit each, 0-F, and
 initialise to 0. Their names retain the original 10^1 and 10^0 control-contact
 terminology.
 
-RUT TENS
+RUT MSH
     Display ACC[3:0] as one hexadecimal digit in TENS.
 
-RUT UNITS
+RUT LSH
     Display ACC[3:0] as one hexadecimal digit in UNITS.
 
-RUT TENS UNITS
+RUT MSH UNITS
     Write the same hexadecimal digit to both positions.
 
 Software can still use these positions to present a multi-digit decimal
@@ -431,7 +431,7 @@ An explicit blank drum position is therefore:
 
 00000000000000000000000000
 
-Raw words are not modified by the assembler. Automatic C or DISPLAY contacts
+Raw words are not modified by the assembler. Automatic C or RTN contacts
 are not added to them.
 
 Blank positions beyond the assembled source remain on the full 65-position
@@ -458,13 +458,13 @@ For example:
 
 STO 2
 
-activates the physical STO, C, CORE2 and DISPLAY contacts.
+activates the physical STO, C2 and RTN contacts.
 
 Similarly:
 
 RIN 2 5
 
-activates RIN, C, CORE2, line 1 and line 3. The four data lines are therefore
+activates RIN, C2, line 2 and line 4; C and RTN are not asserted for initialisation. The four data lines are therefore
 visible in the actual 26-bit drum word and can also be encountered by a jump
 search.
 
@@ -476,17 +476,7 @@ one thing. A drum position can activate multiple control lines simultaneously.
 
 The two timing tracks are excluded from the 26-bit instruction word.
 
-        26 CONTACT TRACKS ACROSS THE DRUM
-        R A S S S T R S C J A B C C C C C C 1 2 3 4 D 1 1 A
-        I D U H H R U T O U       1 2 3 4 5         I 0 0 N
-        N D B R L A T O J P                         S ^ ^ S
-                                                    P 0 1
-
-RIN A   X . . . . . . . . . X . . . . . . . . . . . . . . .
-TRA     . . . . . X . . . . . . . . . . . . . . . . . . . .
-RIN B   X . . . . . . . . . . X . . . . . . . . . . . . . .
-ADD     . X . . . . . . . . . . . . . . . . . . . . . . . .
-RUT     . . . . . . X . . . . . . . . . . . . . . . X . . .
+The two timing tracks are excluded from the 26-bit instruction word.  
 
 MACHINE CONTROLS
 ================
@@ -507,11 +497,11 @@ Stops automatic execution without changing state.
 PC to 1
 -------
 Sets the program drum to position 1 while preserving encoder, decoder,
-registers and core memory.
+registers and word memory.
 
 Reset all
 ---------
-Resets PC, INPUT A/B, ACCUMULATOR, EXTENSION, X, TENS, UNITS, all five cores,
+Resets the drum position, INPUT A/B, ACCUMULATOR, EXTENSION, X, TENS, UNITS, all five words,
 ANS and execution state to zero, and clears the execution trace.
 
 If the program begins with RIN core-initialisation instructions, running again
@@ -522,7 +512,7 @@ LIMITS AND IMPLEMENTATION NOTES
 - Drum capacity: 65 positions.
 - INPUT A/B: one hexadecimal digit, 0-F.
 - TENS/UNITS: one hexadecimal digit each, 0-F.
-- Core words and X: four bits, 0-15.
+- Memory words and X: four bits, 0-15.
 - ACC: four data stages plus 2^4/SIGN.
 - EXTENSION: four stages connected to ACC for shifting.
 - ADD and SUB clear X after arithmetic completes.
@@ -535,7 +525,7 @@ LIMITS AND IMPLEMENTATION NOTES
 - A taken jump leaves the drum at the marker found; there is no extra PC
   increment after the jump.
 - ANS means operator attention/pause; it is not HALT.
-- There is no NOP instruction. A blank drum position simply does nothing.
+- There is no NOP instruction. Execution pauses on a blank drum position.
 - The simulator is a behavioural reconstruction of the manually operated
   architecture, not an electrical simulation of the paperclip circuitry.
 
