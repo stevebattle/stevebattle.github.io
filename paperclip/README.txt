@@ -1,4 +1,4 @@
-PAPERCLIP COMPUTER 26-BIT DRUM ASSEMBLER & SIMULATOR
+PAPERCLIP COMPUTER ASSEMBLER & SIMULATOR
 =====================================================
 
 ABOUT THIS SIMULATOR
@@ -15,8 +15,8 @@ The interface is organised around the main machine units:
 ENCODER          one hexadecimal-digit INPUT A and INPUT B
 DECODER          one hexadecimal-digit TENS and UNITS, plus ANS
 ARITHMETIC UNIT  ACCUMULATOR, EXTENSION and X REGISTER
-WORD MEMORY      five writable four-bit words
-PROGRAM          65-position program drum
+CORE MEMORY      five writable four-bit words
+PROGRAM DRUM     65-position program drum
 
 QUICK START
 ===========
@@ -38,8 +38,12 @@ Step      Executes exactly one drum position. It does not perform the
 Pause     Stops automatic execution without changing machine state.
 Drum to 1 Sets the program drum to position 1 while preserving registers,
           decoder, encoders and word memory.
-Reset all Resets the drum position, ACCUMULATOR, EXTENSION, X REGISTER,
-          TENS, UNITS, INPUT A, INPUT B, words, ANS and execution state.
+Clear Registers
+          Clears ACCUMULATOR, EXTENSION, X REGISTER, TENS, UNITS,
+          INPUT A, INPUT B, and core memory. It does not
+          change the program drum position.
+Clear     Clears the Assembly source editor. It appears immediately to the
+          right of Download.
 
 QUICK START EXAMPLE 1: ADDITION
 ===============================
@@ -75,28 +79,27 @@ RIN B ANS
 In Run mode the simulator pauses before such an external RIN. Enter the new
 value and click Run again to execute the instruction.
 
-QUICK START EXAMPLE 2: MISERE NIM
+QUICK START EXAMPLE 2: MISÈRE NIM
 =================================
-Single-pile misere Nim allows the player to remove 1, 2 or 3 pebbles. The
+Single-pile misère Nim allows the player to remove 1, 2 or 3 pebbles. The
 player taking the last pebble loses. The supplied Nim program uses the
 strategy of taking 4 minus the player's move. Useful starting piles are 5,
 9 and 13.
 
-The program now initialises all five memory words itself at the beginning:
+The program initialises all five memory words at the beginning:
 
 RIN 1 D    // WORD 1 = starting pile, 13 decimal
 RIN 2 1    // WORD 2 = constant 1
 RIN 3 4    // WORD 3 = constant 4
 RIN 4 0    // WORD 4 = computer's most recent move
-RIN 5 0    // WORD 5 = scratch
 
 The second operand is one hexadecimal digit, 0-F, representing the complete
 four-bit value to be loaded. Thus the starting pile can be changed to 5 or 9
 by changing the first instruction to RIN 1 5 or RIN 1 9.
 
-The decimal pile count is deliberately calculated by the program and placed
-across TENS and UNITS. Thus a pile of 13 is shown as 13, even though each
-individual decoder position is capable of displaying a hexadecimal digit.
+The decimal pile count is calculated by the program and placed
+across TENS and UNITS. Thus a pile of 13 is shown as 13. This is Binary Coded Decimal, 
+even though each individual decoder position is capable of displaying a hexadecimal digit.
 
 When the program reaches:
 
@@ -107,10 +110,6 @@ INPUT B and click Run. The program then performs the player's move, computes
 the computer's response, stores that response in WORD 4, updates WORD 1 and
 refreshes the decoder.
 
-Because ADD and SUB clear X, the Nim program explicitly reloads X where
-necessary. WORD 5 temporarily preserves decimal 10 during the pile-display
-conversion.
-
 Example:
 
 Starting pile    13
@@ -119,14 +118,14 @@ Computer move     1  (WORD 4)
 Remaining pile    9  (WORD 1)
 DECODER          09
 
-The current Nim program also demonstrates the physical marker mechanism.
-Markers 1-3 are searched forwards; marker 4 is searched backwards. A drum
-word may carry more than one marker. For example:
+The Nim program also demonstrates the physical marker mechanism.
+Markers 1-3 are searched forwards; marker 4 is searched backwards. 
+A drum word may carry more than one marker. For example:
 
 3:
 4: RIN 1
 
-assembles as a single drum position carrying both marker contacts 3 and 4.
+would assemble as a single drum position carrying both marker contacts 3 and 4.
 The line containing only 3: does not consume a drum position.
 
 ASSEMBLY LANGUAGE
@@ -140,7 +139,7 @@ Comments may begin with:
 ; comment
 # comment
 
-Markers use the physical control-line numbers directly:
+Markers 1 to 4 use the physical control-line numbers directly:
 
 1:
 2:
@@ -236,14 +235,13 @@ For example:
 RIN 2 5
 
 selects WORD 2 and activates lines 1 and 3, representing 0101 (hexadecimal
-5). These contacts are genuinely assembled onto the drum word; they are not
-merely assembler metadata.
+5).
 
 The same physical lines are interpreted as marker contacts by JUP and COJ.
 Consequently a jump search can encounter a 1-4 contact belonging to a RIN
 core-initialisation word. Keeping initialisation instructions together at the
 start of a program normally avoids interference, but a careless wrap-around
-jump can encounter them.
+jump could encounter them.
 
 The same 1-4 control lines also have instruction-specific meanings for
 SHL/SHR.
@@ -254,31 +252,15 @@ ADD and SUB both clear the X register after completing their arithmetic.
 Consequently, programs must not assume that X still contains an operand or
 result after ADD or SUB.
 
-For example:
-
-TRA
-RIN 3
-SUB
-
-leaves the subtraction result in ACC but X = 0. To use that result as the
-next X operand, explicitly transfer it again:
-
-TRA
 
 CORE MEMORY ADDRESS AND INITIALISATION NOTATION
 ===============================================
 For RIN and STO, a numeric first operand from 1 to 5 means the corresponding
 core-memory word:
 
+Examples
+--------
 RIN 1
-RIN 2
-RIN 3
-RIN 4
-RIN 5
-STO 1
-STO 2
-STO 3
-STO 4
 STO 5
 
 The assembler automatically asserts C as well as the selected C1-C5 contact.
@@ -320,9 +302,9 @@ RUT LSH ANS
 
 Execution can continue after an ANS pause by clicking Run again.
 
-DISPLAY (ACC)
+RTN DISPLAY (ACC)
 =============
-DISPLAY is a physical control contact used when the accumulator/extension
+RTN is a physical control contact used when the accumulator/extension
 contents must be visible to the operator. The symbolic assembler automatically
 adds DISPLAY to:
 
@@ -330,13 +312,11 @@ ADD  SUB  SHR  SHL  TRA  STO  RUT  COJ
 
 It is not automatically added to:
 
-RIN  JUP
+RIN (core initialisation) JUP
 
-When DISPLAY is active, lit ACCUMULATOR and EXTENSION lamps appear amber.
-Otherwise they appear green. DISPLAY does not pause execution.
+When RTN is active, lit ACCUMULATOR and EXTENSION lamps appear amber.
+Otherwise they appear green.
 
-Literal 26-bit words are never changed by the assembler, so DISPLAY must be
-set explicitly in a literal word when required.
 
 ACCUMULATOR, X AND EXTENSION
 ============================
@@ -360,26 +340,26 @@ as the second operand and then clear X to zero.
 ENCODER AND DECODER
 ===================
 INPUT A and INPUT B each represent one four-bit value. The simulator accepts
-exactly one hexadecimal character per encoder: 0-9 or A-F. Lowercase a-f is
+one hexadecimal character per encoder: 0-9 or A-F. Lowercase a-f is
 normalised to uppercase; an empty or invalid value resolves to 0.
 
 This hexadecimal extension goes slightly beyond the original decimal encoder,
-but maps directly onto all sixteen possible four-bit values.
+but maps directly onto all sixteen possible four-bit values for completeness.
 
 TENS and UNITS likewise display one hexadecimal digit each, 0-F, and
 initialise to 0. Their names retain the original 10^1 and 10^0 control-contact
 terminology.
 
 RUT MSH
-    Display ACC[3:0] as one hexadecimal digit in TENS.
+    Display ACC[3:0] as one hexadecimal digit in TENS (Most Significant Half)
 
 RUT LSH
-    Display ACC[3:0] as one hexadecimal digit in UNITS.
+    Display ACC[3:0] as one hexadecimal digit in UNITS (Least Significant Half)
 
-RUT MSH UNITS
-    Write the same hexadecimal digit to both positions.
+RUT LSH MSH
+    Writes the accumulator to both positions (useful to zero the display).
 
-Software can still use these positions to present a multi-digit decimal
+Software can still use these positions to present a multi-digit Binary Coded Decimal
 result by calculating the decimal digits separately, as the Nim example does.
 
 MARKERS AND JUMPS
@@ -431,9 +411,6 @@ An explicit blank drum position is therefore:
 
 00000000000000000000000000
 
-Raw words are not modified by the assembler. Automatic C or RTN contacts
-are not added to them.
-
 Blank positions beyond the assembled source remain on the full 65-position
 drum. A blank word does nothing and advances. Position 65 wraps to position 1.
 
@@ -464,9 +441,7 @@ Similarly:
 
 RIN 2 5
 
-activates RIN, C2, line 2 and line 4; C and RTN are not asserted for initialisation. The four data lines are therefore
-visible in the actual 26-bit drum word and can also be encountered by a jump
-search.
+activates RIN, C2, line 2 and line 4; C and RTN are not asserted for initialisation. The four data lines are visible in the 26-bit drum word and can also be encountered by a jump search.
 
 All 65 drum positions are shown. Unprogrammed positions contain no contacts.
 Imagine the drum unrolled into a flat sheet. Each row is a program step and
@@ -474,16 +449,14 @@ each column corresponds to a wire/contact. Because these are independent
 contacts, the operand/control section is not restricted to selecting exactly
 one thing. A drum position can activate multiple control lines simultaneously.
 
-The two timing tracks are excluded from the 26-bit instruction word.
-
-The two timing tracks are excluded from the 26-bit instruction word.  
 
 MACHINE CONTROLS
 ================
 Run
 ---
-Runs continuously. Plain RIN A/B reads immediately. RIN A/B ANS pauses before
-the read. RUT ... ANS pauses after readout.
+Runs continuously at a fixed 300 ms step interval. Plain RIN A/B reads
+immediately. RIN A/B ANS pauses before the read. RUT ... ANS pauses after
+readout.
 
 Step
 ----
@@ -494,18 +467,19 @@ Pause
 -----
 Stops automatic execution without changing state.
 
-PC to 1
--------
-Sets the program drum to position 1 while preserving encoder, decoder,
-registers and word memory.
-
-Reset all
+Drum to 1
 ---------
-Resets the drum position, INPUT A/B, ACCUMULATOR, EXTENSION, X, TENS, UNITS, all five words,
-ANS and execution state to zero, and clears the execution trace.
+Sets the program drum to position 1 while preserving encoder, decoder,
+registers and core memory.
 
-If the program begins with RIN core-initialisation instructions, running again
-from position 1 will reconstruct its programmed core values.
+Clear Registers
+---------------
+Clears INPUT A/B, ACCUMULATOR, EXTENSION, X, TENS, UNITS, and all five core words. 
+It does not change the program drum position.
+
+Clear
+-----
+Clears the Assembly source editor, to ready it for coding.
 
 LIMITS AND IMPLEMENTATION NOTES
 ===============================
@@ -528,69 +502,3 @@ LIMITS AND IMPLEMENTATION NOTES
 - There is no NOP instruction. Execution pauses on a blank drum position.
 - The simulator is a behavioural reconstruction of the manually operated
   architecture, not an electrical simulation of the paperclip circuitry.
-
-TROUBLESHOOTING
-===============
-A program that previously worked now gives the wrong arithmetic result
------------------------------------------------------------------------
-Check whether it relied on X surviving ADD or SUB. Both instructions now clear
-X. Insert TRA or reload the required value before the next arithmetic step.
-
-A core-memory instruction does not assemble
--------------------------------------------
-Use a numeric core address from 1 to 5:
-
-RIN 3
-STO 4
-
-To initialise a core directly, add exactly one hexadecimal digit:
-
-RIN 3 A
-
-CORE1-CORE5 are also accepted as compatibility aliases.
-
-Run pauses at RIN A or RIN B
-----------------------------
-Check whether the instruction includes ANS. RIN B ANS deliberately pauses
-before the read. Plain RIN B should not pause.
-
-Nim behaves incorrectly after Reset all
----------------------------------------
-Reset all clears every core. With the revised Nim program, return to drum
-position 1 and execute its five opening RIN initialisation instructions:
-
-RIN 1 D
-RIN 2 1
-RIN 3 4
-RIN 4 0
-RIN 5 0
-
-There is no need to restore the core lamps manually.
-
-JUP or COJ reaches an unexpected position
------------------------------------------
-Remember that the four marker contacts may be repeated and are shared with
-other operations. JUP/COJ stops at the FIRST matching contact encountered in
-the relevant direction: forwards for 1-3 and backwards for 4. Check for an
-intervening marker or a shared 1-4 contact in a RIN initialisation word,
-particularly after a wrap-around search.
-
-A marker does not consume the drum position I expected
-------------------------------------------------------
-A marker written alone applies to the next instruction and does not itself
-consume a drum position. Thus:
-
-3:
-4: RIN 1
-
-is one drum word carrying both marker 3 and marker 4.
-
-A raw binary line fails to assemble
------------------------------------
-It must contain exactly 26 binary digits after comments are removed. Do not
-prefix it with BITS.
-
-Browser displays source rather than the simulator
--------------------------------------------------
-Ensure the file has an .html extension and open it in a modern browser such
-as Edge, Chrome, Firefox or Safari.

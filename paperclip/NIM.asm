@@ -4,31 +4,24 @@
 // Core 2 = constant 1
 // Core 3 = constant 4
 // Core 4 = computer's most recent move, initially 0
-// Core 5 = scratch, initially 0; later holds decimal 10
 // Input B = player's move: 1, 2, or 3
-//
-// Markers 1-3 search forwards. Marker 4 searches backwards.
 // Taking the last pebble loses.
 
-// Initialise all five core words.
+// Initialise the four core words.
 RIN 1 D
 RIN 2 1
 RIN 3 4
 RIN 4 0
-RIN 5 0
 
 // Display the current pile in the DECODER.
 4: RIN 2
 
 // Build decimal 10: (1 << 3) + (1 << 1).
-// ADD clears X, so save the result in core 5 before using it.
 SHL 3
 TRA
 RIN 2
 SHL 1
 ADD
-STO 5
-RIN 5
 TRA
 
 // Calculate pile - 10. A negative result sets SIGN.
@@ -36,7 +29,7 @@ RIN 1
 SUB
 COJ 1
 
-// Pile is 10-15: ACC contains the units digit and TENS is 1.
+// Pile is 10-15: ACC contains the units digit and MSH is 1.
 RUT LSH
 RIN 2
 RUT MSH
@@ -44,7 +37,7 @@ JUP 2
 
 1: RIN 1
 
-// Pile is 0-9: copy it to UNITS, then generate zero for TENS.
+// Pile is 0-9: copy it to LSH, then generate zero for MSH.
 RUT LSH
 TRA
 RIN 1
